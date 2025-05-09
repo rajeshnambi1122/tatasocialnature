@@ -4,10 +4,46 @@
   width: 100%;
 }
 
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff; /* White canvas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's on top */
+  opacity: 1;
+  transition: opacity 0.75s ease-in-out; /* Transition for fade-out */
+}
+
+#preloader img {
+  max-width: 150px; /* Adjust as needed, e.g., for your logo-center size */
+  height: auto;
+  animation: fadeInLogo 1s ease-in-out; /* Simple fade-in for the logo */
+}
+
+@keyframes fadeInLogo {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* When preloader is done (isLoading is false), it fades out */
+/* We handle removal from DOM via *ngIf in app.component.html based on isLoading */
+
 .app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.75s ease-in-out; /* Transition for fade-in */
+  transition-delay: 0.2s; /* Small delay for main content to appear after preloader starts fading */
+}
+
+.app-container.loaded {
+  opacity: 1; /* Fade in when loaded */
 }
 
 main {

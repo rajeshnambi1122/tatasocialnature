@@ -1,4 +1,8 @@
-<div class="app-container">
+<div id="preloader" *ngIf="isLoading">
+  <img src="images/logocenter.png" alt="Loading...">
+</div>
+
+<div class="app-container" [class.loaded]="!isLoading">
   <main>
     <router-outlet></router-outlet>
   </main>
