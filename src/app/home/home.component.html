@@ -5,6 +5,7 @@
             <img src="images/logocenter.png" alt="Center Logo" class="logo logo-center">
             <img src="images/logoright.jpg" alt="Right Logo" class="logo">
         </div>
+ 
     </div>
     <nav>
         <button class="hamburger-menu" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
@@ -40,25 +41,30 @@
         <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
     </div>
     <div class="hero-content-overlay">
-        <h1>World Environment Day 2025 - Halwa City Marathon!</h1>
-        <p>Run with us to strengthen a greener Tirunelveli!</p>
-        <a routerLink="/register" class="btn btn-accent btn-hero">Register Now</a>
+        <div class="container">
+            <h1>World Environment Day 2025 - Halwa City Marathon!</h1>
+            <p>Run with us to strengthen a greener Tirunelveli!</p>
+            <a routerLink="/register" class="btn btn-accent btn-hero">Register Now</a>
+        </div>
     </div>
 </section>
 
 <section class="promo-section">
-    <div class="promo-card animate-fadeInUp">
-        <div class="promo-icon">🏃‍♂️</div>
-        <h2>Ready to run the green path?</h2>
-        <p>Register now – Let's bring a change for the environment!</p>
-        <a routerLink="/register" class="btn btn-primary">Register Now</a>
-    </div>
-
-    <div class="promo-card animate-fadeInUp" style="animation-delay: 0.2s;">
-        <div class="promo-icon">🏟️</div>
-        <h2>Green journey begins at Anna Stadium!</h2>
-        <p>Green path crossing key spots of Tirunelveli!</p>
-        <a routerLink="/register" class="btn btn-primary">View Route</a>
+    <div class="container">
+        <div class="promo-grid">
+            <div class="promo-card animate-fadeInUp">
+                <div class="promo-icon">🏃‍♂️</div>
+                <h2>Ready to run the green path?</h2>
+                <p>Register now – Let's bring a change for the environment!</p>
+                <a routerLink="/register" class="btn btn-primary">Register Now</a>
+            </div>
+            <div class="promo-card animate-fadeInUp" style="animation-delay: 0.2s;">
+                <div class="promo-icon">🏟️</div>
+                <h2>Green journey begins at Anna Stadium!</h2>
+                <p>Green path crossing key spots of Tirunelveli!</p>
+                <a routerLink="/register" class="btn btn-primary">View Route</a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -139,13 +145,19 @@
     <div class="container">
         <h2>How to Register Online?</h2>
         <div class="register-content glass-card">
-            <p><strong>Website:</strong> <a href="http://www.sanct.in">www.sanct.in</a></p>
             <p><strong>Steps:</strong></p>
             <ol>
-                <li>Click on the Register Now button on the website.</li>
-                <li>Fill in your Name, Phone Number, Email, and select the Running Distance (5KM).</li>
-                <li>Share your thoughts about the Environment* (one sentence).</li>
-                <li>You will receive your Registration Number* via SMS/Email.</li>
+                <li>Click on a "Register Now" button.</li>
+                <li>Select the <strong>Event Type</strong> you wish to participate in (e.g., Marathon, Kidathon, Drawing Competition).</li>
+                <li>Fill in your personal details: Name, Date of Birth (Age will be calculated), Gender, and Aadhar Card Number.</li>
+                <li>If participating in a school event (Drawing/Poetry), provide your School Name and Standard/Grade.</li>
+                <li>Enter your Blood Group, Email, Phone Number, and an Emergency Contact Number.</li>
+                <li>Upload a passport-size Photo.</li>
+                <li>If applicable for your chosen event, select your T-shirt Size.</li>
+                <li>Read the general registration conditions and the "Pledge for a Greener Tomorrow."</li>
+                <li>Agree to the pledge by checking the box.</li>
+                <li>Review your details and click "Submit Application."</li>
+                <li>You will receive confirmation of your registration.</li>
             </ol>
         </div>
     </div>
@@ -183,10 +195,10 @@
         <h2>Rules And Regulations</h2>
         <div class="rules-content glass-card">
             <ul class="rules-list">
-                <li><span>⚠️</span> Participants must follow the designated route</li>
-                <li><span>⚠️</span> Medical certificate recommended for all participants</li>
-                <li><span>⚠️</span> Eco-friendly approach - No plastic bottles or waste</li>
-                <li><span>⚠️</span> Proper running attire and footwear required</li>
+                <li><span class="rule-icon">📜</span> Participants must follow the designated route</li>
+                <li><span class="rule-icon">🩺</span> Medical certificate recommended for all participants</li>
+                <li><span class="rule-icon">♻️</span> Eco-friendly approach - No plastic bottles or waste</li>
+                <li><span class="rule-icon">👟</span> Proper running attire and footwear required</li>
             </ul>
         </div>
     </div>
@@ -268,7 +280,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-about">
-                <h3>Halwa City Marathon 2025</h3>
+                <h3>Halwa City Marathon <span class="year">2025</span></h3>
                 <p>This awareness marathon event in Tirunelveli celebrates Environment Day, spreading the message of environmental protection and sustainability.</p>
             </div>
             <div class="footer-contact">

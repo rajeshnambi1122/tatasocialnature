@@ -21,10 +21,10 @@ export class HomeComponent implements OnInit {
   ];
   
   tirunelveliImages = [
-    { src: 'images/ten1.jpeg', alt: 'Nellaiappar Temple' },
-    { src: 'images/ten2.jpeg', alt: 'Famous Tirunelveli Halwa' },
+    { src: 'images/ten1.jpeg', alt: 'Tirunelveli Railway Station' },
+    { src: 'images/ten2.jpeg', alt: 'Tirunelveli Railway Station' },
     { src: 'images/ten3.jpeg', alt: 'Thamirabarani River' },
-    { src: 'images/ten4.jpeg', alt: 'City Landscape' },
+    { src: 'images/ten4.jpeg', alt: 'World Famous Halwa' },
     { src: 'images/ten5.jpeg', alt: 'Cultural Heritage' }
   ];
   
