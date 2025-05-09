@@ -15,15 +15,17 @@ export class HomeComponent implements OnInit {
   tirunelveliSlideIndex = 0;
   
   carouselImages = [
-    { src: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?q=80&w=2070&auto=format&fit=crop', alt: 'Marathon Runners' },
-    { src: 'https://images.unsplash.com/photo-1519677584237-752f8853252e?q=80&w=2070&auto=format&fit=crop', alt: 'Marathon Event' },
-    { src: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=2067&auto=format&fit=crop', alt: 'Marathon Finish Line' }
+    { src: 'images/gallery1.jpg', alt: 'Marathon Event' },
+    { src: 'images/gallery2.jpg', alt: 'Runners in Action' },
+    { src: 'images/gallery3.jpg', alt: 'Marathon Participants' }
   ];
   
   tirunelveliImages = [
-    { src: 'https://www.tourmyindia.com/blog//wp-content/uploads/2021/06/Nellaiappar-Temple-Tirunelveli-Tamil-Nadu.jpg', alt: 'Nellaiappar Temple' },
-    { src: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Tirunelveli_Halwa.jpg', alt: 'Famous Tirunelveli Halwa' },
-    { src: 'https://www.tourmyindia.com/blog//wp-content/uploads/2021/06/Thamirabarani-River-Tirunelveli-Tamil-Nadu.jpg', alt: 'Thamirabarani River' }
+    { src: 'images/ten1.jpeg', alt: 'Nellaiappar Temple' },
+    { src: 'images/ten2.jpeg', alt: 'Famous Tirunelveli Halwa' },
+    { src: 'images/ten3.jpeg', alt: 'Thamirabarani River' },
+    { src: 'images/ten4.jpeg', alt: 'City Landscape' },
+    { src: 'images/ten5.jpeg', alt: 'Cultural Heritage' }
   ];
   
   autoSlideInterval: any;

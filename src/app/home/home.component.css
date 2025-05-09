@@ -732,3 +732,148 @@
     right: 20px;
   }
   
+  /* Marathon Route Section Styles */
+  .route-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .route-steps {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .route-point {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 15px;
+    background: var(--glass-background);
+    backdrop-filter: var(--glass-backdrop-filter);
+    -webkit-backdrop-filter: var(--glass-backdrop-filter);
+    border: var(--glass-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .route-point:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow-md);
+  }
+  
+  .route-icon {
+    font-size: 1.8em;
+    margin-right: 15px;
+    color: var(--primary-color);
+    min-width: 40px;
+    text-align: center;
+  }
+  
+  .route-point.start .route-icon,
+  .route-point.end .route-icon {
+    color: var(--accent-color);
+  }
+  
+  .route-text {
+    font-size: 1.1em;
+    color: var(--text-color-dark);
+    font-family: var(--font-secondary);
+  }
+  
+  .route-connector {
+    text-align: center;
+    font-size: 1.5em;
+    color: var(--primary-color);
+    margin: -5px 0 5px 30px;
+  }
+  
+  .route-image-container {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .route-image-container img {
+    max-width: 100%;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-md);
+    transition: transform 0.3s ease;
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .route-image-container img:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Responsive adjustments for route layout */
+  @media (max-width: 768px) {
+    .route-layout {
+      flex-direction: column;
+    }
+    
+    .route-steps,
+    .route-image-container {
+      width: 100%;
+      min-width: unset;
+    }
+    
+    .route-image-container {
+      margin-top: 20px;
+    }
+    
+    .route-connector {
+      margin-left: 20px;
+    }
+    
+    .route-image-container img {
+      height: 300px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .hero {
+      min-height: 60vh;
+    }
+    
+    .hero-content-overlay {
+      padding: 20px;
+    }
+    
+    .hero-content-overlay h1 {
+      font-size: 1.5rem;
+    }
+    
+    .promo-card {
+      padding: 20px;
+    }
+    
+    .promo-icon {
+      font-size: 36px;
+    }
+    
+    .about-text, .info-box, .register-content, .rules-content, .medical-content {
+      padding: 20px;
+    }
+    
+    .tirunelveli-carousel {
+      height: 250px;
+    }
+    
+    .tirunelveli-carousel .carousel-control {
+      width: 35px;
+      height: 35px;
+      font-size: 16px;
+    }
+    
+    .route-image-container img {
+      height: 200px;
+    }
+  }
+  
