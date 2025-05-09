@@ -1,0 +1,191 @@
+<div class="form-container">
+    <header>
+      <div class="logo-container">
+        <img src="assets/images/logoleft.jpg" alt="Left Logo" class="logo">
+        <img src="assets/images/logocenter.png" alt="Center Logo" class="logo">
+        <img src="assets/images/logoright.jpg" alt="Right Logo" class="logo">
+      </div>
+      <div class="event-title">
+        <h1>Halwa City Marathon 2025</h1>
+        <p>World Environment Day Special Event</p>
+      </div>
+    </header>
+  
+    <div class="application-form">
+      <h2>APPLICATION FORM</h2>
+      <form (ngSubmit)="onSubmit()" #applicationForm="ngForm">
+        <div class="form-group">
+          <label for="eventType">Event Type:</label>
+          <select id="eventType" name="eventType" [(ngModel)]="formData.eventType" required (change)="onEventTypeChange()">
+            <option value="" disabled selected>-- Select Event --</option>
+            <option value="marathon">Marathon (Age 10 to 60)</option>
+            <option value="kidathon">Kidathon - Butterfly Walk & Run (Up to 10 years)</option>
+            <option value="kingwalkathon">King Walkathon (Above 60 years)</option>
+            <option value="walkathon">Walkathon - For Disabled (All ages)</option>
+            <option value="drawing">Drawing Competition (School students only)</option>
+            <option value="poetry">Poetry Competition (School students only)</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" [(ngModel)]="formData.name" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="dob">Date of birth:</label>
+          <input type="date" id="dob" name="dob" [(ngModel)]="formData.dob" required (change)="calculateAge()" (input)="onDobInput($event)">
+          <small class="hint">Age will be calculated automatically</small>
+        </div>
+  
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" [(ngModel)]="formData.age" required [readonly]="true">
+        </div>
+  
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" [(ngModel)]="formData.gender" required>
+            <option value="" disabled selected>-- Select Gender --</option>
+            <option value="male" *ngIf="!isSchoolEvent">Male</option>
+            <option value="female" *ngIf="!isSchoolEvent">Female</option>
+            <option value="boy" *ngIf="isSchoolEvent">Boy</option>
+            <option value="girl" *ngIf="isSchoolEvent">Girl</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="aadhar">Aadhar Card Number:</label>
+          <input type="text" id="aadhar" name="aadhar" [(ngModel)]="formData.aadhar" required maxlength="12" pattern="[0-9]{12}">
+          <small *ngIf="formData.aadhar && formData.aadhar.length !== 12">Aadhar number must be 12 digits</small>
+        </div>
+  
+        <div class="form-group" *ngIf="isSchoolEvent">
+          <label for="school">School Name:</label>
+          <input type="text" id="school" name="school" [(ngModel)]="formData.school" required>
+        </div>
+  
+        <div class="form-group" *ngIf="isSchoolEvent">
+          <label for="standard">Standard/Grade:</label>
+          <select id="standard" name="standard" [(ngModel)]="formData.standard" required>
+            <option value="" disabled selected>-- Select Standard --</option>
+            <option value="1">1st Standard</option>
+            <option value="2">2nd Standard</option>
+            <option value="3">3rd Standard</option>
+            <option value="4">4th Standard</option>
+            <option value="5">5th Standard</option>
+            <option value="6">6th Standard</option>
+            <option value="7">7th Standard</option>
+            <option value="8">8th Standard</option>
+            <option value="9">9th Standard</option>
+            <option value="10">10th Standard</option>
+            <option value="11">11th Standard</option>
+            <option value="12">12th Standard</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="bloodGroup">Blood group:</label>
+          <select id="bloodGroup" name="bloodGroup" [(ngModel)]="formData.bloodGroup" required>
+            <option value="" disabled selected>-- Select Blood Group --</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="photo">Photo (passport-size):</label>
+          <div class="custom-file-input">
+            <input type="file" id="photo" name="photo" (change)="onFileChange($event)" accept="image/*">
+            <label class="custom-file-label" for="photo">
+              {{ formData.photoFileName || 'Choose a passport-size photo' }}
+            </label>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" [(ngModel)]="formData.email" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" [(ngModel)]="formData.phone" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="emergency">Emergency Contact Number:</label>
+          <input type="tel" id="emergency" name="emergency" [(ngModel)]="formData.emergency" required>
+        </div>
+  
+        <div class="form-group" *ngIf="formData.eventType === 'marathon' || formData.eventType === 'kidathon' || formData.eventType === 'kingwalkathon' || formData.eventType === 'walkathon'">
+          <label for="tshirtSize">T-shirt Size:</label>
+          <select id="tshirtSize" name="tshirtSize" [(ngModel)]="formData.tshirtSize" required>
+            <option value="" disabled selected>-- Select Size --</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+        </div>
+  
+        <div class="info-section">
+          <h3>General registration conditions:</h3>
+          <ol>
+            <li>Age and Eligibility: Participants must be of appropriate age for their event category and healthy.</li>
+            <li>Medical Fitness: Consultation with a doctor is advised for running events.</li>
+            <li>Rules: Participants must follow all event regulations.</li>
+            <li>Documents: ID proof and Aadhar card details are required during registration.</li>
+          </ol>
+        </div>
+  
+        <div class="info-section" *ngIf="formData.eventType && formData.eventType !== 'drawing' && formData.eventType !== 'poetry'">
+          <h3>Pledge for a Greener Tomorrow:</h3>
+          <p>I pledge to run for the planet and take a stand for a cleaner, greener, and healthier land.</p>
+          <p><strong>I commit to:</strong></p>
+          <ul>
+            <li>Reduce Emissions – I choose cleaner ways to move.</li>
+            <li>Promote Clean Energy – I support and advocate for sustainable power.</li>
+            <li>Champion Recycling – I reduce, reuse, and recycle responsibly.</li>
+            <li>Protect Biodiversity – I respect and preserve the natural world around me.</li>
+            <li>Enhance Health & Well-Being – I run for a healthier body, mind, and community.</li>
+            <li>Educate and Inspire – I will spread awareness and encourage eco-friendly choices.</li>
+          </ul>
+          <p>Together, we move toward a sustainable future for all.</p>
+          <p>Let's run for change. Let's run for the Earth.</p>
+  
+          <div class="form-group checkbox">
+            <input type="checkbox" id="agreePledge" name="agreePledge" [(ngModel)]="formData.agreePledge" required>
+            <label for="agreePledge">I agree to the pledge</label>
+          </div>
+        </div>
+  
+        <div class="info-section">
+          <h3>Registration Details:</h3>
+          <p><strong>Event Day:</strong> 1st June 2025</p>
+          <p><strong>Start from:</strong> Anna Stadium</p>
+          <p *ngIf="formData.eventType === 'marathon'"><strong>Marathon Distance:</strong> 5km</p>
+          <p><strong>Registration start date:</strong> 5th May 2025</p>
+          <p><strong>Registration end date:</strong> 15th May 2025 or as soon as slots are filled.</p>
+        </div>
+  
+        <div class="alert alert-warning" *ngIf="showAgeWarning">
+          <strong>Note:</strong> Your age does not match the requirements for the selected event. Please select an appropriate event category.
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary submit-btn" [disabled]="!applicationForm.form.valid || showAgeWarning">Submit Application</button>
+          <button type="button" class="btn btn-outline back-btn" routerLink="/">Back to Home</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

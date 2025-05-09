@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Create a smooth transition for route changes */
+::ng-deep router-outlet + * {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}

@@ -1,0 +1,302 @@
+<header class="modern-header">
+    <div class="header-top">
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Tata_Power_Logo.svg/2560px-Tata_Power_Logo.svg.png" alt="Left Logo" class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/2271/2271462.png" alt="Center Logo" class="logo logo-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Tamil_nadu_logo.svg/1200px-Tamil_nadu_logo.svg.png" alt="Right Logo" class="logo">
+        </div>
+   
+    </div>
+    <nav>
+        <button class="hamburger-menu" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+            <span class="hamburger-menu__line"></span>
+            <span class="hamburger-menu__line"></span>
+            <span class="hamburger-menu__line"></span>
+        </button>
+        <ul [class.mobile-menu-active]="isMobileMenuOpen">
+            <li><a href="#home" (click)="isMobileMenuOpen = false">Home</a></li>
+            <li><a href="#about" (click)="isMobileMenuOpen = false">About Us</a></li>
+            <li><a href="#location" (click)="isMobileMenuOpen = false">Location</a></li>
+            <li><a routerLink="/register" (click)="isMobileMenuOpen = false">Registration</a></li>
+            <li><a href="#rules" (click)="isMobileMenuOpen = false">Rules</a></li>
+            <li><a href="#medical" (click)="isMobileMenuOpen = false">Medical</a></li>
+            <li><a href="#tirunelveli" (click)="isMobileMenuOpen = false">Tirunelveli</a></li>
+            <li><a href="#contact" (click)="isMobileMenuOpen = false">Contact</a></li>
+        </ul>
+        <div class="right-nav">
+            <div class="language-selector">
+                <a href="#">தமிழ்</a> | <a href="#">English</a>
+            </div>
+            <a routerLink="/register" class="btn btn-primary register-btn">Register Now</a>
+        </div>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <div class="carousel-container">
+        <div class="carousel-slide" *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentSlideIndex">
+            <img [src]="image.src" [alt]="image.alt || 'Marathon Carousel Image'">
+        </div>
+        <button class="carousel-control prev" (click)="prevSlide()">&#10094;</button>
+        <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
+    </div>
+    <div class="hero-content-overlay">
+        <h1>World Environment Day 2025 - Halwa City Marathon!</h1>
+        <p>Run with us to strengthen a greener Tirunelveli!</p>
+        <a routerLink="/register" class="btn btn-accent btn-hero">Register Now</a>
+    </div>
+</section>
+
+<section class="promo-section">
+    <div class="promo-card animate-fadeInUp">
+        <div class="promo-icon">🏃‍♂️</div>
+        <h2>Ready to run the green path?</h2>
+        <p>Register now – Let's bring a change for the environment!</p>
+        <a routerLink="/register" class="btn btn-primary">Register Now</a>
+    </div>
+
+    <div class="promo-card animate-fadeInUp" style="animation-delay: 0.2s;">
+        <div class="promo-icon">🏟️</div>
+        <h2>Green journey begins at Anna Stadium!</h2>
+        <p>Green path crossing key spots of Tirunelveli!</p>
+        <a routerLink="/register" class="btn btn-primary">View Route</a>
+    </div>
+</section>
+
+<section id="about" class="about-section animate-fadeInUp" style="animation-delay: 0.4s;">
+    <div class="container">
+        <h2>About The Marathon</h2>
+        <div class="about-content">
+            <div class="about-text glass-card">
+                <p>As part of our ongoing efforts to protect the environment and water bodies in the Tirunelveli district, this year, in collaboration with TP solar Limited, a Tata enterprise, we are organizing a grand nature festival named "Halwa City Marathon" on June 1, in celebration of World Environment Day 2025.</p>
+                <p>The event aims to raise awareness among the people about our duty to protect the Thamirabarani River, which serves as a lifeline for the people of Tirunelveli. The marathon, named after another iconic identity of Tirunelveli — Halwa — will be celebrated as a Green Diwali, reflecting social concern and environmental consciousness.</p>
+                <p>Let us come together and join hands to protect our lifeline — the Thamirabarani River!</p>
+            </div>
+            <div class="about-info">
+                <div class="info-box">
+                    <h3>Runners Information:</h3>
+                    <ul>
+                        <li><span class="info-icon">🔢</span>Chest Number Collection</li>
+                        <li><span class="info-icon">⏰</span>Race Start Timing - 06:00 AM</li>
+                        <li><span class="info-icon">🗺️</span>Route Maps - Available Link</li>
+                        <li><span class="info-icon">📍</span>Venue Maps - Available Link</li>
+                        <li><span class="info-icon">🏥</span>Hospitals On Route - Available Link</li>
+                    </ul>
+                </div>
+                <img src="https://images.unsplash.com/photo-1584289537638-6577a0a011c9?q=80&w=1972&auto=format&fit=crop" alt="About Image" class="about-image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="location" class="animate-fadeInUp" style="animation-delay: 0.2s;">
+    <div class="container">
+        <h2>🏃‍♂️ Marathon Route</h2>
+        <div class="route-layout">
+            <div class="route-steps">
+                <div class="route-point start">
+                    <span class="route-icon">🏁</span>
+                    <span class="route-text">Start from Anna Stadium</span>
+                </div>
+                <div class="route-connector">↓</div>
+                <div class="route-point">
+                    <span class="route-icon">📍</span>
+                    <span class="route-text">Near A.R. Line, Xaviers College</span>
+                </div>
+                <div class="route-connector">↓</div>
+                <div class="route-point">
+                    <span class="route-icon">➡️</span>
+                    <span class="route-text">Turn right at District Library</span>
+                </div>
+                <div class="route-connector">↓</div>
+                <div class="route-point">
+                    <span class="route-icon">🏥</span>
+                    <span class="route-text">via Krishna Hospital</span>
+                </div>
+                <div class="route-connector">↓</div>
+                <div class="route-point">
+                    <span class="route-icon">🏥</span>
+                    <span class="route-text">Government Hospital</span>
+                </div>
+                <div class="route-connector">↓</div>
+                <div class="route-point">
+                    <span class="route-icon">➡️</span>
+                    <span class="route-text">Turn right at District Industries Centre</span>
+                </div>
+                <div class="route-connector">↓</div>
+                <div class="route-point end">
+                    <span class="route-icon">🏁</span>
+                    <span class="route-text">Return to Anna Stadium</span>
+                </div>
+            </div>
+            <div class="route-image-container">
+                <img src="https://images.unsplash.com/photo-1541627286792-6dafb75d4166?q=80&w=2070&auto=format&fit=crop" alt="Route Image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="application" class="register-section animate-fadeInUp" style="animation-delay: 0.3s;">
+    <div class="container">
+        <h2>How to Register Online?</h2>
+        <div class="register-content glass-card">
+            <p><strong>Website:</strong> <a href="http://www.sanct.in">www.sanct.in</a></p>
+            <p><strong>Steps:</strong></p>
+            <ol>
+                <li>Click on the Register Now button on the website.</li>
+                <li>Fill in your Name, Phone Number, Email, and select the Running Distance (5KM).</li>
+                <li>Share your thoughts about the Environment* (one sentence).</li>
+                <li>You will receive your Registration Number* via SMS/Email.</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="register-cta">
+    <div class="container">
+        <div class="cta-content glass-card">
+            <h2>Register now and be a part of the movement</h2>
+            <p class="highlight">FREE for all participants!</p>
+            <div class="benefits">
+                <div class="benefit-list">
+                    <h3>All registered participants will receive:</h3>
+                    <ul>
+                        <li><span>🏆</span> Official Participation Certificate</li>
+                        <li><span>🥇</span> Marathon Medal</li>
+                        <li><span>👕</span> Event T-shirt</li>
+                        <li><span>🧢</span> Event Cap</li>
+                        <li><span>🥤</span> Nutritious Energy Drinks</li>
+                        <li><span>🍳</span> Breakfast</li>
+                    </ul>
+                </div>
+                <div class="benefit-image">
+                    <img src="https://images.unsplash.com/photo-1608138278545-366680accc66?q=80&w=2070&auto=format&fit=crop" alt="Register Image" class="rounded-image">
+                </div>
+            </div>
+            <a routerLink="/register" class="btn btn-accent btn-large">Register Now!</a>
+            <p class="note">(Limited slots available! Hurry up!)</p>
+        </div>
+    </div>
+</section>
+
+<section id="rules" class="rules-section"> 
+    <div class="container">
+        <h2>Rules And Regulations</h2>
+        <div class="rules-content glass-card">
+            <ul class="rules-list">
+                <li><span>⚠️</span> Participants must follow the designated route</li>
+                <li><span>⚠️</span> Medical certificate recommended for all participants</li>
+                <li><span>⚠️</span> Eco-friendly approach - No plastic bottles or waste</li>
+                <li><span>⚠️</span> Proper running attire and footwear required</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="medical" class="medical-section"> 
+    <div class="container">
+        <h2>Medical Facilities</h2>
+        <div class="medical-content glass-card">
+            <div class="medical-points">
+                <div class="medical-point">
+                    <span class="medical-icon">🚑</span>
+                    <p>Ambulances stationed along the route</p>
+                </div>
+                <div class="medical-point">
+                    <span class="medical-icon">🧑‍⚕️</span>
+                    <p>Medical professionals available at every checkpoint</p>
+                </div>
+                <div class="medical-point">
+                    <span class="medical-icon">💊</span>
+                    <p>First-aid stations at key locations</p>
+                </div>
+                <div class="medical-point">
+                    <span class="medical-icon">💧</span>
+                    <p>Hydration points every 1km</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="important-info animate-fadeInUp" style="animation-delay: 0.2s;">
+    <div class="container">
+        <h2>🔔 Important Information</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>🕔 5:00 AM</h4>
+                <p>Registration and Ground Assembly</p>
+            </div>
+            <div class="info-card">
+                <h4>🏁 6:30 AM</h4>
+                <p>Marathon Start</p>
+            </div>
+            <div class="info-card">
+                <h4>🎖️ Rewards</h4>
+                <p>Certificate & Water/Nutrition for All Participants</p>
+            </div>
+            <div class="info-card">
+                <h4>🚫 No Plastic</h4>
+                <p>Avoid Plastic Umbrellas and Bottles</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="tirunelveli" class="tirunelveli-section animate-fadeInUp" style="animation-delay: 0.3s;">
+    <div class="container">
+        <h2>✨ Glimpse of Tirunelveli</h2>
+        <div class="tirunelveli-content">
+            <div class="tirunelveli-text glass-card">
+                <p>Tirunelveli, known as the "City of Paddy Fields" and famous for its unique Halwa sweet, is one of the oldest cities in Tamil Nadu. It is situated on the eastern banks of the perennial Thamirabarani River, which serves as the lifeline for the people of this region.</p>
+                <p>Home to numerous ancient temples including the Nellaiappar Temple, historic monuments, and serene natural landscapes, Tirunelveli offers a perfect blend of cultural heritage and natural beauty.</p>
+                <p>The city is also known for its significant contribution to education, with several renowned educational institutions.</p>
+                <p>Our marathon celebrates not only environmental awareness but also showcases the rich heritage and beauty of this historic city.</p>
+            </div>
+            <div class="tirunelveli-carousel">
+                <div class="carousel-slide" *ngFor="let image of tirunelveliImages; let i = index" [class.active]="i === tirunelveliSlideIndex">
+                    <img [src]="image.src" [alt]="image.alt || 'Tirunelveli Landmark'">
+                    <div class="caption">{{image.alt}}</div>
+                </div>
+                <button class="carousel-control prev" (click)="prevTirunelveliSlide()">&#10094;</button>
+                <button class="carousel-control next" (click)="nextTirunelveliSlide()">&#10095;</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="contact" class="glass-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>Halwa City Marathon 2025</h3>
+                <p>This awareness marathon event in Tirunelveli celebrates Environment Day, spreading the message of environmental protection and sustainability.</p>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <ul class="contact-info">
+                    <li><i class="icon">✉️</i> halwacitymarathan&#64;gmail.com</li>
+                    <li><i class="icon">📱</i> +91 9500415515</li>
+                    <li><i class="icon">🏢</i> Bhaskaran.U Social and Nature Conservation Trust, Tirunelveli, Tamil Nadu - 627011</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 All Rights Reserved By <strong>Pojo Technology</strong></p>
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="social-link" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="social-link" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    <span>Instagram</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
