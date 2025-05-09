@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden; /* Prevent horizontal scrolling on the HTML element */
+  scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
+}
+
 /* CSS Variables - Updated with modern color palette */
 :root {
   /* Colors */
@@ -83,6 +88,7 @@ body {
   line-height: 1.65;
   background-color: var(--background-light);
   overflow-x: hidden;
+  scroll-behavior: smooth; /* Also enable smooth scrolling for body */
   background-image: 
     radial-gradient(circle at 15% 20%, rgba(var(--primary-color-rgb), 0.12) 0%, transparent 35%),
     radial-gradient(circle at 80% 80%, rgba(var(--accent-color-rgb), 0.08) 0%, transparent 35%);

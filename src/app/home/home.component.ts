@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
   
   autoSlideInterval: any;
   
+  constructor(private viewportScroller: ViewportScroller) {}
+  
   ngOnInit() {
     // Auto-slide every 5 seconds
     this.startAutoSlide();
@@ -43,6 +45,13 @@ export class HomeComponent implements OnInit {
   
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+  
+  scrollToSection(sectionId: string): void {
+    this.viewportScroller.scrollToAnchor(sectionId);
+    if (this.isMobileMenuOpen) {
+      this.isMobileMenuOpen = false; // Close mobile menu after clicking
+    }
   }
   
   nextSlide() {

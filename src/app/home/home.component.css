@@ -169,6 +169,21 @@ section {
 
 .logo-center {
   height: 65px;
+  animation: pulse-logo 2.5s infinite ease-in-out;
+  animation-delay: 1.5s; /* Start animation after 1.5 seconds */
+}
+
+/* Add this new keyframe animation here, at the top level */
+@keyframes pulse-logo {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .event-title {
@@ -1160,6 +1175,9 @@ nav ul li a:hover::after {
   
   .tirunelveli-carousel {
     height: 350px;
+    width: 100%;
+    min-width: unset;
+    flex-basis: 350px;
   }
   
   .footer-content {
@@ -1320,6 +1338,9 @@ nav ul li a:hover::after {
   
   .tirunelveli-carousel {
     height: 280px;
+    width: 100%;
+    min-width: unset;
+    flex-basis: 280px;
   }
   
   .tirunelveli-carousel .carousel-control {
