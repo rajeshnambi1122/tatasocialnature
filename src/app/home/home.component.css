@@ -1375,4 +1375,192 @@ nav ul li a:hover::after {
     height: 16px;
   }
 }
+
+/* Gallery Section Styles - Old grid styles removed/commented out */
+/*
+.gallery-section {
+  padding: 80px 0;
+  background-color: var(--background-light);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-md);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 4 / 3; 
+}
+
+.gallery-item:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.0) 100%);
+  color: white;
+  padding: 20px 15px 15px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.gallery-item:hover .gallery-item-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+*/
+
+.gallery-section {
+  padding: 80px 0;
+  background-color: var(--background-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent-color), var(--secondary-color)); /* Different gradient for gallery */
+  opacity: 0.7;
+}
+
+.gallery-carousel-container {
+  margin-top: 40px;
+  position: relative;
+  height: 500px; /* Adjust height as needed */
+  overflow: hidden;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--box-shadow-lg);
+}
+
+.gallery-carousel-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out, transform 1.2s ease;
+  transform: scale(1.05);
+  background-size: cover;
+  background-position: center;
+}
+
+.gallery-carousel-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.gallery-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-carousel-container .caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: white;
+  padding: 18px;
+  text-align: center;
+  font-weight: 500;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.95rem;
+}
+
+/* Reusing .carousel-control styles from hero/Tirunelveli for consistency */
+/* Ensure .carousel-control styles are globally accessible or duplicated if needed */
+.gallery-carousel-container .carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.gallery-carousel-container .carousel-control:hover {
+  background: rgba(var(--primary-color-rgb), 0.7);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-carousel-container .carousel-control.prev {
+  left: 15px;
+}
+
+.gallery-carousel-container .carousel-control.next {
+  right: 15px;
+}
+
+/* Responsive adjustments for gallery carousel */
+@media (max-width: 768px) {
+  .gallery-carousel-container {
+    height: 400px; /* Adjusted height for tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery-grid { /* This can be removed as it's for the old grid */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  .gallery-item-overlay { /* This can be removed as it's for the old grid */
+    font-size: 0.8rem;
+    padding: 15px 10px 10px;
+  }
+  .gallery-carousel-container {
+    height: 300px; /* Adjusted height for smaller mobiles */
+  }
+  .gallery-carousel-container .carousel-control {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
   
