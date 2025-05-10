@@ -9,6 +9,7 @@ section {
   padding: 80px 0;
   position: relative;
   overflow: hidden;
+  animation: fadeIn 0.8s ease-out;
 }
 
 .tirunelveli-section::before {
@@ -35,6 +36,7 @@ section {
   padding: 35px;
   border-radius: var(--border-radius-lg);
   line-height: 1.8;
+  animation: slideInFromLeft 0.8s ease-out;
 }
 
 .tirunelveli-text p {
@@ -50,6 +52,7 @@ section {
   overflow: hidden;
   border-radius: var(--border-radius-xl);
   box-shadow: var(--box-shadow-lg);
+  animation: slideInFromRight 0.8s ease-out;
 }
 
 .tirunelveli-carousel .carousel-slide {
@@ -58,14 +61,14 @@ section {
   height: 100%;
   opacity: 0;
   transition: opacity 1s ease-in-out, transform 1.2s ease;
-  transform: scale(1.05);
+  transform: translateY(50px);
   background-size: cover;
   background-position: center;
 }
 
 .tirunelveli-carousel .carousel-slide.active {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
 
 .tirunelveli-carousel img {
@@ -136,6 +139,7 @@ section {
   width: 100%;
   border-bottom: 3px solid transparent;
   border-image: linear-gradient(90deg, var(--primary-color), var(--accent-color)) 1;
+  animation: slideInFromTop 0.5s ease-out;
 }
 
 .header-top {
@@ -154,6 +158,7 @@ section {
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  animation: scaleIn 0.5s ease-out;
 }
 
 .logo {
@@ -169,12 +174,12 @@ section {
 
 .logo-center {
   height: 65px;
-  animation: pulse-logo 2.5s infinite ease-in-out;
+  animation: pulse 2s infinite ease-in-out;
   animation-delay: 1.5s; /* Start animation after 1.5 seconds */
 }
 
 /* Add this new keyframe animation here, at the top level */
-@keyframes pulse-logo {
+@keyframes pulse {
   0% {
     transform: scale(1);
   }
@@ -238,6 +243,8 @@ nav ul {
 nav ul li {
   margin: 0;
   position: relative;
+  animation: slideInFromRight 0.5s ease-out;
+  animation-fill-mode: both;
 }
 
 nav ul li a {
@@ -274,23 +281,12 @@ nav ul li a:hover::after {
 .right-nav {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
+/* Remove old language selector styles */
 .language-selector {
-  margin-right: 20px;
-  color: var(--text-color-light);
-}
-
-.language-selector a {
-  color: var(--text-color-dark);
-  text-decoration: none;
-  padding: 5px;
-  font-size: 13px;
-  transition: color 0.3s;
-}
-
-.language-selector a:hover {
-  color: var(--primary-color);
+  display: none;
 }
 
 .register-btn {
@@ -360,12 +356,12 @@ nav ul li a:hover::after {
   height: 100%;
   opacity: 0;
   transition: opacity 1.2s ease-in-out, transform 1.5s ease;
-  transform: scale(1.05);
+  transform: translateX(50px);
 }
 
 .carousel-slide.active {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0);
 }
 
 .carousel-slide img {
@@ -389,7 +385,7 @@ nav ul li a:hover::after {
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
   max-width: 800px;
   margin: 0 auto;
-  animation: fadeIn 1s ease-in-out, fadeInUp 0.8s ease-in-out 0.2s;
+  animation: fadeIn 1s ease-out, float 6s infinite ease-in-out;
 }
 
 .hero-content-overlay h1 {
@@ -484,6 +480,8 @@ nav ul li a:hover::after {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  animation: scaleIn 0.5s ease-out;
+  animation-fill-mode: both;
 }
 
 .promo-card::before {
@@ -528,10 +526,15 @@ nav ul li a:hover::after {
   font-size: 0.95rem;
 }
 
+/* Stagger promo cards */
+.promo-card:nth-child(1) { animation-delay: 0.2s; }
+.promo-card:nth-child(2) { animation-delay: 0.4s; }
+
 /* About Section */
 .about-section {
   padding: 80px 0;
   background-color: var(--background-light);
+  animation: fadeIn 0.8s ease-out;
 }
 
 .about-content {
@@ -550,6 +553,7 @@ nav ul li a:hover::after {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  animation: slideInFromLeft 0.8s ease-out;
 }
 
 .about-text p {
@@ -574,6 +578,7 @@ nav ul li a:hover::after {
   padding: 30px;
   box-shadow: var(--box-shadow-sm);
   flex-grow: 1; /* Allow info box to grow */
+  animation: slideInFromRight 0.8s ease-out;
 }
 
 .info-box h3 {
@@ -1048,13 +1053,9 @@ nav ul li a:hover::after {
   }
   
   .right-nav {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  
-  .language-selector {
-    margin-right: 0;
-    margin-bottom: 5px;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
   }
   
   .register-btn {
@@ -1442,6 +1443,7 @@ nav ul li a:hover::after {
   background-color: var(--background-light);
   position: relative;
   overflow: hidden;
+  animation: fadeIn 0.8s ease-out;
 }
 
 .gallery-section::before {
@@ -1462,6 +1464,7 @@ nav ul li a:hover::after {
   overflow: hidden;
   border-radius: var(--border-radius-xl);
   box-shadow: var(--box-shadow-lg);
+  animation: scaleIn 0.8s ease-out;
 }
 
 .gallery-carousel-slide {
@@ -1470,14 +1473,14 @@ nav ul li a:hover::after {
   height: 100%;
   opacity: 0;
   transition: opacity 1s ease-in-out, transform 1.2s ease;
-  transform: scale(1.05);
+  transform: scale(0.8) rotate(-5deg);
   background-size: cover;
   background-position: center;
 }
 
 .gallery-carousel-slide.active {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) rotate(0deg);
 }
 
 .gallery-carousel-slide img {
@@ -1561,6 +1564,204 @@ nav ul li a:hover::after {
     width: 40px;
     height: 40px;
     font-size: 18px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Apply animations to elements */
+.modern-header {
+  animation: slideInFromTop 0.5s ease-out;
+}
+
+.logo-container {
+  animation: scaleIn 0.5s ease-out;
+}
+
+.logo-center {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+nav ul li {
+  animation: slideInFromRight 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+/* Stagger navigation items */
+nav ul li:nth-child(1) { animation-delay: 0.1s; }
+nav ul li:nth-child(2) { animation-delay: 0.2s; }
+nav ul li:nth-child(3) { animation-delay: 0.3s; }
+nav ul li:nth-child(4) { animation-delay: 0.4s; }
+nav ul li:nth-child(5) { animation-delay: 0.5s; }
+nav ul li:nth-child(6) { animation-delay: 0.6s; }
+nav ul li:nth-child(7) { animation-delay: 0.7s; }
+nav ul li:nth-child(8) { animation-delay: 0.8s; }
+nav ul li:nth-child(9) { animation-delay: 0.9s; }
+
+.hero-content-overlay {
+  animation: fadeIn 1s ease-out, float 6s infinite ease-in-out;
+}
+
+.promo-card {
+  animation: scaleIn 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+/* Stagger promo cards */
+.promo-card:nth-child(1) { animation-delay: 0.2s; }
+.promo-card:nth-child(2) { animation-delay: 0.4s; }
+
+.about-section {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.about-text {
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+.info-box {
+  animation: slideInFromRight 0.8s ease-out;
+}
+
+.tirunelveli-section {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.tirunelveli-text {
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+.tirunelveli-carousel {
+  animation: slideInFromRight 0.8s ease-out;
+}
+
+.gallery-section {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.gallery-carousel-container {
+  animation: scaleIn 0.8s ease-out;
+}
+
+/* Hover animations */
+.promo-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--box-shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.btn-hero:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(var(--accent-color-rgb), 0.4);
+  transition: all 0.3s ease;
+}
+
+/* Carousel transitions */
+.carousel-slide {
+  transition: opacity 1.2s ease-in-out, transform 1.5s ease;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Loading animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Success message animation */
+@keyframes successPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.success-message {
+  animation: successPop 0.5s ease-out;
+}
+
+/* Responsive animations */
+@media (max-width: 768px) {
+  nav ul li {
+    animation: slideInFromTop 0.5s ease-out;
+  }
+  
+  .promo-card {
+    animation: slideInFromTop 0.5s ease-out;
+  }
+  
+  .about-text,
+  .info-box,
+  .tirunelveli-text,
+  .tirunelveli-carousel {
+    animation: slideInFromTop 0.5s ease-out;
   }
 }
   

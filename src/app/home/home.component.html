@@ -5,7 +5,6 @@
             <img src="images/logocenter.png" alt="Center Logo" class="logo logo-center">
             <img src="images/logoright.jpg" alt="Right Logo" class="logo">
         </div>
- 
     </div>
     <nav>
         <button class="hamburger-menu" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
@@ -14,21 +13,19 @@
             <span class="hamburger-menu__line"></span>
         </button>
         <ul [class.mobile-menu-active]="isMobileMenuOpen">
-            <li><a (click)="scrollToSection('home')">Home</a></li>
-            <li><a (click)="scrollToSection('about')">About Us</a></li>
-            <li><a (click)="scrollToSection('location')">Location</a></li>
-            <li><a (click)="scrollToSection('gallery')">Gallery</a></li>
-            <li><a routerLink="/register" (click)="isMobileMenuOpen = false">Registration</a></li>
-            <li><a (click)="scrollToSection('rules')">Rules</a></li>
-            <li><a (click)="scrollToSection('medical')">Medical</a></li>
-            <li><a (click)="scrollToSection('tirunelveli')">Tirunelveli</a></li>
-            <li><a (click)="scrollToSection('contact')">Contact</a></li>
+            <li><a (click)="scrollToSection('home')">{{ 'NAV_HOME' | translate | async }}</a></li>
+            <li><a (click)="scrollToSection('about')">{{ 'NAV_ABOUT_US' | translate | async }}</a></li>
+            <li><a (click)="scrollToSection('location')">{{ 'NAV_LOCATION' | translate | async }}</a></li>
+            <li><a (click)="scrollToSection('gallery')">{{ 'NAV_GALLERY' | translate | async }}</a></li>
+            <li><a routerLink="/register" (click)="isMobileMenuOpen = false">{{ 'NAV_REGISTRATION' | translate | async }}</a></li>
+            <li><a (click)="scrollToSection('rules')">{{ 'NAV_RULES' | translate | async }}</a></li>
+            <li><a (click)="scrollToSection('medical')">{{ 'NAV_MEDICAL' | translate | async }}</a></li>
+            <li><a (click)="scrollToSection('tirunelveli')">{{ 'NAV_TIRUNELVELI' | translate | async }}</a></li>
+            <li><a (click)="scrollToSection('contact')">{{ 'NAV_CONTACT' | translate | async }}</a></li>
         </ul>
         <div class="right-nav">
-            <div class="language-selector">
-                <a href="#">தமிழ்</a> | <a href="#">English</a>
-            </div>
-            <a routerLink="/register" class="btn btn-primary register-btn">Register Now</a>
+            <app-language-toggle></app-language-toggle>
+            <a routerLink="/register" class="btn btn-primary register-btn">{{ 'REGISTER_NOW' | translate | async }}</a>
         </div>
     </nav>
 </header>
@@ -36,16 +33,16 @@
 <section id="home" class="hero">
     <div class="carousel-container">
         <div class="carousel-slide" *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentSlideIndex">
-            <img [src]="image.src" [alt]="image.alt || 'Marathon Carousel Image'">
+            <img [src]="image.src" [alt]="image.alt || ('Marathon Carousel Image' | translate | async)">
         </div>
         <button class="carousel-control prev" (click)="prevSlide()">&#10094;</button>
         <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
     </div>
     <div class="hero-content-overlay">
         <div class="container">
-            <h1>World Environment Day 2025 - Halwa City Marathon!</h1>
-            <p>Run with us to strengthen a greener Tirunelveli!</p>
-            <a routerLink="/register" class="btn btn-accent btn-hero">Register Now</a>
+            <h1>{{ 'HERO_TITLE' | translate | async }}</h1>
+            <p>{{ 'HERO_SUBTITLE' | translate | async }}</p>
+            <a routerLink="/register" class="btn btn-accent btn-hero">{{ 'REGISTER_NOW' | translate | async }}</a>
         </div>
     </div>
 </section>
@@ -55,15 +52,15 @@
         <div class="promo-grid">
             <div class="promo-card animate-fadeInUp">
                 <div class="promo-icon">🏃‍♂️</div>
-                <h2>Ready to run the green path?</h2>
-                <p>Register now – Let's bring a change for the environment!</p>
-                <a routerLink="/register" class="btn btn-primary">Register Now</a>
+                <h2>{{ 'PROMO_READY_TITLE' | translate | async }}</h2>
+                <p>{{ 'PROMO_READY_SUBTITLE' | translate | async }}</p>
+                <a routerLink="/register" class="btn btn-primary">{{ 'REGISTER_NOW' | translate | async }}</a>
             </div>
             <div class="promo-card animate-fadeInUp" style="animation-delay: 0.2s;">
                 <div class="promo-icon">🏟️</div>
-                <h2>Green journey begins at Anna Stadium!</h2>
-                <p>Green path crossing key spots of Tirunelveli!</p>
-                <a routerLink="/register" class="btn btn-primary">View Route</a>
+                <h2>{{ 'PROMO_GREEN_TITLE' | translate | async }}</h2>
+                <p>{{ 'PROMO_GREEN_SUBTITLE' | translate | async }}</p>
+                <a (click)="scrollToSection('location')" class="btn btn-primary">{{ 'VIEW_ROUTE' | translate | async }}</a>
             </div>
         </div>
     </div>
@@ -71,25 +68,24 @@
 
 <section id="about" class="about-section animate-fadeInUp" style="animation-delay: 0.4s;">
     <div class="container">
-        <h2>About The Marathon</h2>
+        <h2>{{ 'ABOUT_TITLE' | translate | async }}</h2>
         <div class="about-content">
             <div class="about-text glass-card">
-                <p>As part of our ongoing efforts to protect the environment and water bodies in the Tirunelveli district, this year, in collaboration with TP solar Limited, a Tata enterprise, we are organizing a grand nature festival named "Halwa City Marathon" on June 1, in celebration of World Environment Day 2025.</p>
-                <p>The event aims to raise awareness among the people about our duty to protect the Thamirabarani River, which serves as a lifeline for the people of Tirunelveli. The marathon, named after another iconic identity of Tirunelveli — Halwa — will be celebrated as a Green Diwali, reflecting social concern and environmental consciousness.</p>
-                <p>Let us come together and join hands to protect our lifeline — the Thamirabarani River!</p>
+                <p>{{ 'ABOUT_PARAGRAPH_1' | translate | async }}</p>
+                <p>{{ 'ABOUT_PARAGRAPH_2' | translate | async }}</p>
+                <p>{{ 'ABOUT_PARAGRAPH_3' | translate | async }}</p>
             </div>
             <div class="about-info">
                 <div class="info-box">
-                    <h3>Runners Information:</h3>
+                    <h3>{{ 'RUNNERS_INFO_TITLE' | translate | async }}</h3>
                     <ul>
-                        <li><span class="info-icon">🔢</span>Chest Number Collection</li>
-                        <li><span class="info-icon">⏰</span>Race Start Timing - 06:00 AM</li>
-                        <li><span class="info-icon">🗺️</span>Route Maps - Available Link</li>
-                        <li><span class="info-icon">📍</span>Venue Maps - Available Link</li>
-                        <li><span class="info-icon">🏥</span>Hospitals On Route - Available Link</li>
+                        <li><span class="info-icon">🔢</span>{{ 'RUNNERS_INFO_CHEST_NUMBER' | translate | async }}</li>
+                        <li><span class="info-icon">⏰</span>{{ 'RUNNERS_INFO_START_TIME' | translate | async }}</li>
+                        <li><span class="info-icon">🗺️</span>{{ 'RUNNERS_INFO_ROUTE_MAPS' | translate | async }}</li>
+                        <li><span class="info-icon">📍</span>{{ 'RUNNERS_INFO_VENUE_MAPS' | translate | async }}</li>
+                        <li><span class="info-icon">🏥</span>{{ 'RUNNERS_INFO_HOSPITALS' | translate | async }}</li>
                     </ul>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -97,66 +93,65 @@
 
 <section id="location" class="animate-fadeInUp" style="animation-delay: 0.2s;">
     <div class="container">
-        <h2>🏃‍♂️ Marathon Route</h2>
+        <h2>{{ 'MARATHON_ROUTE_TITLE' | translate | async }}</h2>
         <div class="route-layout">
             <div class="route-steps">
                 <div class="route-point start">
                     <span class="route-icon">🏁</span>
-                    <span class="route-text">Start from Anna Stadium</span>
+                    <span class="route-text">{{ 'ROUTE_START' | translate | async }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">📍</span>
-                    <span class="route-text">Near A.R. Line, Xaviers College</span>
+                    <span class="route-text">{{ 'ROUTE_XAVIERS' | translate | async }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">➡️</span>
-                    <span class="route-text">Turn right at District Library</span>
+                    <span class="route-text">{{ 'ROUTE_LIBRARY' | translate | async }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">🏥</span>
-                    <span class="route-text">via Krishna Hospital</span>
+                    <span class="route-text">{{ 'ROUTE_KRISHNA_HOSPITAL' | translate | async }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">🏥</span>
-                    <span class="route-text">Government Hospital</span>
+                    <span class="route-text">{{ 'ROUTE_GOVT_HOSPITAL' | translate | async }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">➡️</span>
-                    <span class="route-text">Turn right at District Industries Centre</span>
+                    <span class="route-text">{{ 'ROUTE_INDUSTRIES' | translate | async }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point end">
                     <span class="route-icon">🏁</span>
-                    <span class="route-text">Return to Anna Stadium</span>
+                    <span class="route-text">{{ 'ROUTE_END' | translate | async }}</span>
                 </div>
             </div>
-          
         </div>
     </div>
 </section>
 
 <section id="application" class="register-section animate-fadeInUp" style="animation-delay: 0.3s;">
     <div class="container">
-        <h2>How to Register Online?</h2>
+        <h2>{{ 'HOW_TO_REGISTER_TITLE' | translate | async }}</h2>
         <div class="register-content glass-card">
-            <p><strong>Steps:</strong></p>
+            <p><strong>{{ 'STEPS' | translate | async }}:</strong></p>
             <ol>
-                <li>Click on a "Register Now" button.</li>
-                <li>Select the <strong>Event Type</strong> you wish to participate in (e.g., Marathon, Kidathon, Drawing Competition).</li>
-                <li>Fill in your personal details: Name, Date of Birth (Age will be calculated), Gender, and Aadhar Card Number.</li>
-                <li>If participating in a school event (Drawing/Poetry), provide your School Name and Standard/Grade.</li>
-                <li>Enter your Blood Group, Email, Phone Number, and an Emergency Contact Number.</li>
-                <li>Upload a passport-size Photo.</li>
-                <li>If applicable for your chosen event, select your T-shirt Size.</li>
-                <li>Read the general registration conditions and the "Pledge for a Greener Tomorrow."</li>
-                <li>Agree to the pledge by checking the box.</li>
-                <li>Review your details and click "Submit Application."</li>
-                <li>You will receive confirmation of your registration.</li>
+                <li>{{ 'REGISTER_STEP_1' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_2' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_3' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_4' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_5' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_6' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_7' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_8' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_9' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_10' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_11' | translate | async }}</li>
             </ol>
         </div>
     </div>
@@ -165,37 +160,36 @@
 <section class="register-cta">
     <div class="container">
         <div class="cta-content glass-card">
-            <h2>Register now and be a part of the movement</h2>
-            <p class="highlight">FREE for all participants!</p>
+            <h2>{{ 'REGISTER_CTA_TITLE' | translate | async }}</h2>
+            <p class="highlight">{{ 'REGISTER_CTA_FREE' | translate | async }}</p>
             <div class="benefits">
                 <div class="benefit-list">
-                    <h3>All registered participants will receive:</h3>
+                    <h3>{{ 'BENEFITS_TITLE' | translate | async }}</h3>
                     <ul>
-                        <li><span>🏆</span> Official Participation Certificate</li>
-                        <li><span>🥇</span> Marathon Medal</li>
-                        <li><span>👕</span> Event T-shirt</li>
-                        <li><span>🧢</span> Event Cap</li>
-                        <li><span>🥤</span> Nutritious Energy Drinks</li>
-                        <li><span>🍳</span> Breakfast</li>
+                        <li><span>🏆</span> {{ 'BENEFIT_CERTIFICATE' | translate | async }}</li>
+                        <li><span>🥇</span> {{ 'BENEFIT_MEDAL' | translate | async }}</li>
+                        <li><span>👕</span> {{ 'BENEFIT_TSHIRT' | translate | async }}</li>
+                        <li><span>🧢</span> {{ 'BENEFIT_CAP' | translate | async }}</li>
+                        <li><span>🥤</span> {{ 'BENEFIT_DRINKS' | translate | async }}</li>
+                        <li><span>🍳</span> {{ 'BENEFIT_BREAKFAST' | translate | async }}</li>
                     </ul>
                 </div>
-               
             </div>
-            <a routerLink="/register" class="btn btn-accent btn-large">Register Now!</a>
-            <p class="note">(Limited slots available! Hurry up!)</p>
+            <a routerLink="/register" class="btn btn-accent btn-large">{{ 'REGISTER_NOW' | translate | async }}</a>
+            <p class="note">{{ 'REGISTER_NOTE' | translate | async }}</p>
         </div>
     </div>
 </section>
 
 <section id="rules" class="rules-section"> 
     <div class="container">
-        <h2>Rules And Regulations</h2>
+        <h2>{{ 'RULES_TITLE' | translate | async }}</h2>
         <div class="rules-content glass-card">
             <ul class="rules-list">
-                <li><span class="rule-icon">📜</span> Participants must follow the designated route</li>
-                <li><span class="rule-icon">🩺</span> Medical certificate recommended for all participants</li>
-                <li><span class="rule-icon">♻️</span> Eco-friendly approach - No plastic bottles or waste</li>
-                <li><span class="rule-icon">👟</span> Proper running attire and footwear required</li>
+                <li><span class="rule-icon">📜</span> {{ 'RULE_ROUTE' | translate | async }}</li>
+                <li><span class="rule-icon">🩺</span> {{ 'RULE_MEDICAL' | translate | async }}</li>
+                <li><span class="rule-icon">♻️</span> {{ 'RULE_ECO' | translate | async }}</li>
+                <li><span class="rule-icon">👟</span> {{ 'RULE_ATTIRE' | translate | async }}</li>
             </ul>
         </div>
     </div>
@@ -203,24 +197,24 @@
 
 <section id="medical" class="medical-section"> 
     <div class="container">
-        <h2>Medical Facilities</h2>
+        <h2>{{ 'MEDICAL_TITLE' | translate | async }}</h2>
         <div class="medical-content glass-card">
             <div class="medical-points">
                 <div class="medical-point">
                     <span class="medical-icon">🚑</span>
-                    <p>Ambulances stationed along the route</p>
+                    <p>{{ 'MEDICAL_AMBULANCE' | translate | async }}</p>
                 </div>
                 <div class="medical-point">
                     <span class="medical-icon">🧑‍⚕️</span>
-                    <p>Medical professionals available at every checkpoint</p>
+                    <p>{{ 'MEDICAL_PROFESSIONALS' | translate | async }}</p>
                 </div>
                 <div class="medical-point">
                     <span class="medical-icon">💊</span>
-                    <p>First-aid stations at key locations</p>
+                    <p>{{ 'MEDICAL_FIRST_AID' | translate | async }}</p>
                 </div>
                 <div class="medical-point">
                     <span class="medical-icon">💧</span>
-                    <p>Hydration points every 1km</p>
+                    <p>{{ 'MEDICAL_HYDRATION' | translate | async }}</p>
                 </div>
             </div>
         </div>
@@ -229,23 +223,23 @@
 
 <section class="important-info animate-fadeInUp" style="animation-delay: 0.2s;">
     <div class="container">
-        <h2>🔔 Important Information</h2>
+        <h2>{{ 'IMPORTANT_INFO_TITLE' | translate | async }}</h2>
         <div class="info-grid">
             <div class="info-card">
-                <h4>🕔 5:00 AM</h4>
-                <p>Registration and Ground Assembly</p>
+                <h4>{{ 'INFO_TIME_5AM' | translate | async }}</h4>
+                <p>{{ 'INFO_REGISTRATION' | translate | async }}</p>
             </div>
             <div class="info-card">
-                <h4>🏁 6:30 AM</h4>
-                <p>Marathon Start</p>
+                <h4>{{ 'INFO_TIME_630AM' | translate | async }}</h4>
+                <p>{{ 'INFO_MARATHON_START' | translate | async }}</p>
             </div>
             <div class="info-card">
-                <h4>🎖️ Rewards</h4>
-                <p>Certificate & Water/Nutrition for All Participants</p>
+                <h4>{{ 'INFO_REWARDS' | translate | async }}</h4>
+                <p>{{ 'INFO_REWARDS_DESC' | translate | async }}</p>
             </div>
             <div class="info-card">
-                <h4>🚫 No Plastic</h4>
-                <p>Avoid Plastic Umbrellas and Bottles</p>
+                <h4>{{ 'INFO_NO_PLASTIC' | translate | async }}</h4>
+                <p>{{ 'INFO_NO_PLASTIC_DESC' | translate | async }}</p>
             </div>
         </div>
     </div>
@@ -253,7 +247,7 @@
 
 <section id="gallery" class="gallery-section animate-fadeInUp">
     <div class="container">
-        <h2>📸 Event Gallery</h2>
+        <h2>{{ 'GALLERY_TITLE' | translate | async }}</h2>
         <div class="gallery-carousel-container">
             <div class="gallery-carousel-slide" 
                  *ngFor="let image of gallerySectionImages; let i = index" 
@@ -269,18 +263,18 @@
 
 <section id="tirunelveli" class="tirunelveli-section animate-fadeInUp" style="animation-delay: 0.3s;">
     <div class="container">
-        <h2>✨ Glimpse of Tirunelveli</h2>
+        <h2>{{ 'TIRUNELVELI_TITLE' | translate | async }}</h2>
         <div class="tirunelveli-content">
             <div class="tirunelveli-text glass-card">
-                <p>Tirunelveli, known as the "City of Paddy Fields" and famous for its unique Halwa sweet, is one of the oldest cities in Tamil Nadu. It is situated on the eastern banks of the perennial Thamirabarani River, which serves as the lifeline for the people of this region.</p>
-                <p>Home to numerous ancient temples including the Nellaiappar Temple, historic monuments, and serene natural landscapes, Tirunelveli offers a perfect blend of cultural heritage and natural beauty.</p>
-                <p>The city is also known for its significant contribution to education, with several renowned educational institutions.</p>
-                <p>Our marathon celebrates not only environmental awareness but also showcases the rich heritage and beauty of this historic city.</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_1' | translate | async }}</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_2' | translate | async }}</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_3' | translate | async }}</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_4' | translate | async }}</p>
             </div>
             <div class="tirunelveli-carousel">
                 <div class="carousel-slide" *ngFor="let image of tirunelveliImages; let i = index" [class.active]="i === tirunelveliSlideIndex">
                     <img [src]="image.src" [alt]="image.alt || 'Tirunelveli Landmark'">
-                    <div class="caption">{{image.alt}}</div>
+                    <div class="caption">{{ 'TIRUNELVELI_CAROUSEL_' + (i + 1) | translate | async }}</div>
                 </div>
                 <button class="carousel-control prev" (click)="prevTirunelveliSlide()">&#10094;</button>
                 <button class="carousel-control next" (click)="nextTirunelveliSlide()">&#10095;</button>
@@ -293,15 +287,15 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-about">
-                <h3>Halwa City Marathon <span class="year">2025</span></h3>
-                <p>This awareness marathon event in Tirunelveli celebrates Environment Day, spreading the message of environmental protection and sustainability.</p>
+                <h3>{{ 'FOOTER_TITLE' | translate | async }} <span class="year">2025</span></h3>
+                <p>{{ 'FOOTER_DESCRIPTION' | translate | async }}</p>
             </div>
             <div class="footer-contact">
-                <h3>Contact Us</h3>
+                <h3>{{ 'CONTACT_US' | translate | async }}</h3>
                 <ul class="contact-info">
-                    <li><i class="icon">✉️</i> halwacitymarathan&#64;gmail.com</li>
-                    <li><i class="icon">📱</i> +91 9500415515</li>
-                    <li><i class="icon">🏢</i> Bhaskaran.U Social and Nature Conservation Trust, Tirunelveli, Tamil Nadu - 627011</li>
+                    <li><i class="icon">✉️</i> {{ 'CONTACT_EMAIL' | translate | async }}</li>
+                    <li><i class="icon">📱</i> {{ 'CONTACT_PHONE' | translate | async }}</li>
+                    <li><i class="icon">🏢</i> {{ 'CONTACT_ADDRESS' | translate | async }}</li>
                 </ul>
             </div>
         </div>

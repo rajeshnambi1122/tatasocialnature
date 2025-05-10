@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateService } from '../translate.service';
+import { TranslatePipe } from '../translate.pipe';
+import { Observable } from 'rxjs';
+import { LanguageToggleComponent } from '../language-toggle/language-toggle.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslatePipe, LanguageToggleComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -14,6 +18,7 @@ export class HomeComponent implements OnInit {
   currentSlideIndex = 0;
   tirunelveliSlideIndex = 0;
   gallerySlideIndex = 0;
+  currentLang$: Observable<string>;
   
   carouselImages = [
     { src: 'images/gallery1.jpg', alt: 'Marathon Event' },
@@ -45,10 +50,17 @@ export class HomeComponent implements OnInit {
   
   autoSlideInterval: any;
   
-  constructor(private viewportScroller: ViewportScroller) {}
+  constructor(
+    private viewportScroller: ViewportScroller,
+    public translateService: TranslateService
+  ) {
+    this.currentLang$ = this.translateService.getCurrentLanguage();
+  }
   
   ngOnInit() {
-    // Auto-slide every 5 seconds
+    // Load saved language preference
+    const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+    this.switchLanguage(savedLang);
     this.startAutoSlide();
   }
   
@@ -65,10 +77,15 @@ export class HomeComponent implements OnInit {
   }
   
   scrollToSection(sectionId: string): void {
-    this.viewportScroller.scrollToAnchor(sectionId);
-    if (this.isMobileMenuOpen) {
-      this.isMobileMenuOpen = false; // Close mobile menu after clicking
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      this.isMobileMenuOpen = false;
     }
+  }
+  
+  switchLanguage(lang: string) {
+    this.translateService.setLanguage(lang).subscribe();
   }
   
   nextSlide() {
