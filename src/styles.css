@@ -13,36 +13,36 @@ html {
   scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
 }
 
-/* CSS Variables - Updated with modern color palette */
+/* CSS Variables - Updated with Halwa City theme colors */
 :root {
   /* Colors */
-  --primary-color: #3a86ff;
-  --primary-color-rgb: 58, 134, 255;
-  --primary-light: #61a0ff;
-  --primary-dark: #2667cc;
-  --accent-color: #7209b7;
-  --accent-color-rgb: 114, 9, 183;
-  --accent-light: #9d4eda;
-  --accent-dark: #5c0e8b;
-  --secondary-color: #f72585;
-  --secondary-color-rgb: 247, 37, 133;
-  --secondary-light: #f95ea5;
-  --secondary-dark: #d01968;
-  --success-color: #06d6a0;
-  --success-color-rgb: 6, 214, 160;
-  --warning-color: #ffd166;
-  --warning-color-rgb: 255, 209, 102;
-  --danger-color: #ef476f;
-  --danger-color-rgb: 239, 71, 111;
-  --text-color-dark: #1a1a2e;
-  --text-color-light: #4a4a68;
-  --text-color-muted: #9a9ab0;
+  --primary-color: #8B4513; /* Saddle Brown */
+  --primary-color-rgb: 139, 69, 19;
+  --primary-light: #A0522D; /* Sienna */
+  --primary-dark: #654321; /* Dark Brown */
+  --accent-color: #DAA520; /* Goldenrod */
+  --accent-color-rgb: 218, 165, 32;
+  --accent-light: #FFD700; /* Gold */
+  --accent-dark: #B8860B; /* Dark Goldenrod */
+  --secondary-color: #CD853F; /* Peru */
+  --secondary-color-rgb: 205, 133, 63;
+  --secondary-light: #DEB887; /* Burlywood */
+  --secondary-dark: #8B4513; /* Saddle Brown */
+  --success-color: #228B22; /* Forest Green */
+  --success-color-rgb: 34, 139, 34;
+  --warning-color: #FFA500; /* Orange */
+  --warning-color-rgb: 255, 165, 0;
+  --danger-color: #B22222; /* Firebrick */
+  --danger-color-rgb: 178, 34, 34;
+  --text-color-dark: #2C1810; /* Dark Brown */
+  --text-color-light: #5C4033; /* Medium Brown */
+  --text-color-muted: #8B7355; /* Tan */
   --text-color-white: #ffffff;
-  --border-color: #e0e0ef; /* Slightly softer border */
-  --background-light: #f9faff; /* Slightly cooler light background */
-  --background-dark: #121828; /* Darker dark background */
-  --background-dark-rgb: 18, 24, 40; /* RGB for dark background */
-  --background-card: rgba(255, 255, 255, 0.95); /* More opaque card background */
+  --border-color: #DEB887; /* Burlywood */
+  --background-light: #FFF8DC; /* Cornsilk */
+  --background-dark: #2C1810; /* Dark Brown */
+  --background-dark-rgb: 44, 24, 16;
+  --background-card: rgba(255, 248, 220, 0.95); /* Cornsilk with opacity */
   
   /* Typography */
   --font-primary: 'Montserrat', sans-serif;
