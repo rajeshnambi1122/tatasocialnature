@@ -5,6 +5,7 @@ import { TranslateService } from '../translate.service';
 import { TranslatePipe } from '../translate.pipe';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { MetaService } from '../services/meta.service';
 
 @Component({
   selector: 'app-application-register',
@@ -22,7 +23,8 @@ export class ApplicationRegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private metaService: MetaService
   ) {
     this.currentLang$ = this.translateService.getCurrentLanguage();
     
@@ -49,6 +51,7 @@ export class ApplicationRegisterComponent implements OnInit {
     // Load saved language preference
     const savedLang = localStorage.getItem('preferredLanguage') || 'en';
     this.translateService.setLanguage(savedLang).subscribe();
+    this.setMetaTags();
 
     // Subscribe to event type changes
     this.registrationForm.get('eventType')?.valueChanges.subscribe(value => {
@@ -78,6 +81,17 @@ export class ApplicationRegisterComponent implements OnInit {
         this.registrationForm.get('age')?.setValue(age);
         this.validateAgeForEvent(age);
       }
+    });
+  }
+
+  private setMetaTags(): void {
+    this.metaService.setMetaTags({
+      title: 'Register | TP Marathon 2025',
+      description: 'Register for the Tirunelveli-Palayamkottai Marathon 2025. Open for various age groups and categories.',
+      keywords: 'marathon registration, Tirunelveli marathon, register race, marathon sign up, marathon entry',
+      ogTitle: 'Register for TP Marathon 2025',
+      ogDescription: 'Join runners from across the region at the Tirunelveli-Palayamkottai Marathon 2025. Register now!',
+      canonicalUrl: 'https://tpmarathon.com/register'
     });
   }
 

@@ -5,6 +5,7 @@ import { TranslateService } from '../translate.service';
 import { TranslatePipe } from '../translate.pipe';
 import { Observable } from 'rxjs';
 import { LanguageToggleComponent } from '../language-toggle/language-toggle.component';
+import { MetaService } from '../services/meta.service';
 
 @Component({
   selector: 'app-home',
@@ -52,7 +53,8 @@ export class HomeComponent implements OnInit {
   
   constructor(
     private viewportScroller: ViewportScroller,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    private metaService: MetaService
   ) {
     this.currentLang$ = this.translateService.getCurrentLanguage();
   }
@@ -62,6 +64,18 @@ export class HomeComponent implements OnInit {
     const savedLang = localStorage.getItem('preferredLanguage') || 'en';
     this.switchLanguage(savedLang);
     this.startAutoSlide();
+    this.setMetaTags();
+  }
+  
+  private setMetaTags(): void {
+    this.metaService.setMetaTags({
+      title: 'TP Marathon 2025 | Tirunelveli-Palayamkottai Marathon',
+      description: 'Join the Tirunelveli-Palayamkottai Marathon 2025. Run through beautiful scenery and historic landmarks in this iconic event.',
+      keywords: 'marathon, Tirunelveli, Palayamkottai, running, sports event, Tamil Nadu marathon, fitness, race',
+      ogTitle: 'TP Marathon 2025 - Run Through History',
+      ogDescription: 'Register now for the Tirunelveli-Palayamkottai Marathon 2025 and be part of this spectacular event',
+      canonicalUrl: 'https://tpmarathon.com'
+    });
   }
   
   startAutoSlide() {

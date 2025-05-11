@@ -1,0 +1,374 @@
+<div class="admin-dashboard">
+  <!-- Header Section -->
+  <header class="modern-header">
+    <div class="header-content">
+      <h1>Admin Dashboard</h1>
+      <p>Marathon Participants Management</p>
+    </div>
+  </header>
+
+  <div class="dashboard-container container">
+    <!-- Quick Status Bar -->
+    <div class="quick-status-bar">
+      <div class="status-item">
+        <i class="fas fa-users"></i>
+        <span class="status-label">Total Registrations:</span>
+        <span class="status-value">{{ stats.total }}</span>
+      </div>
+      <div class="status-divider"></div>
+      <div class="status-item">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="status-label">Last Updated:</span>
+        <span class="status-value">{{ lastUpdated | date:'medium' }}</span>
+      </div>
+      <div class="status-divider"></div>
+      <div class="status-item">
+        <button class="btn-icon refresh-icon" (click)="loadParticipants()" [class.spinning]="loading">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card glass-card">
+        <div class="stat-icon total">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-content">
+          <h3>Total Participants</h3>
+          <p class="stat-number">{{ stats.total }}</p>
+          <div class="stat-footer">All registered participants</div>
+        </div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-icon full">
+          <i class="fas fa-running"></i>
+        </div>
+        <div class="stat-content">
+          <h3>Full Marathon</h3>
+          <p class="stat-number">{{ stats.fullMarathon }}</p>
+          <div class="stat-footer">
+            <span class="stat-percent">{{ getPercentage(stats.fullMarathon, stats.total) }}%</span> of total
+          </div>
+        </div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-icon half">
+          <i class="fas fa-running"></i>
+        </div>
+        <div class="stat-content">
+          <h3>Half Marathon</h3>
+          <p class="stat-number">{{ stats.halfMarathon }}</p>
+          <div class="stat-footer">
+            <span class="stat-percent">{{ getPercentage(stats.halfMarathon, stats.total) }}%</span> of total
+          </div>
+        </div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-icon fun">
+          <i class="fas fa-running"></i>
+        </div>
+        <div class="stat-content">
+          <h3>Fun Run</h3>
+          <p class="stat-number">{{ stats.funRun }}</p>
+          <div class="stat-footer">
+            <span class="stat-percent">{{ getPercentage(stats.funRun, stats.total) }}%</span> of total
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demographics Summary -->
+    <div class="demographics-section glass-card">
+      <h2>Demographics Overview</h2>
+      <div class="demographics-grid">
+        <div class="demographic-card">
+          <h3>Gender Distribution</h3>
+          <div class="demographic-chart">
+            <div class="chart-bar-container">
+              <div class="chart-label">Male</div>
+              <div class="chart-bar">
+                <div class="chart-fill male" [style.width.%]="getMalePercentage()"></div>
+              </div>
+              <div class="chart-value">{{ getMalePercentage() }}%</div>
+            </div>
+            <div class="chart-bar-container">
+              <div class="chart-label">Female</div>
+              <div class="chart-bar">
+                <div class="chart-fill female" [style.width.%]="100 - getMalePercentage()"></div>
+              </div>
+              <div class="chart-value">{{ 100 - getMalePercentage() }}%</div>
+            </div>
+          </div>
+        </div>
+        <div class="demographic-card">
+          <h3>Category Distribution</h3>
+          <div class="chart-donut-container">
+            <div class="donut-segment full" [style.--percentage]="getPercentage(stats.fullMarathon, stats.total)"></div>
+            <div class="donut-segment half" [style.--percentage]="getPercentage(stats.halfMarathon, stats.total)"></div>
+            <div class="donut-segment fun" [style.--percentage]="getPercentage(stats.funRun, stats.total)"></div>
+            <div class="donut-center">
+              <span class="donut-total">{{ stats.total }}</span>
+              <span class="donut-label">Total</span>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="legend-item">
+              <span class="legend-color full"></span>
+              <span class="legend-label">Full Marathon</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color half"></span>
+              <span class="legend-label">Half Marathon</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color fun"></span>
+              <span class="legend-label">Fun Run</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="filters-section glass-card">
+      <h2>Search Participants</h2>
+      <div class="quick-filters">
+        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === ''" (click)="setQuickFilter('')">All</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === 'full'" (click)="setQuickFilter('full')">Full Marathon</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === 'half'" (click)="setQuickFilter('half')">Half Marathon</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === 'fun'" (click)="setQuickFilter('fun')">Fun Run</button>
+      </div>
+      <form [formGroup]="searchForm" class="search-form">
+        <div class="search-input">
+          <i class="fas fa-search"></i>
+          <input 
+            type="text" 
+            formControlName="searchQuery" 
+            placeholder="Search by name or email..."
+          >
+          <button *ngIf="searchForm.get('searchQuery')?.value" class="clear-search" (click)="clearSearch()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="category-filter">
+          <select formControlName="category">
+            <option value="">All Categories</option>
+            <option value="full">Full Marathon</option>
+            <option value="half">Half Marathon</option>
+            <option value="fun">Fun Run</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary export-btn" (click)="exportToCSV()">
+          <i class="fas fa-download"></i> Export to CSV
+        </button>
+      </form>
+    </div>
+
+    <!-- Participants Table -->
+    <div class="table-container glass-card">
+      <div class="table-header">
+        <h2>Participants List</h2>
+        <div class="table-summary">Showing {{ filteredParticipants.length }} of {{ participants.length }} participants</div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" (click)="sortBy('id')">
+                ID <i class="fas" [ngClass]="sortColumn === 'id' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
+              </th>
+              <th class="sortable" (click)="sortBy('name')">
+                Name <i class="fas" [ngClass]="sortColumn === 'name' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
+              </th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th class="sortable" (click)="sortBy('age')">
+                Age <i class="fas" [ngClass]="sortColumn === 'age' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
+              </th>
+              <th>Gender</th>
+              <th class="sortable" (click)="sortBy('category')">
+                Category <i class="fas" [ngClass]="sortColumn === 'category' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
+              </th>
+              <th class="sortable" (click)="sortBy('registrationDate')">
+                Reg. Date <i class="fas" [ngClass]="sortColumn === 'registrationDate' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
+              </th>
+              <th>Emergency Contact</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="loading">
+              <td colspan="10" class="loading-cell">
+                <div class="loading-spinner"></div>
+                Loading participants...
+              </td>
+            </tr>
+            <tr *ngIf="!loading && filteredParticipants.length === 0">
+              <td colspan="10" class="no-data">
+                <i class="fas fa-search"></i>
+                <p>No participants found</p>
+                <button class="btn btn-outline reset-btn" (click)="resetFilters()">Reset Filters</button>
+              </td>
+            </tr>
+            <tr *ngFor="let participant of filteredParticipants" class="animate-row">
+              <td>{{ participant.id }}</td>
+              <td>{{ participant.name }}</td>
+              <td>
+                <a [href]="'mailto:' + participant.email">{{ participant.email }}</a>
+              </td>
+              <td>
+                <a [href]="'tel:' + participant.phone">{{ participant.phone }}</a>
+              </td>
+              <td>{{ participant.age }}</td>
+              <td>
+                <i class="fas" [ngClass]="participant.gender === 'Male' ? 'fa-mars' : 'fa-venus'"></i>
+                {{ participant.gender }}
+              </td>
+              <td>
+                <span class="category-badge" [class]="participant.category">
+                  {{ participant.category | titlecase }}
+                </span>
+              </td>
+              <td>{{ participant.registrationDate | date:'mediumDate' }}</td>
+              <td>{{ participant.emergencyContact }}</td>
+              <td>
+                <button class="btn btn-accent view-btn" (click)="viewDetails(participant)">
+                  <i class="fas fa-eye"></i>
+                  <span class="btn-text">View</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="table-pagination" *ngIf="filteredParticipants.length > 0">
+        <div class="pagination-info">
+          Showing {{ Math.min(currentPage * pageSize, filteredParticipants.length) }} of {{ filteredParticipants.length }} entries
+        </div>
+        <div class="pagination-controls">
+          <button class="pagination-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="pagination-pages">
+            <button *ngFor="let page of getPageNumbers()" class="page-btn" [class.active]="page === currentPage" (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          </div>
+          <button class="pagination-btn" [disabled]="currentPage === getTotalPages()" (click)="goToPage(currentPage + 1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Participant Details Modal -->
+<div class="modal" *ngIf="showDetailsModal && selectedParticipant" (click)="closeDetailsModal()">
+  <div class="modal-content glass-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Participant Details</h2>
+      <button class="close-btn" (click)="closeDetailsModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="participant-profile">
+        <div class="participant-avatar">
+          <div class="avatar-circle" [ngClass]="selectedParticipant.gender === 'Male' ? 'male' : 'female'">
+            {{ getInitials(selectedParticipant.name) }}
+          </div>
+        </div>
+        <div class="participant-primary-info">
+          <h3>{{ selectedParticipant.name }}</h3>
+          <span class="category-badge large" [class]="selectedParticipant.category">
+            {{ selectedParticipant.category | titlecase }} Marathon
+          </span>
+        </div>
+      </div>
+      
+      <div class="details-grid">
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <i class="fas fa-info-circle"></i>
+            Basic Information
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Email</div>
+            <div class="detail-value">
+              <a [href]="'mailto:' + selectedParticipant.email">{{ selectedParticipant.email }}</a>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Phone</div>
+            <div class="detail-value">
+              <a [href]="'tel:' + selectedParticipant.phone">{{ selectedParticipant.phone }}</a>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Age</div>
+            <div class="detail-value">{{ selectedParticipant.age }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Gender</div>
+            <div class="detail-value">
+              <i class="fas" [ngClass]="selectedParticipant.gender === 'Male' ? 'fa-mars' : 'fa-venus'"></i>
+              {{ selectedParticipant.gender }}
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <i class="fas fa-running"></i>
+            Marathon Details
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Category</div>
+            <div class="detail-value">{{ selectedParticipant.category | titlecase }} Marathon</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Registration Date</div>
+            <div class="detail-value">{{ selectedParticipant.registrationDate | date:'mediumDate' }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Registration ID</div>
+            <div class="detail-value">#{{ selectedParticipant.id.toString().padStart(4, '0') }}</div>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-card-header">
+            <i class="fas fa-ambulance"></i>
+            Emergency Information
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Emergency Contact</div>
+            <div class="detail-value">{{ selectedParticipant.emergencyContact }}</div>
+          </div>
+          <div class="detail-row" *ngIf="selectedParticipant.medicalConditions">
+            <div class="detail-label">Medical Conditions</div>
+            <div class="detail-value">{{ selectedParticipant.medicalConditions }}</div>
+          </div>
+          <div class="detail-row" *ngIf="!selectedParticipant.medicalConditions">
+            <div class="detail-label">Medical Conditions</div>
+            <div class="detail-value"><em>None reported</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="closeDetailsModal()">
+          <i class="fas fa-times"></i> Close
+        </button>
+        <button class="btn btn-primary" (click)="sendParticipantEmail()">
+          <i class="fas fa-envelope"></i> Send Email
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 

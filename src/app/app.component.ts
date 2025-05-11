@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MetaService } from './services/meta.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,13 @@ export class AppComponent implements OnInit {
   title = 'tpmarathon';
   isLoading = true;
 
+  constructor(private metaService: MetaService) {}
+
   ngOnInit() {
+    // Initialize default metatags
+    this.metaService.setMetaTags({});
+    
+    // Loading animation simulation
     setTimeout(() => {
       this.isLoading = false;
     }, 3000);
