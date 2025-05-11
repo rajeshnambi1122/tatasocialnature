@@ -28,6 +28,9 @@
   "ABOUT_PARAGRAPH_1": "As part of our continued efforts to protect the environment and water bodies in Tirunelveli district, this year, in collaboration with Tata company TP Solar Limited, we have organized a grand nature festival on June 1st, 2025, named \"Halwa City Marathon\" to celebrate World Environment Day 2025.",
   "ABOUT_PARAGRAPH_2": "The event aims to raise awareness among the people about our duty to protect the Thamirabarani River, which serves as a lifeline for the people of Tirunelveli. The marathon, named after another iconic identity of Tirunelveli — Halwa — will be celebrated as a Green Diwali, reflecting social concern and environmental consciousness.",
   "ABOUT_PARAGRAPH_3": "Let us come together and join hands to protect our lifeline — the Thamirabarani River!",
+  "ABOUT_SANCT_TITLE": "About SANCT",
+  "ABOUT_SANCT_PARAGRAPH_1": "The Social and Nature Conservation Trust (SANCT) is a passionate non-profit organization based in Tirunelveli, focused on promoting environmental sustainability and driving impactful social change. We believe in a future where nature and humanity coexist in balance, and we work tirelessly to protect our natural ecosystems while uplifting communities through education and grassroots initiatives.",
+  "ABOUT_SANCT_PARAGRAPH_2": "Our mission is simple yet powerful: to conserve nature and nurture society. Through hands-on action and community engagement, we aim to build awareness, inspire responsibility, and empower citizens to contribute to a cleaner, greener world.",
   "RUNNERS_INFO_TITLE": "Runners Information:",
   "RUNNERS_INFO_CHEST_NUMBER": "Chest Number Collection",
   "RUNNERS_INFO_START_TIME": "Race Start Time - 06:00 AM",
@@ -181,5 +184,8 @@
   "CONTACT_US": "Contact Us",
   "CONTACT_EMAIL": "halwacitymarathan@gmail.com",
   "CONTACT_PHONE": "+91 9500415515",
-  "CONTACT_ADDRESS": "Baskaran.U Social and Nature Conservation Trust, Tirunelveli, Tamil Nadu - 627011"
+  "CONTACT_ADDRESS": "Baskaran.U Social and Nature Conservation Trust, Tirunelveli, Tamil Nadu - 627011",
+  "FOOTER_TITLE": "Halwa City Marathon",
+  "FOOTER_DESCRIPTION": "A run for environment awareness in Tirunelveli, celebrating World Environment Day.",
+  "MEDICAL_AMBULANCE": "Ambulances stationed along the route"
 }
