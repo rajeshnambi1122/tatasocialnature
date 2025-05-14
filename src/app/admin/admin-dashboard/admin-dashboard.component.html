@@ -347,7 +347,7 @@
 <div class="modal" *ngIf="showDetailsModal && selectedParticipant" (click)="closeDetailsModal()">
   <div class="modal-content glass-card" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h2>Participant Details</h2>
+      <h2><i class="fas fa-user-circle"></i> Participant Details</h2>
       <button class="close-btn" (click)="closeDetailsModal()">
         <i class="fas fa-times"></i>
       </button>
@@ -362,9 +362,25 @@
         </div>
         <div class="participant-primary-info">
           <h3>{{ selectedParticipant.name }}</h3>
-          <span class="category-badge large" [class]="selectedParticipant.category">
+          <span class="event-type-badge large" [class]="selectedParticipant.eventType">
             {{ getEventTypeDisplay(selectedParticipant.eventType) }}
           </span>
+          <div class="participant-id">ID: #{{ selectedParticipant.id.toString().padStart(4, '0') }}</div>
+        </div>
+      </div>
+      
+      <div class="participant-quick-info">
+        <div class="quick-info-item">
+          <i class="fas fa-envelope"></i>
+          <a [href]="'mailto:' + selectedParticipant.email">{{ selectedParticipant.email }}</a>
+        </div>
+        <div class="quick-info-item">
+          <i class="fas fa-phone-alt"></i>
+          <a [href]="'tel:' + selectedParticipant.phone">{{ selectedParticipant.phone }}</a>
+        </div>
+        <div class="quick-info-item">
+          <i class="fas fa-calendar-alt"></i>
+          <span>{{ selectedParticipant.registrationDate | date:'mediumDate' }}</span>
         </div>
       </div>
       
@@ -374,40 +390,30 @@
             <i class="fas fa-info-circle"></i>
             Basic Information
           </div>
-          <div class="detail-row">
-            <div class="detail-label">Email</div>
-            <div class="detail-value">
-              <a [href]="'mailto:' + selectedParticipant.email">{{ selectedParticipant.email }}</a>
+          <div class="detail-rows">
+            <div class="detail-row">
+              <div class="detail-label">Age</div>
+              <div class="detail-value">{{ selectedParticipant.age }}</div>
             </div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Phone</div>
-            <div class="detail-value">
-              <a [href]="'tel:' + selectedParticipant.phone">{{ selectedParticipant.phone }}</a>
+            <div class="detail-row">
+              <div class="detail-label">Date of Birth</div>
+              <div class="detail-value">{{ selectedParticipant.dob | date:'mediumDate' }}</div>
             </div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Age</div>
-            <div class="detail-value">{{ selectedParticipant.age }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Date of Birth</div>
-            <div class="detail-value">{{ selectedParticipant.dob | date:'mediumDate' }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Gender</div>
-            <div class="detail-value">
-              <i class="fas" [ngClass]="selectedParticipant.gender === 'Male' ? 'fa-mars' : 'fa-venus'"></i>
-              {{ selectedParticipant.gender }}
+            <div class="detail-row">
+              <div class="detail-label">Gender</div>
+              <div class="detail-value">
+                <i class="fas" [ngClass]="selectedParticipant.gender === 'Male' ? 'fa-mars' : 'fa-venus'"></i>
+                {{ selectedParticipant.gender }}
+              </div>
             </div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Aadhar Number</div>
-            <div class="detail-value">{{ selectedParticipant.aadharNumber }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Blood Group</div>
-            <div class="detail-value">{{ selectedParticipant.bloodGroup }}</div>
+            <div class="detail-row">
+              <div class="detail-label">Aadhar Number</div>
+              <div class="detail-value">{{ selectedParticipant.aadharNumber }}</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Blood Group</div>
+              <div class="detail-value highlight">{{ selectedParticipant.bloodGroup }}</div>
+            </div>
           </div>
         </div>
 
@@ -416,31 +422,18 @@
             <i class="fas fa-running"></i>
             Marathon Details
           </div>
-          <div class="detail-row">
-            <div class="detail-label">Event Type</div>
-            <div class="detail-value">{{ getEventTypeDisplay(selectedParticipant.eventType) }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Category</div>
-            <div class="detail-value">{{ selectedParticipant.category | titlecase }}</div>
-          </div>
-          <div class="detail-row" *ngIf="selectedParticipant.tshirtSize">
-            <div class="detail-label">T-shirt Size</div>
-            <div class="detail-value">{{ selectedParticipant.tshirtSize }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Registration Date</div>
-            <div class="detail-value">{{ selectedParticipant.registrationDate | date:'mediumDate' }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Registration ID</div>
-            <div class="detail-value">#{{ selectedParticipant.id.toString().padStart(4, '0') }}</div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Pledge Agreement</div>
-            <div class="detail-value">
-              <i class="fas" [ngClass]="selectedParticipant.pledgeAgree ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
-              {{ selectedParticipant.pledgeAgree ? 'Agreed' : 'Not Agreed' }}
+          <div class="detail-rows">
+            <div class="detail-row">
+              <div class="detail-label">Event Type</div>
+              <div class="detail-value">{{ getEventTypeDisplay(selectedParticipant.eventType) }}</div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-label">Category</div>
+              <div class="detail-value">{{ selectedParticipant.category | titlecase }}</div>
+            </div>
+            <div class="detail-row" *ngIf="selectedParticipant.tshirtSize">
+              <div class="detail-label">T-shirt Size</div>
+              <div class="detail-value">{{ selectedParticipant.tshirtSize }}</div>
             </div>
           </div>
         </div>
@@ -450,17 +443,13 @@
             <i class="fas fa-ambulance"></i>
             Emergency Information
           </div>
-          <div class="detail-row">
-            <div class="detail-label">Emergency Contact</div>
-            <div class="detail-value">{{ selectedParticipant.emergencyContact }}</div>
-          </div>
-          <div class="detail-row" *ngIf="selectedParticipant.medicalConditions">
-            <div class="detail-label">Medical Conditions</div>
-            <div class="detail-value">{{ selectedParticipant.medicalConditions }}</div>
-          </div>
-          <div class="detail-row" *ngIf="!selectedParticipant.medicalConditions">
-            <div class="detail-label">Medical Conditions</div>
-            <div class="detail-value"><em>None reported</em></div>
+          <div class="detail-rows">
+            <div class="detail-row">
+              <div class="detail-label">Emergency Contact</div>
+              <div class="detail-value">
+                <a [href]="'tel:' + selectedParticipant.emergencyContact">{{ selectedParticipant.emergencyContact }}</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -469,8 +458,8 @@
         <button class="btn btn-secondary" (click)="closeDetailsModal()">
           <i class="fas fa-times"></i> Close
         </button>
-        <button class="btn btn-primary" (click)="sendParticipantEmail()">
-          <i class="fas fa-envelope"></i> Send Email
+        <button class="btn btn-accent" (click)="printParticipantDetails()">
+          <i class="fas fa-print"></i> Print Details
         </button>
       </div>
     </div>
@@ -592,16 +581,6 @@
             <tr>
               <td class="field-name">Emergency Contact</td>
               <td *ngFor="let participant of participantsToCompare">{{ participant.emergencyContact }}</td>
-            </tr>
-            <tr>
-              <td class="field-name">Pledge Agreement</td>
-              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].pledgeAgree !== participant.pledgeAgree">
-                {{ participant.pledgeAgree ? 'Agreed' : 'Not Agreed' }}
-              </td>
-            </tr>
-            <tr *ngIf="anyParticipantHasMedicalConditions()">
-              <td class="field-name">Medical Conditions</td>
-              <td *ngFor="let participant of participantsToCompare">{{ participant.medicalConditions || 'None' }}</td>
             </tr>
           </tbody>
         </table>

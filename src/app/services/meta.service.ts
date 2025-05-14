@@ -26,13 +26,13 @@ export class MetaService {
     keywords: 'marathon, running, Tirunelveli, Palayamkottai, TP marathon, race, sports',
     ogTitle: 'TP Marathon 2025',
     ogDescription: 'Join the Tirunelveli-Palayamkottai Marathon 2025 and experience a unique run through beautiful scenery',
-    ogImage: 'assets/images/marathon-og.jpg',
-    ogUrl: 'https://tpmarathon.com',
+    ogImage: 'images/tpmarathonmeta.png',
+    ogUrl: '',
     twitterTitle: 'TP Marathon 2025',
     twitterDescription: 'Join the Tirunelveli-Palayamkottai Marathon 2025',
-    twitterImage: 'assets/images/marathon-twitter.jpg',
+    twitterImage: 'images/tpmarathonmeta.png',
     robots: 'index, follow',
-    canonicalUrl: 'https://tpmarathon.com'
+    canonicalUrl: ''
   };
 
   constructor(

@@ -259,7 +259,7 @@ export class AdminDashboardComponent implements OnInit {
 
   exportToCSV(): void {
     const headers = ['ID', 'Name', 'Email', 'Phone', 'Age', 'DOB', 'Gender', 'Aadhar Number', 
-      'Blood Group', 'Event Type', 'T-shirt Size', 'Registration Date', 'Emergency Contact', 'Pledge Agreement'];
+      'Blood Group', 'Event Type', 'T-shirt Size', 'Registration Date', 'Emergency Contact'];
     const csvContent = [
       headers.join(','),
       ...this.filteredParticipants.map(p => [
@@ -275,8 +275,7 @@ export class AdminDashboardComponent implements OnInit {
         `"${p.eventType}"`,
         p.tshirtSize || 'N/A',
         new Date(p.registrationDate).toLocaleDateString(),
-        `"${p.emergencyContact}"`,
-        p.pledgeAgree ? 'Yes' : 'No'
+        `"${p.emergencyContact}"`
       ].join(','))
     ].join('\n');
     
@@ -368,8 +367,209 @@ export class AdminDashboardComponent implements OnInit {
     return eventTypes[eventType] || eventType;
   }
   
-  // Helper method to check if any participant has medical conditions
-  anyParticipantHasMedicalConditions(): boolean {
-    return this.participantsToCompare.some(p => p.medicalConditions && p.medicalConditions.trim().length > 0);
+  // Print participant details
+  printParticipantDetails(): void {
+    if (!this.selectedParticipant) return;
+    
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+    
+    const participant = this.selectedParticipant;
+    const eventType = this.getEventTypeDisplay(participant.eventType);
+    
+    // Create print document HTML
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Participant Details - ${participant.name}</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            .print-header {
+              text-align: center;
+              margin-bottom: 30px;
+              padding-bottom: 20px;
+              border-bottom: 2px solid #ddd;
+            }
+            .print-header h1 {
+              margin: 0;
+              color: #2c3e50;
+              font-size: 24px;
+            }
+            .print-header p {
+              margin: 5px 0 0;
+              color: #7f8c8d;
+              font-size: 16px;
+            }
+            .participant-name {
+              font-size: 28px;
+              margin: 20px 0 10px;
+              color: #2c3e50;
+            }
+            .event-badge {
+              display: inline-block;
+              padding: 5px 15px;
+              background-color: #3498db;
+              color: white;
+              border-radius: 20px;
+              font-size: 14px;
+              margin-bottom: 20px;
+            }
+            .info-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 20px;
+              margin-bottom: 30px;
+            }
+            .info-section {
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              overflow: hidden;
+            }
+            .info-section h3 {
+              margin: 0;
+              padding: 10px 15px;
+              background-color: #f5f7fa;
+              border-bottom: 1px solid #ddd;
+              font-size: 18px;
+              color: #2c3e50;
+            }
+            .info-content {
+              padding: 10px 15px;
+            }
+            .info-row {
+              display: flex;
+              padding: 8px 0;
+              border-bottom: 1px solid #eee;
+            }
+            .info-row:last-child {
+              border-bottom: none;
+            }
+            .info-label {
+              flex: 0 0 40%;
+              font-weight: bold;
+              color: #7f8c8d;
+            }
+            .info-value {
+              flex: 1;
+            }
+            .footer {
+              margin-top: 40px;
+              text-align: center;
+              font-size: 14px;
+              color: #95a5a6;
+              padding-top: 20px;
+              border-top: 1px solid #ddd;
+            }
+            @media print {
+              body {
+                padding: 0;
+                margin: 0;
+              }
+              .print-button {
+                display: none;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="print-header">
+            <h1>Halwa City Marathon 2025</h1>
+            <p>Participant Registration Details</p>
+          </div>
+          
+          <h2 class="participant-name">${participant.name}</h2>
+          <div class="event-badge">${eventType}</div>
+          
+          <div class="info-grid">
+            <div class="info-section">
+              <h3>Personal Information</h3>
+              <div class="info-content">
+                <div class="info-row">
+                  <div class="info-label">Email</div>
+                  <div class="info-value">${participant.email}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Phone</div>
+                  <div class="info-value">${participant.phone}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Age</div>
+                  <div class="info-value">${participant.age}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Date of Birth</div>
+                  <div class="info-value">${new Date(participant.dob).toLocaleDateString()}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Gender</div>
+                  <div class="info-value">${participant.gender}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Aadhar Number</div>
+                  <div class="info-value">${participant.aadharNumber}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Blood Group</div>
+                  <div class="info-value">${participant.bloodGroup}</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="info-section">
+              <h3>Marathon Details</h3>
+              <div class="info-content">
+                <div class="info-row">
+                  <div class="info-label">Event Type</div>
+                  <div class="info-value">${eventType}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">T-shirt Size</div>
+                  <div class="info-value">${participant.tshirtSize || 'N/A'}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Registration Date</div>
+                  <div class="info-value">${new Date(participant.registrationDate).toLocaleDateString()}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Registration ID</div>
+                  <div class="info-value">#${participant.id.toString().padStart(4, '0')}</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-label">Emergency Contact</div>
+                  <div class="info-value">${participant.emergencyContact}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="footer">
+            <p>This document was generated on ${new Date().toLocaleString()}</p>
+          </div>
+          
+          <div style="text-align: center; margin-top: 30px;">
+            <button class="print-button" onclick="window.print(); window.close();" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">Print</button>
+          </div>
+          
+          <script>
+            // Auto-print when document is loaded
+            window.onload = function() {
+              // Small delay to ensure content is rendered
+              setTimeout(() => {
+                window.print();
+              }, 500);
+            }
+          </script>
+        </body>
+      </html>
+    `);
+    
+    printWindow.document.close();
   }
 } 
