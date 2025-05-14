@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateService } from '../translate.service';
@@ -92,6 +92,31 @@ export class HomeComponent implements OnInit {
   
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+  
+  // Close mobile menu when clicking outside nav
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    // Get the clicked element
+    const target = event.target as HTMLElement;
+    
+    // Don't close if the hamburger button itself is clicked (toggleMobileMenu handles this)
+    if (target.closest('.hamburger-menu')) {
+      return;
+    }
+    
+    // Don't close if clicking inside the menu
+    if (this.isMobileMenuOpen && !target.closest('nav ul') && !target.closest('.right-nav')) {
+      this.isMobileMenuOpen = false;
+    }
+  }
+  
+  // Close mobile menu when window resizes to larger screen
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth > 992 && this.isMobileMenuOpen) {
+      this.isMobileMenuOpen = false;
+    }
   }
   
   scrollToSection(sectionId: string): void {

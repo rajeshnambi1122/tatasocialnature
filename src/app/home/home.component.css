@@ -75,6 +75,7 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .tirunelveli-carousel .caption {
@@ -91,17 +92,18 @@ section {
   font-weight: 500;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 0.95rem;
+  z-index: 5;
 }
 
 .tirunelveli-carousel .carousel-control {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   width: 45px;
   height: 45px;
   display: flex;
@@ -225,12 +227,19 @@ section {
 
 nav {
   padding: 0 20px;
+  background-color: rgba(255, 255, 255, 0.98);
+  border-top: 1px solid rgba(0,0,0,0.03);
+}
+
+.nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.98);
   height: 60px;
-  border-top: 1px solid rgba(0,0,0,0.03);
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
 }
 
 nav ul {
@@ -316,6 +325,7 @@ nav ul li a:hover::after {
   cursor: pointer;
   padding: 10px;
   z-index: 1001;
+  transition: all 0.3s ease;
 }
 
 .hamburger-menu__line {
@@ -326,6 +336,66 @@ nav ul li a:hover::after {
   margin: 5px 0;
   transition: all 0.3s;
   border-radius: 3px;
+}
+
+/* Improve tablet-specific nav layout */
+@media (min-width: 769px) and (max-width: 992px) {
+  nav {
+    padding: 0;
+  }
+  
+  .nav-container {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 5px 15px;
+  }
+  
+  nav ul {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px 0;
+  }
+  
+  nav ul li {
+    margin: 0;
+    flex: 0 0 auto;
+  }
+  
+  nav ul li a {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .right-nav {
+    margin-left: auto;
+    order: 2;
+  }
+
+  /* Ensure the hamburger menu is properly positioned */
+  .hamburger-menu {
+    margin-left: 10px;
+  }
+
+  /* Fix for Tirunelveli carousel on tablet */
+  .tirunelveli-carousel {
+    height: 400px;
+    width: 100%;
+    min-width: unset;
+    flex-basis: auto;
+    margin: 0 auto;
+  }
+  
+  .tirunelveli-carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .tirunelveli-content {
+    gap: 30px;
+  }
 }
 
 /* Enhanced Hero section */
@@ -377,12 +447,12 @@ nav ul li a:hover::after {
   text-align: center;
   color: white;
   padding: 50px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: var(--border-radius-xl);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
   max-width: 800px;
   margin: 0 auto;
   animation: fadeIn 1s ease-out, float 6s infinite ease-in-out;
@@ -396,14 +466,14 @@ nav ul li a:hover::after {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content-overlay p {
   font-size: 1.45rem;
   margin-bottom: 35px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  font-weight: 400;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  font-weight: 500;
 }
 
 .btn-hero {
@@ -1043,65 +1113,29 @@ nav ul li a:hover::after {
 
 /* Responsive adjustments */
 @media (max-width: 992px) {
-  nav ul {
-    gap: 0;
-  }
-  
-  nav ul li a {
-    padding: 20px 12px;
-    font-size: 0.9rem;
-  }
-  
-  .right-nav {
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .register-btn {
-    padding: 9px 18px;
-    font-size: 0.85rem;
-  }
-  
-  .hero-content-overlay h1 {
-    font-size: 2.8rem;
-  }
-  
-  .hero-content-overlay p {
-    font-size: 1.3rem;
-  }
-}
-
-@media (max-width: 768px) {
+  /* Tablet-specific navbar improvements */
   .header-top {
-    padding: 12px;
+    padding: 12px 10px;
   }
-
+  
   .logo {
-    height: 45px;
+    height: 50px;
     margin: 0 10px;
   }
   
   .logo-center {
-    height: 55px;
-  }
-  
-  .event-title h1 {
-    font-size: 22px;
-  }
-  
-  .event-title p {
-    font-size: 14px;
+    height: 60px;
   }
   
   nav {
-    padding: 0 15px;
-    height: auto;
+    padding: 0;
     flex-wrap: wrap;
+    position: relative;
   }
   
   .hamburger-menu {
     display: block;
+    margin-left: auto;
   }
   
   .hamburger-menu.active .hamburger-menu__line:nth-child(1) {
@@ -1140,6 +1174,7 @@ nav ul li a:hover::after {
   
   nav ul li a {
     padding: 15px 20px;
+    font-size: 0.95rem;
     border-bottom: 1px solid rgba(0,0,0,0.05);
   }
   
@@ -1148,8 +1183,75 @@ nav ul li a:hover::after {
   }
   
   .right-nav {
-    margin-left: auto;
+    margin-left: 0;
     padding: 10px 0;
+    width: auto;
+    order: 2;
+    margin-right: 60px; /* Make space for hamburger menu */
+  }
+  
+  .register-btn {
+    padding: 9px 16px;
+    font-size: 0.85rem;
+  }
+  
+  /* Other tablet specific styles */
+  .hero-content-overlay {
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.12); /* Slightly more transparent on tablet */
+  }
+  
+  .hero-content-overlay h1 {
+    font-size: 2.8rem;
+  }
+  
+  .hero-content-overlay p {
+    font-size: 1.3rem;
+  }
+  
+  /* Fix for Tirunelveli carousel on all tablets/mobile */
+  .tirunelveli-carousel .carousel-slide {
+    height: 100%;
+  }
+  
+  .tirunelveli-carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile styles - can be simplified since most are now moved to the tablet breakpoint */
+  .header-top {
+    padding: 10px;
+  }
+
+  .logo {
+    height: 45px;
+    margin: 0 8px;
+  }
+  
+  .logo-center {
+    height: 55px;
+  }
+  
+  .event-title h1 {
+    font-size: 22px;
+  }
+  
+  .event-title p {
+    font-size: 14px;
+  }
+  
+  .right-nav {
+    margin-right: 50px;
+  }
+  
+  .register-btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
   }
   
   .hero {
@@ -1159,14 +1261,17 @@ nav ul li a:hover::after {
   .hero-content-overlay {
     padding: 35px;
     max-width: 90%;
+    background: rgba(0, 0, 0, 0.1); /* Even more transparent on mobile */
   }
   
   .hero-content-overlay h1 {
     font-size: 2rem;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.6); /* Stronger shadow on mobile for readability */
   }
   
   .hero-content-overlay p {
     font-size: 1.1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); /* Stronger shadow on mobile for readability */
   }
   
   .btn-hero {
@@ -1178,7 +1283,17 @@ nav ul li a:hover::after {
     height: 350px;
     width: 100%;
     min-width: unset;
-    flex-basis: 350px;
+    flex-basis: auto;
+    margin: 0 auto 20px;
+  }
+  
+  .tirunelveli-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .tirunelveli-text {
+    padding: 25px;
   }
   
   .footer-content {
@@ -1204,6 +1319,80 @@ nav ul li a:hover::after {
   
   .about-image {
     height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero {
+    min-height: 60vh;
+  }
+  
+  .hero-content-overlay {
+    padding: 25px 20px;
+    background: rgba(0, 0, 0, 0.08); /* Most transparent on small devices */
+  }
+  
+  .hero-content-overlay h1 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.7); /* Even stronger shadow on small devices */
+  }
+  
+  .hero-content-overlay p {
+    font-size: 1rem;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); /* Even stronger shadow on small devices */
+  }
+  
+  .promo-card {
+    padding: 25px;
+  }
+  
+  .promo-icon {
+    font-size: 40px;
+  }
+  
+  .about-text, .info-box, .register-content, .rules-content, .medical-content {
+    padding: 25px;
+  }
+  
+  .tirunelveli-carousel {
+    height: 280px;
+    width: 100%;
+    margin: 0 auto 15px;
+  }
+  
+  .tirunelveli-carousel .carousel-control {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .tirunelveli-carousel .caption {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+  
+  .event-title h1 {
+    font-size: 18px;
+  }
+
+  .event-title p {
+    font-size: 13px;
+  }
+
+  .btn-hero {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+
+  .social-link {
+    width: 35px;
+    height: 35px;
+  }
+  .social-link svg {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -1309,71 +1498,6 @@ nav ul li a:hover::after {
   
   .route-image-container img {
     height: 300px;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero {
-    min-height: 60vh;
-  }
-  
-  .hero-content-overlay {
-    padding: 20px;
-  }
-  
-  .hero-content-overlay h1 {
-    font-size: 1.6rem;
-  }
-  
-  .promo-card {
-    padding: 25px;
-  }
-  
-  .promo-icon {
-    font-size: 40px;
-  }
-  
-  .about-text, .info-box, .register-content, .rules-content, .medical-content {
-    padding: 25px;
-  }
-  
-  .tirunelveli-carousel {
-    height: 280px;
-    width: 100%;
-    min-width: unset;
-    flex-basis: 280px;
-  }
-  
-  .tirunelveli-carousel .carousel-control {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-  }
-  
-  .route-image-container img {
-    height: 220px;
-  }
-
-  .event-title h1 {
-    font-size: 18px;
-  }
-
-  .event-title p {
-    font-size: 13px;
-  }
-
-  .btn-hero {
-    padding: 12px 25px;
-    font-size: 0.9rem;
-  }
-
-  .social-link {
-    width: 35px;
-    height: 35px;
-  }
-  .social-link svg {
-    width: 16px;
-    height: 16px;
   }
 }
 
@@ -1762,6 +1886,34 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
   .tirunelveli-text,
   .tirunelveli-carousel {
     animation: slideInFromTop 0.5s ease-out;
+  }
+}
+
+.view-detailed-route {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.view-detailed-route .btn {
+  padding: 12px 25px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--box-shadow-sm);
+}
+
+.view-detailed-route .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--box-shadow-md);
+}
+
+@media (max-width: 768px) {
+  .view-detailed-route {
+    margin-top: 30px;
+  }
+  
+  .view-detailed-route .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
   }
 }
   
