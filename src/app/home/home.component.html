@@ -14,19 +14,19 @@
                 <span class="hamburger-menu__line"></span>
             </button>
             <ul [class.mobile-menu-active]="isMobileMenuOpen">
-                <li><a (click)="scrollToSection('home')">{{ 'NAV_HOME' | translate | async }}</a></li>
-                <li><a (click)="scrollToSection('about')">{{ 'NAV_ABOUT_US' | translate | async }}</a></li>
-                <li><a routerLink="/route" (click)="isMobileMenuOpen = false">{{ 'NAV_ROUTE' | translate | async }}</a></li>
-                <li><a (click)="scrollToSection('gallery')">{{ 'NAV_GALLERY' | translate | async }}</a></li>
-                <li><a routerLink="/register" (click)="isMobileMenuOpen = false">{{ 'NAV_REGISTRATION' | translate | async }}</a></li>
-                <li><a (click)="scrollToSection('rules')">{{ 'NAV_RULES' | translate | async }}</a></li>
-                <li><a (click)="scrollToSection('medical')">{{ 'NAV_MEDICAL' | translate | async }}</a></li>
-                <li><a (click)="scrollToSection('tirunelveli')">{{ 'NAV_TIRUNELVELI' | translate | async }}</a></li>
-                <li><a (click)="scrollToSection('contact')">{{ 'NAV_CONTACT' | translate | async }}</a></li>
+                <li><a (click)="scrollToSection('home')">{{ 'NAV_HOME' | translate }}</a></li>
+                <li><a (click)="scrollToSection('about')">{{ 'NAV_ABOUT_US' | translate }}</a></li>
+                <li><a routerLink="/route" (click)="isMobileMenuOpen = false">{{ 'NAV_ROUTE' | translate }}</a></li>
+                <li><a (click)="scrollToSection('gallery')">{{ 'NAV_GALLERY' | translate }}</a></li>
+                <li><a routerLink="/register" (click)="isMobileMenuOpen = false">{{ 'NAV_REGISTRATION' | translate }}</a></li>
+                <li><a (click)="scrollToSection('rules')">{{ 'NAV_RULES' | translate }}</a></li>
+                <li><a (click)="scrollToSection('medical')">{{ 'NAV_MEDICAL' | translate }}</a></li>
+                <li><a (click)="scrollToSection('tirunelveli')">{{ 'NAV_TIRUNELVELI' | translate }}</a></li>
+                <li><a (click)="scrollToSection('contact')">{{ 'NAV_CONTACT' | translate }}</a></li>
             </ul>
             <div class="right-nav">
                 <app-language-toggle></app-language-toggle>
-                <a routerLink="/register" class="btn btn-primary register-btn">{{ 'REGISTER_NOW' | translate | async }}</a>
+                <a routerLink="/register" class="btn btn-primary register-btn">{{ 'REGISTER_NOW' | translate }}</a>
             </div>
         </div>
     </nav>
@@ -35,16 +35,16 @@
 <section id="home" class="hero">
     <div class="carousel-container">
         <div class="carousel-slide" *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentSlideIndex">
-            <img [src]="image.src" [alt]="image.alt || ('Marathon Carousel Image' | translate | async)">
+            <img [src]="image.src" [alt]="image.alt || ('Marathon Carousel Image' | translate)">
         </div>
         <button class="carousel-control prev" (click)="prevSlide()">&#10094;</button>
         <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
     </div>
     <div class="hero-content-overlay">
         <div class="container">
-            <h1>{{ 'HERO_TITLE' | translate | async }}</h1>
-            <p>{{ 'HERO_SUBTITLE' | translate | async }}</p>
-            <a routerLink="/register" class="btn btn-accent btn-hero">{{ 'REGISTER_NOW' | translate | async }}</a>
+            <h1>{{ 'HERO_TITLE' | translate }}</h1>
+            <p>{{ 'HERO_SUBTITLE' | translate }}</p>
+            <a routerLink="/register" class="btn btn-accent btn-hero">{{ 'REGISTER_NOW' | translate }}</a>
         </div>
     </div>
 </section>
@@ -54,15 +54,15 @@
         <div class="promo-grid">
             <div class="promo-card animate-fadeInUp">
                 <div class="promo-icon">🏃‍♂️</div>
-                <h2>{{ 'PROMO_READY_TITLE' | translate | async }}</h2>
-                <p>{{ 'PROMO_READY_SUBTITLE' | translate | async }}</p>
-                <a routerLink="/register" class="btn btn-primary">{{ 'REGISTER_NOW' | translate | async }}</a>
+                <h2>{{ 'PROMO_READY_TITLE' | translate }}</h2>
+                <p>{{ 'PROMO_READY_SUBTITLE' | translate }}</p>
+                <a routerLink="/register" class="btn btn-primary">{{ 'REGISTER_NOW' | translate }}</a>
             </div>
             <div class="promo-card animate-fadeInUp" style="animation-delay: 0.2s;">
                 <div class="promo-icon">🏟️</div>
-                <h2>{{ 'PROMO_GREEN_TITLE' | translate | async }}</h2>
-                <p>{{ 'PROMO_GREEN_SUBTITLE' | translate | async }}</p>
-                <a routerLink="/route" class="btn btn-primary">{{ 'VIEW_ROUTE' | translate | async }}</a>
+                <h2>{{ 'PROMO_GREEN_TITLE' | translate }}</h2>
+                <p>{{ 'PROMO_GREEN_SUBTITLE' | translate }}</p>
+                <a routerLink="/route" class="btn btn-primary">{{ 'VIEW_ROUTE' | translate }}</a>
             </div>
         </div>
     </div>
@@ -70,22 +70,22 @@
 
 <section id="about" class="about-section animate-fadeInUp" style="animation-delay: 0.4s;">
     <div class="container">
-        <h2>{{ 'ABOUT_TITLE' | translate | async }}</h2>
+        <h2>{{ 'ABOUT_TITLE' | translate }}</h2>
         <div class="about-content">
             <div class="about-text glass-card">
-                <p>{{ 'ABOUT_PARAGRAPH_1' | translate | async }}</p>
-                <p>{{ 'ABOUT_PARAGRAPH_2' | translate | async }}</p>
-                <p>{{ 'ABOUT_PARAGRAPH_3' | translate | async }}</p>
+                <p>{{ 'ABOUT_PARAGRAPH_1' | translate }}</p>
+                <p>{{ 'ABOUT_PARAGRAPH_2' | translate }}</p>
+                <p>{{ 'ABOUT_PARAGRAPH_3' | translate }}</p>
             </div>
             <div class="about-info">
                 <div class="info-box">
-                    <h3>{{ 'RUNNERS_INFO_TITLE' | translate | async }}</h3>
+                    <h3>{{ 'RUNNERS_INFO_TITLE' | translate }}</h3>
                     <ul>
-                        <li><span class="info-icon">🔢</span>{{ 'RUNNERS_INFO_CHEST_NUMBER' | translate | async }}</li>
-                        <li><span class="info-icon">⏰</span>{{ 'RUNNERS_INFO_START_TIME' | translate | async }}</li>
-                        <li><span class="info-icon">🗺️</span>{{ 'RUNNERS_INFO_ROUTE_MAPS' | translate | async }}</li>
-                        <li><span class="info-icon">📍</span>{{ 'RUNNERS_INFO_VENUE_MAPS' | translate | async }}</li>
-                        <li><span class="info-icon">🏥</span>{{ 'RUNNERS_INFO_HOSPITALS' | translate | async }}</li>
+                        <li><span class="info-icon">🔢</span>{{ 'RUNNERS_INFO_CHEST_NUMBER' | translate }}</li>
+                        <li><span class="info-icon">⏰</span>{{ 'RUNNERS_INFO_START_TIME' | translate }}</li>
+                        <li><span class="info-icon">🗺️</span>{{ 'RUNNERS_INFO_ROUTE_MAPS' | translate }}</li>
+                        <li><span class="info-icon">📍</span>{{ 'RUNNERS_INFO_VENUE_MAPS' | translate }}</li>
+                        <li><span class="info-icon">🏥</span>{{ 'RUNNERS_INFO_HOSPITALS' | translate }}</li>
                     </ul>
                 </div>
             </div>
@@ -95,11 +95,11 @@
 
 <section class="about-sanct-section animate-fadeInUp" style="animation-delay: 0.5s;">
     <div class="container">
-        <h2>{{ 'ABOUT_SANCT_TITLE' | translate | async }}</h2>
+        <h2>{{ 'ABOUT_SANCT_TITLE' | translate }}</h2>
         <div class="about-content">
             <div class="about-text glass-card">
-                <p>{{ 'ABOUT_SANCT_PARAGRAPH_1' | translate | async }}</p>
-                <p>{{ 'ABOUT_SANCT_PARAGRAPH_2' | translate | async }}</p>
+                <p>{{ 'ABOUT_SANCT_PARAGRAPH_1' | translate }}</p>
+                <p>{{ 'ABOUT_SANCT_PARAGRAPH_2' | translate }}</p>
             </div>
         </div>
     </div>
@@ -107,68 +107,68 @@
 
 <section id="location" class="animate-fadeInUp" style="animation-delay: 0.2s;">
     <div class="container">
-        <h2>{{ 'MARATHON_ROUTE_TITLE' | translate | async }}</h2>
+        <h2>{{ 'MARATHON_ROUTE_TITLE' | translate }}</h2>
         <div class="route-layout">
             <div class="route-steps">
                 <div class="route-point start">
                     <span class="route-icon">🏁</span>
-                    <span class="route-text">{{ 'ROUTE_START' | translate | async }}</span>
+                    <span class="route-text">{{ 'ROUTE_START' | translate }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">📍</span>
-                    <span class="route-text">{{ 'ROUTE_XAVIERS' | translate | async }}</span>
+                    <span class="route-text">{{ 'ROUTE_XAVIERS' | translate }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">➡️</span>
-                    <span class="route-text">{{ 'ROUTE_LIBRARY' | translate | async }}</span>
+                    <span class="route-text">{{ 'ROUTE_LIBRARY' | translate }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">🏥</span>
-                    <span class="route-text">{{ 'ROUTE_KRISHNA_HOSPITAL' | translate | async }}</span>
+                    <span class="route-text">{{ 'ROUTE_KRISHNA_HOSPITAL' | translate }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">🏥</span>
-                    <span class="route-text">{{ 'ROUTE_GOVT_HOSPITAL' | translate | async }}</span>
+                    <span class="route-text">{{ 'ROUTE_GOVT_HOSPITAL' | translate }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point">
                     <span class="route-icon">➡️</span>
-                    <span class="route-text">{{ 'ROUTE_INDUSTRIES' | translate | async }}</span>
+                    <span class="route-text">{{ 'ROUTE_INDUSTRIES' | translate }}</span>
                 </div>
                 <div class="route-connector">↓</div>
                 <div class="route-point end">
                     <span class="route-icon">🏁</span>
-                    <span class="route-text">{{ 'ROUTE_END' | translate | async }}</span>
+                    <span class="route-text">{{ 'ROUTE_END' | translate }}</span>
                 </div>
             </div>
         </div>
         <div class="view-detailed-route">
-            <a routerLink="/route" class="btn btn-primary">{{ 'VIEW_DETAILED_ROUTE' | translate | async }}</a>
+            <a routerLink="/route" class="btn btn-primary">{{ 'VIEW_DETAILED_ROUTE' | translate }}</a>
         </div>
     </div>
 </section>
 
 <section id="application" class="register-section animate-fadeInUp" style="animation-delay: 0.3s;">
     <div class="container">
-        <h2>{{ 'HOW_TO_REGISTER_TITLE' | translate | async }}</h2>
+        <h2>{{ 'HOW_TO_REGISTER_TITLE' | translate }}</h2>
         <div class="register-content glass-card">
-            <p><strong>{{ 'STEPS' | translate | async }}:</strong></p>
+            <p><strong>{{ 'STEPS' | translate }}:</strong></p>
             <ol>
-                <li>{{ 'REGISTER_STEP_1' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_2' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_3' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_4' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_5' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_6' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_7' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_8' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_9' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_10' | translate | async }}</li>
-                <li>{{ 'REGISTER_STEP_11' | translate | async }}</li>
+                <li>{{ 'REGISTER_STEP_1' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_2' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_3' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_4' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_5' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_6' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_7' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_8' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_9' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_10' | translate }}</li>
+                <li>{{ 'REGISTER_STEP_11' | translate }}</li>
             </ol>
         </div>
     </div>
@@ -177,36 +177,36 @@
 <section class="register-cta">
     <div class="container">
         <div class="cta-content glass-card">
-            <h2>{{ 'REGISTER_CTA_TITLE' | translate | async }}</h2>
-            <p class="highlight">{{ 'REGISTER_CTA_FREE' | translate | async }}</p>
+            <h2>{{ 'REGISTER_CTA_TITLE' | translate }}</h2>
+            <p class="highlight">{{ 'REGISTER_CTA_FREE' | translate }}</p>
             <div class="benefits">
                 <div class="benefit-list">
-                    <h3>{{ 'BENEFITS_TITLE' | translate | async }}</h3>
+                    <h3>{{ 'BENEFITS_TITLE' | translate }}</h3>
                     <ul>
-                        <li><span>🏆</span> {{ 'BENEFIT_CERTIFICATE' | translate | async }}</li>
-                        <li><span>🥇</span> {{ 'BENEFIT_MEDAL' | translate | async }}</li>
-                        <li><span>👕</span> {{ 'BENEFIT_TSHIRT' | translate | async }}</li>
-                        <li><span>🧃</span> {{ 'BENEFIT_CAP' | translate | async }}</li>
-                        <li><span>🪴</span> {{ 'BENEFIT_DRINKS' | translate | async }}</li>
-                        <li><span>💛</span> {{ 'BENEFIT_BREAKFAST' | translate | async }}</li>
+                        <li><span>🏆</span> {{ 'BENEFIT_CERTIFICATE' | translate }}</li>
+                        <li><span>🥇</span> {{ 'BENEFIT_MEDAL' | translate }}</li>
+                        <li><span>👕</span> {{ 'BENEFIT_TSHIRT' | translate }}</li>
+                        <li><span>🧃</span> {{ 'BENEFIT_CAP' | translate }}</li>
+                        <li><span>🪴</span> {{ 'BENEFIT_DRINKS' | translate }}</li>
+                        <li><span>💛</span> {{ 'BENEFIT_BREAKFAST' | translate }}</li>
                     </ul>
                 </div>
             </div>
-            <a routerLink="/register" class="btn btn-accent btn-large">{{ 'REGISTER_NOW' | translate | async }}</a>
-            <p class="note">{{ 'REGISTER_NOTE' | translate | async }}</p>
+            <a routerLink="/register" class="btn btn-accent btn-large">{{ 'REGISTER_NOW' | translate }}</a>
+            <p class="note">{{ 'REGISTER_NOTE' | translate }}</p>
         </div>
     </div>
 </section>
 
 <section id="rules" class="rules-section"> 
     <div class="container">
-        <h2>{{ 'RULES_TITLE' | translate | async }}</h2>
+        <h2>{{ 'RULES_TITLE' | translate }}</h2>
         <div class="rules-content glass-card">
             <ul class="rules-list">
-                <li><span class="rule-icon">📜</span> {{ 'RULE_ROUTE' | translate | async }}</li>
-                <li><span class="rule-icon">🩺</span> {{ 'RULE_MEDICAL' | translate | async }}</li>
-                <li><span class="rule-icon">♻️</span> {{ 'RULE_ECO' | translate | async }}</li>
-                <li><span class="rule-icon">👟</span> {{ 'RULE_ATTIRE' | translate | async }}</li>
+                <li><span class="rule-icon">📜</span> {{ 'RULE_ROUTE' | translate }}</li>
+                <li><span class="rule-icon">🩺</span> {{ 'RULE_MEDICAL' | translate }}</li>
+                <li><span class="rule-icon">♻️</span> {{ 'RULE_ECO' | translate }}</li>
+                <li><span class="rule-icon">👟</span> {{ 'RULE_ATTIRE' | translate }}</li>
             </ul>
         </div>
     </div>
@@ -214,24 +214,24 @@
 
 <section id="medical" class="medical-section"> 
     <div class="container">
-        <h2>{{ 'MEDICAL_TITLE' | translate | async }}</h2>
+        <h2>{{ 'MEDICAL_TITLE' | translate }}</h2>
         <div class="medical-content glass-card">
             <div class="medical-points">
                 <div class="medical-point">
                     <span class="medical-icon">🚑</span>
-                    <p>{{ 'MEDICAL_AMBULANCE' | translate | async }}</p>
+                    <p>{{ 'MEDICAL_AMBULANCE' | translate }}</p>
                 </div>
                 <div class="medical-point">
                     <span class="medical-icon">🧑‍⚕️</span>
-                    <p>{{ 'MEDICAL_PROFESSIONALS' | translate | async }}</p>
+                    <p>{{ 'MEDICAL_PROFESSIONALS' | translate }}</p>
                 </div>
                 <div class="medical-point">
                     <span class="medical-icon">💊</span>
-                    <p>{{ 'MEDICAL_FIRST_AID' | translate | async }}</p>
+                    <p>{{ 'MEDICAL_FIRST_AID' | translate }}</p>
                 </div>
                 <div class="medical-point">
                     <span class="medical-icon">💧</span>
-                    <p>{{ 'MEDICAL_HYDRATION' | translate | async }}</p>
+                    <p>{{ 'MEDICAL_HYDRATION' | translate }}</p>
                 </div>
             </div>
         </div>
@@ -240,23 +240,23 @@
 
 <section class="important-info animate-fadeInUp" style="animation-delay: 0.2s;">
     <div class="container">
-        <h2>{{ 'IMPORTANT_INFO_TITLE' | translate | async }}</h2>
+        <h2>{{ 'IMPORTANT_INFO_TITLE' | translate }}</h2>
         <div class="info-grid">
             <div class="info-card">
-                <h4>{{ 'INFO_TIME_5AM' | translate | async }}</h4>
-                <p>{{ 'INFO_REGISTRATION' | translate | async }}</p>
+                <h4>{{ 'INFO_TIME_5AM' | translate }}</h4>
+                <p>{{ 'INFO_REGISTRATION' | translate }}</p>
             </div>
             <div class="info-card">
-                <h4>{{ 'INFO_TIME_630AM' | translate | async }}</h4>
-                <p>{{ 'INFO_MARATHON_START' | translate | async }}</p>
+                <h4>{{ 'INFO_TIME_630AM' | translate }}</h4>
+                <p>{{ 'INFO_MARATHON_START' | translate }}</p>
             </div>
             <div class="info-card">
-                <h4>{{ 'INFO_REWARDS' | translate | async }}</h4>
-                <p>{{ 'INFO_REWARDS_DESC' | translate | async }}</p>
+                <h4>{{ 'INFO_REWARDS' | translate }}</h4>
+                <p>{{ 'INFO_REWARDS_DESC' | translate }}</p>
             </div>
             <div class="info-card">
-                <h4>{{ 'INFO_NO_PLASTIC' | translate | async }}</h4>
-                <p>{{ 'INFO_NO_PLASTIC_DESC' | translate | async }}</p>
+                <h4>{{ 'INFO_NO_PLASTIC' | translate }}</h4>
+                <p>{{ 'INFO_NO_PLASTIC_DESC' | translate }}</p>
             </div>
         </div>
     </div>
@@ -264,7 +264,7 @@
 
 <section id="gallery" class="gallery-section animate-fadeInUp">
     <div class="container">
-        <h2>{{ 'GALLERY_TITLE' | translate | async }}</h2>
+        <h2>{{ 'GALLERY_TITLE' | translate }}</h2>
         <div class="gallery-carousel-container">
             <div class="gallery-carousel-slide" 
                  *ngFor="let image of gallerySectionImages; let i = index" 
@@ -280,18 +280,18 @@
 
 <section id="tirunelveli" class="tirunelveli-section animate-fadeInUp" style="animation-delay: 0.3s;">
     <div class="container">
-        <h2>{{ 'TIRUNELVELI_TITLE' | translate | async }}</h2>
+        <h2>{{ 'TIRUNELVELI_TITLE' | translate }}</h2>
         <div class="tirunelveli-content">
             <div class="tirunelveli-text glass-card">
-                <p>{{ 'TIRUNELVELI_PARAGRAPH_1' | translate | async }}</p>
-                <p>{{ 'TIRUNELVELI_PARAGRAPH_2' | translate | async }}</p>
-                <p>{{ 'TIRUNELVELI_PARAGRAPH_3' | translate | async }}</p>
-                <p>{{ 'TIRUNELVELI_PARAGRAPH_4' | translate | async }}</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_1' | translate }}</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_2' | translate }}</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_3' | translate }}</p>
+                <p>{{ 'TIRUNELVELI_PARAGRAPH_4' | translate }}</p>
             </div>
             <div class="tirunelveli-carousel">
                 <div class="carousel-slide" *ngFor="let image of tirunelveliImages; let i = index" [class.active]="i === tirunelveliSlideIndex">
                     <img [src]="image.src" [alt]="image.alt || 'Tirunelveli Landmark'">
-                    <div class="caption">{{ 'TIRUNELVELI_CAROUSEL_' + (i + 1) | translate | async }}</div>
+                    <div class="caption">{{ 'TIRUNELVELI_CAROUSEL_' + (i + 1) | translate }}</div>
                 </div>
                 <button class="carousel-control prev" (click)="prevTirunelveliSlide()">&#10094;</button>
                 <button class="carousel-control next" (click)="nextTirunelveliSlide()">&#10095;</button>
@@ -304,15 +304,15 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-about">
-                <h3>{{ 'FOOTER_TITLE' | translate | async }} <span class="year">2025</span></h3>
-                <p>{{ 'FOOTER_DESCRIPTION' | translate | async }}</p>
+                <h3>{{ 'FOOTER_TITLE' | translate }} <span class="year">2025</span></h3>
+                <p>{{ 'FOOTER_DESCRIPTION' | translate }}</p>
             </div>
             <div class="footer-contact">
-                <h3>{{ 'CONTACT_US' | translate | async }}</h3>
+                <h3>{{ 'CONTACT_US' | translate }}</h3>
                 <ul class="contact-info">
-                    <li><i class="icon">✉️</i> {{ 'CONTACT_EMAIL' | translate | async }}</li>
-                    <li><i class="icon">📱</i> {{ 'CONTACT_PHONE' | translate | async }}</li>
-                    <li><i class="icon">🏢</i> {{ 'CONTACT_ADDRESS' | translate | async }}</li>
+                    <li><i class="icon">✉️</i> {{ 'CONTACT_EMAIL' | translate }}</li>
+                    <li><i class="icon">📱</i> {{ 'CONTACT_PHONE' | translate }}</li>
+                    <li><i class="icon">🏢</i> {{ 'CONTACT_ADDRESS' | translate }}</li>
                 </ul>
             </div>
         </div>

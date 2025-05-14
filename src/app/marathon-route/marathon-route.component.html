@@ -14,19 +14,19 @@
                 <span class="hamburger-menu__line"></span>
             </button>
             <ul [class.mobile-menu-active]="isMobileMenuOpen">
-                <li><a routerLink="/" (click)="isMobileMenuOpen = false">{{ 'NAV_HOME' | translate | async }}</a></li>
-                <li><a routerLink="/" [fragment]="'about'" (click)="isMobileMenuOpen = false">{{ 'NAV_ABOUT_US' | translate | async }}</a></li>
-                <li><a routerLink="/route" (click)="isMobileMenuOpen = false">{{ 'NAV_ROUTE' | translate | async }}</a></li>
-                <li><a routerLink="/" [fragment]="'gallery'" (click)="isMobileMenuOpen = false">{{ 'NAV_GALLERY' | translate | async }}</a></li>
-                <li><a routerLink="/register" (click)="isMobileMenuOpen = false">{{ 'NAV_REGISTRATION' | translate | async }}</a></li>
-                <li><a routerLink="/" [fragment]="'rules'" (click)="isMobileMenuOpen = false">{{ 'NAV_RULES' | translate | async }}</a></li>
-                <li><a routerLink="/" [fragment]="'medical'" (click)="isMobileMenuOpen = false">{{ 'NAV_MEDICAL' | translate | async }}</a></li>
-                <li><a routerLink="/" [fragment]="'tirunelveli'" (click)="isMobileMenuOpen = false">{{ 'NAV_TIRUNELVELI' | translate | async }}</a></li>
-                <li><a routerLink="/" [fragment]="'contact'" (click)="isMobileMenuOpen = false">{{ 'NAV_CONTACT' | translate | async }}</a></li>
+                <li><a routerLink="/" (click)="isMobileMenuOpen = false">{{ 'NAV_HOME' | translate }}</a></li>
+                <li><a routerLink="/" [fragment]="'about'" (click)="isMobileMenuOpen = false">{{ 'NAV_ABOUT_US' | translate }}</a></li>
+                <li><a routerLink="/route" (click)="isMobileMenuOpen = false">{{ 'NAV_ROUTE' | translate }}</a></li>
+                <li><a routerLink="/" [fragment]="'gallery'" (click)="isMobileMenuOpen = false">{{ 'NAV_GALLERY' | translate }}</a></li>
+                <li><a routerLink="/register" (click)="isMobileMenuOpen = false">{{ 'NAV_REGISTRATION' | translate }}</a></li>
+                <li><a routerLink="/" [fragment]="'rules'" (click)="isMobileMenuOpen = false">{{ 'NAV_RULES' | translate }}</a></li>
+                <li><a routerLink="/" [fragment]="'medical'" (click)="isMobileMenuOpen = false">{{ 'NAV_MEDICAL' | translate }}</a></li>
+                <li><a routerLink="/" [fragment]="'tirunelveli'" (click)="isMobileMenuOpen = false">{{ 'NAV_TIRUNELVELI' | translate }}</a></li>
+                <li><a routerLink="/" [fragment]="'contact'" (click)="isMobileMenuOpen = false">{{ 'NAV_CONTACT' | translate }}</a></li>
             </ul>
             <div class="right-nav">
                 <app-language-toggle></app-language-toggle>
-                <a routerLink="/register" class="btn btn-primary register-btn">{{ 'REGISTER_NOW' | translate | async }}</a>
+                <a routerLink="/register" class="btn btn-primary register-btn">{{ 'REGISTER_NOW' | translate }}</a>
             </div>
         </div>
     </nav>
@@ -34,49 +34,49 @@
 
 <section class="map-section">
     <div class="container">
-        <h2>{{ 'ROUTE_PAGE_TITLE' | translate | async }}</h2>
+        <h2>{{ 'ROUTE_PAGE_TITLE' | translate }}</h2>
         
         <div class="route-steps">
             <div class="route-point start">
                 <span class="route-icon">🏁</span>
-                <span class="route-text">{{ 'ROUTE_START' | translate | async }}</span>
+                <span class="route-text">{{ 'ROUTE_START' | translate }}</span>
             </div>
             <div class="route-connector">↓</div>
             <div class="route-point">
                 <span class="route-icon">📍</span>
-                <span class="route-text">{{ 'ROUTE_XAVIERS' | translate | async }}</span>
+                <span class="route-text">{{ 'ROUTE_XAVIERS' | translate }}</span>
             </div>
             <div class="route-connector">↓</div>
             <div class="route-point">
                 <span class="route-icon">➡️</span>
-                <span class="route-text">{{ 'ROUTE_LIBRARY' | translate | async }}</span>
+                <span class="route-text">{{ 'ROUTE_LIBRARY' | translate }}</span>
             </div>
             <div class="route-connector">↓</div>
             <div class="route-point">
                 <span class="route-icon">🏥</span>
-                <span class="route-text">{{ 'ROUTE_KRISHNA_HOSPITAL' | translate | async }}</span>
+                <span class="route-text">{{ 'ROUTE_KRISHNA_HOSPITAL' | translate }}</span>
             </div>
             <div class="route-connector">↓</div>
             <div class="route-point">
                 <span class="route-icon">🏥</span>
-                <span class="route-text">{{ 'ROUTE_GOVT_HOSPITAL' | translate | async }}</span>
+                <span class="route-text">{{ 'ROUTE_GOVT_HOSPITAL' | translate }}</span>
             </div>
             <div class="route-connector">↓</div>
             <div class="route-point">
                 <span class="route-icon">➡️</span>
-                <span class="route-text">{{ 'ROUTE_INDUSTRIES' | translate | async }}</span>
+                <span class="route-text">{{ 'ROUTE_INDUSTRIES' | translate }}</span>
             </div>
             <div class="route-connector">↓</div>
             <div class="route-point end">
                 <span class="route-icon">🏁</span>
-                <span class="route-text">{{ 'ROUTE_END' | translate | async }}</span>
+                <span class="route-text">{{ 'ROUTE_END' | translate }}</span>
             </div>
         </div>
         
         <div class="route-map-container">
             <div class="map-placeholder">
                 <img src="images/route-map.jpg" alt="Marathon Route Map" class="route-map">
-                <p class="map-note">{{ 'ROUTE_MAP_NOTE' | translate | async }}</p>
+                <p class="map-note">{{ 'ROUTE_MAP_NOTE' | translate }}</p>
             </div>
         </div>
     </div>
@@ -86,15 +86,15 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-about">
-                <h3>{{ 'FOOTER_TITLE' | translate | async }} <span class="year">2025</span></h3>
-                <p>{{ 'FOOTER_DESCRIPTION' | translate | async }}</p>
+                <h3>{{ 'FOOTER_TITLE' | translate }} <span class="year">2025</span></h3>
+                <p>{{ 'FOOTER_DESCRIPTION' | translate }}</p>
             </div>
             <div class="footer-contact">
-                <h3>{{ 'CONTACT_US' | translate | async }}</h3>
+                <h3>{{ 'CONTACT_US' | translate }}</h3>
                 <ul class="contact-info">
-                    <li><i class="icon">✉️</i> {{ 'CONTACT_EMAIL' | translate | async }}</li>
-                    <li><i class="icon">📱</i> {{ 'CONTACT_PHONE' | translate | async }}</li>
-                    <li><i class="icon">🏢</i> {{ 'CONTACT_ADDRESS' | translate | async }}</li>
+                    <li><i class="icon">✉️</i> {{ 'CONTACT_EMAIL' | translate }}</li>
+                    <li><i class="icon">📱</i> {{ 'CONTACT_PHONE' | translate }}</li>
+                    <li><i class="icon">🏢</i> {{ 'CONTACT_ADDRESS' | translate }}</li>
                 </ul>
             </div>
         </div>

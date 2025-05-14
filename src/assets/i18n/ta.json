@@ -1,6 +1,7 @@
 {
   "NAV_HOME": "முகப்பு",
   "NAV_ABOUT_US": "எங்களைப் பற்றி",
+  "NAV_ROUTE": "பாதை",
   "NAV_LOCATION": "இடம்",
   "NAV_GALLERY": "கேலரி",
   "NAV_REGISTRATION": "பதிவு",
@@ -32,6 +33,7 @@
   "RUNNERS_INFO_VENUE_MAPS": "இட வரைபடங்கள் - இணைப்பு கிடைக்கும்",
   "RUNNERS_INFO_HOSPITALS": "பாதையில் உள்ள மருத்துவமனைகள் - இணைப்பு கிடைக்கும்",
   "MARATHON_ROUTE_TITLE": "மாரத்தான் பாதை",
+  "ROUTE_PAGE_TITLE": "மாரத்தான் ஓட்டப் பாதை",
   "ROUTE_START": "அண்ணா அரங்கத்தில் இருந்து தொடங்குகிறது",
   "ROUTE_XAVIERS": "ஏ.ஆர். லைன், சேவியர்ஸ் கல்லூரிக்கு அருகில்",
   "ROUTE_LIBRARY": "மாவட்ட நூலகத்தில் வலப்புறம் திரும்பவும்",

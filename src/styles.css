@@ -264,6 +264,25 @@ button:focus, .btn:focus {
   background: none;
 }
 
+/* Add button size classes */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  min-width: 120px;
+}
+
+.btn-md {
+  padding: 0.8rem 1.8rem;
+  font-size: 1rem;
+  min-width: 160px;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  min-width: 200px;
+}
+
 /* Container */
 .container {
   width: 100%;

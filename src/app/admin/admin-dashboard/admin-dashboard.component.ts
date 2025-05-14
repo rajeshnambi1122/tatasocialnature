@@ -39,6 +39,11 @@ export class AdminDashboardComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 10;
   
+  // Comparison
+  participantsToCompare: Participant[] = [];
+  showComparisonModal = false;
+  maxCompareCount = 3;
+  
   stats = {
     total: 0,
     fullMarathon: 0,
@@ -265,5 +270,61 @@ export class AdminDashboardComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/admin/login']);
+  }
+
+  // Comparison related methods
+  toggleCompareParticipant(participant: Participant): void {
+    const index = this.participantsToCompare.findIndex(p => p.id === participant.id);
+    
+    if (index === -1) {
+      // Add to comparison if not already selected and if we haven't reached the max
+      if (this.participantsToCompare.length < this.maxCompareCount) {
+        this.participantsToCompare.push(participant);
+      }
+    } else {
+      // Remove from comparison
+      this.participantsToCompare.splice(index, 1);
+    }
+  }
+  
+  isSelectedForComparison(participant: Participant): boolean {
+    return this.participantsToCompare.some(p => p.id === participant.id);
+  }
+  
+  canAddMoreToComparison(): boolean {
+    return this.participantsToCompare.length < this.maxCompareCount;
+  }
+  
+  clearComparison(): void {
+    this.participantsToCompare = [];
+    this.showComparisonModal = false;
+  }
+  
+  openComparisonModal(): void {
+    if (this.participantsToCompare.length > 1) {
+      this.showComparisonModal = true;
+    }
+  }
+  
+  closeComparisonModal(): void {
+    this.showComparisonModal = false;
+  }
+  
+  // Helper methods for comparison
+  getUniqueCategories(): string[] {
+    return [...new Set(this.participantsToCompare.map(p => p.category))];
+  }
+  
+  getUniqueGenders(): string[] {
+    return [...new Set(this.participantsToCompare.map(p => p.gender))];
+  }
+  
+  getAgeRange(): { min: number, max: number, avg: number } {
+    const ages = this.participantsToCompare.map(p => p.age);
+    return {
+      min: Math.min(...ages),
+      max: Math.max(...ages),
+      avg: Math.round(ages.reduce((a, b) => a + b, 0) / ages.length)
+    };
   }
 } 

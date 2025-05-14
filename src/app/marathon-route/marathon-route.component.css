@@ -146,6 +146,11 @@ nav ul li a:hover::after {
   border: none;
   box-shadow: var(--box-shadow-sm);
   font-size: 0.9rem;
+  min-width: 150px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .register-btn:hover {

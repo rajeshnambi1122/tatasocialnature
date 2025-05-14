@@ -34,6 +34,21 @@
       </div>
     </div>
 
+    <!-- Add comparison controls after the Quick Status Bar -->
+    <div class="comparison-controls" *ngIf="participantsToCompare.length > 0">
+      <div class="comparison-badge">
+        <span>{{ participantsToCompare.length }} participants selected</span>
+        <div class="comparison-actions">
+          <button class="comparison-btn compare" [disabled]="participantsToCompare.length < 2" (click)="openComparisonModal()">
+            <i class="fas fa-chart-bar"></i> Compare
+          </button>
+          <button class="comparison-btn clear" (click)="clearComparison()">
+            <i class="fas fa-times"></i> Clear
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Stats Cards -->
     <div class="stats-grid">
       <div class="stat-card glass-card">
@@ -239,10 +254,14 @@
               </td>
               <td>{{ participant.registrationDate | date:'mediumDate' }}</td>
               <td>{{ participant.emergencyContact }}</td>
-              <td>
-                <button class="btn btn-accent view-btn" (click)="viewDetails(participant)">
+              <td class="table-actions">
+                <button class="action-btn view" (click)="viewDetails(participant)">
                   <i class="fas fa-eye"></i>
-                  <span class="btn-text">View</span>
+                </button>
+                <button class="action-btn compare" [class.selected]="isSelectedForComparison(participant)" 
+                  [disabled]="!isSelectedForComparison(participant) && !canAddMoreToComparison()" 
+                  (click)="toggleCompareParticipant(participant)">
+                  <i class="fas fa-balance-scale"></i>
                 </button>
               </td>
             </tr>
@@ -373,6 +392,105 @@
         <button class="btn btn-primary" (click)="sendParticipantEmail()">
           <i class="fas fa-envelope"></i> Send Email
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add the comparison modal -->
+<div class="modal comparison-modal" *ngIf="showComparisonModal && participantsToCompare.length > 1" (click)="closeComparisonModal()">
+  <div class="modal-content glass-card wide-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Participant Comparison</h2>
+      <button class="close-btn" (click)="closeComparisonModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="comparison-summary">
+        <div class="comparison-stats">
+          <div class="comparison-stat-item">
+            <h3>Participants</h3>
+            <div class="stat-value">{{ participantsToCompare.length }}</div>
+          </div>
+          <div class="comparison-stat-item">
+            <h3>Categories</h3>
+            <div class="stat-value">{{ getUniqueCategories().length }}</div>
+            <div class="stat-tags">
+              <span class="category-tag" *ngFor="let category of getUniqueCategories()" [class]="category">
+                {{ category | titlecase }}
+              </span>
+            </div>
+          </div>
+          <div class="comparison-stat-item">
+            <h3>Age Range</h3>
+            <div class="stat-value">{{ getAgeRange().min }} - {{ getAgeRange().max }}</div>
+            <div class="stat-subtitle">Avg: {{ getAgeRange().avg }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comparison-table-container">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th *ngFor="let participant of participantsToCompare">
+                {{ participant.name }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="field-name">ID</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.id }}</td>
+            </tr>
+            <tr>
+              <td class="field-name">Name</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.name }}</td>
+            </tr>
+            <tr>
+              <td class="field-name">Email</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.email }}</td>
+            </tr>
+            <tr>
+              <td class="field-name">Phone</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.phone }}</td>
+            </tr>
+            <tr>
+              <td class="field-name">Age</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].age !== participant.age">
+                {{ participant.age }}
+              </td>
+            </tr>
+            <tr>
+              <td class="field-name">Gender</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].gender !== participant.gender">
+                {{ participant.gender }}
+              </td>
+            </tr>
+            <tr>
+              <td class="field-name">Category</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].category !== participant.category">
+                <span class="category-badge" [class]="participant.category">{{ participant.category | titlecase }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="field-name">Registration Date</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].registrationDate !== participant.registrationDate">
+                {{ participant.registrationDate | date:'mediumDate' }}
+              </td>
+            </tr>
+            <tr>
+              <td class="field-name">Emergency Contact</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.emergencyContact }}</td>
+            </tr>
+            <tr *ngIf="participantsToCompare[0].medicalConditions">
+              <td class="field-name">Medical Conditions</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.medicalConditions || 'None' }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -1,30 +1,25 @@
 <div class="form-container">
-  <header>
-    <div class="logo-container">
-      <img src="images/logoleft.jpg" alt="Left Logo" class="logo">
-      <img src="images/logocenter.png" alt="Center Logo" class="logo logo-center">
-      <img src="images/logoright.jpg" alt="Right Logo" class="logo">
-    </div>
-    <div class="event-title">
-      <h1>{{ 'REG_FORM_HEADER_TITLE' | translate | async }}</h1>
-      <p>{{ 'REG_FORM_HEADER_SUBTITLE' | translate | async }}</p>
+  <header class="registration-header">
+    <div class="container">
+      <h1>{{ 'REG_FORM_HEADER_TITLE' | translate }}</h1>
+      <p>{{ 'REG_FORM_HEADER_SUBTITLE' | translate }}</p>
     </div>
   </header>
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="application-form">
-    <h2>{{ 'REG_FORM_TITLE' | translate | async }}</h2>
+    <h2>{{ 'REG_FORM_TITLE' | translate }}</h2>
 
     <!-- Event Type -->
     <div class="form-group">
-      <label for="eventType">{{ 'REG_FORM_EVENT_TYPE_LABEL' | translate | async }}</label>
+      <label for="eventType">{{ 'REG_FORM_EVENT_TYPE_LABEL' | translate }}</label>
       <select id="eventType" formControlName="eventType">
-        <option value="">{{ 'REG_FORM_EVENT_TYPE_SELECT' | translate | async }}</option>
-        <option value="kidathon">{{ 'REG_FORM_EVENT_TYPE_KIDATHON' | translate | async }}</option>
-        <option value="marathon">{{ 'REG_FORM_EVENT_TYPE_MARATHON' | translate | async }}</option>
-        <option value="kingwalkathon">{{ 'REG_FORM_EVENT_TYPE_KINGWALKATHON' | translate | async }}</option>
-        <option value="walkathon_disabled">{{ 'REG_FORM_EVENT_TYPE_WALKATHON_DISABLED' | translate | async }}</option>
-        <option value="drawing">{{ 'REG_FORM_EVENT_TYPE_DRAWING' | translate | async }}</option>
-        <option value="poetry">{{ 'REG_FORM_EVENT_TYPE_POETRY' | translate | async }}</option>
+        <option value="">{{ 'REG_FORM_EVENT_TYPE_SELECT' | translate }}</option>
+        <option value="kidathon">{{ 'REG_FORM_EVENT_TYPE_KIDATHON' | translate }}</option>
+        <option value="marathon">{{ 'REG_FORM_EVENT_TYPE_MARATHON' | translate }}</option>
+        <option value="kingwalkathon">{{ 'REG_FORM_EVENT_TYPE_KINGWALKATHON' | translate }}</option>
+        <option value="walkathon_disabled">{{ 'REG_FORM_EVENT_TYPE_WALKATHON_DISABLED' | translate }}</option>
+        <option value="drawing">{{ 'REG_FORM_EVENT_TYPE_DRAWING' | translate }}</option>
+        <option value="poetry">{{ 'REG_FORM_EVENT_TYPE_POETRY' | translate }}</option>
       </select>
       <small class="error-message" *ngIf="registrationForm.get('eventType')?.errors?.['required'] && registrationForm.get('eventType')?.touched">
         {{ getErrorMessage('eventType') }}
@@ -33,7 +28,7 @@
 
     <!-- Name -->
     <div class="form-group">
-      <label for="name">{{ 'REG_FORM_NAME_LABEL' | translate | async }}</label>
+      <label for="name">{{ 'REG_FORM_NAME_LABEL' | translate }}</label>
       <input type="text" id="name" formControlName="name">
       <small class="error-message" *ngIf="registrationForm.get('name')?.errors && registrationForm.get('name')?.touched">
         {{ getErrorMessage('name') }}
@@ -42,9 +37,9 @@
 
     <!-- Date of Birth -->
     <div class="form-group">
-      <label for="dob">{{ 'REG_FORM_DOB_LABEL' | translate | async }}</label>
+      <label for="dob">{{ 'REG_FORM_DOB_LABEL' | translate }}</label>
       <input type="date" id="dob" formControlName="dob">
-      <small class="hint">{{ 'REG_FORM_DOB_HINT' | translate | async }}</small>
+      <small class="hint">{{ 'REG_FORM_DOB_HINT' | translate }}</small>
       <small class="error-message" *ngIf="registrationForm.get('dob')?.errors?.['required'] && registrationForm.get('dob')?.touched">
         {{ getErrorMessage('dob') }}
       </small>
@@ -52,17 +47,17 @@
 
     <!-- Age (Auto-calculated) -->
     <div class="form-group">
-      <label for="age">{{ 'REG_FORM_AGE_LABEL' | translate | async }}</label>
+      <label for="age">{{ 'REG_FORM_AGE_LABEL' | translate }}</label>
       <input type="number" id="age" formControlName="age" readonly>
     </div>
 
     <!-- Gender -->
     <div class="form-group">
-      <label for="gender">{{ 'REG_FORM_GENDER_LABEL' | translate | async }}</label>
+      <label for="gender">{{ 'REG_FORM_GENDER_LABEL' | translate }}</label>
       <select id="gender" formControlName="gender">
-        <option value="">{{ 'REG_FORM_GENDER_SELECT' | translate | async }}</option>
-        <option value="male">{{ 'REG_FORM_GENDER_MALE' | translate | async }}</option>
-        <option value="female">{{ 'REG_FORM_GENDER_FEMALE' | translate | async }}</option>
+        <option value="">{{ 'REG_FORM_GENDER_SELECT' | translate }}</option>
+        <option value="male">{{ 'REG_FORM_GENDER_MALE' | translate }}</option>
+        <option value="female">{{ 'REG_FORM_GENDER_FEMALE' | translate }}</option>
       </select>
       <small class="error-message" *ngIf="registrationForm.get('gender')?.errors?.['required'] && registrationForm.get('gender')?.touched">
         {{ getErrorMessage('gender') }}
@@ -71,9 +66,9 @@
 
     <!-- Aadhar Number -->
     <div class="form-group">
-      <label for="aadharNumber">{{ 'REG_FORM_AADHAR_LABEL' | translate | async }}</label>
+      <label for="aadharNumber">{{ 'REG_FORM_AADHAR_LABEL' | translate }}</label>
       <input type="text" id="aadharNumber" formControlName="aadharNumber">
-      <small class="hint">{{ 'REG_FORM_AADHAR_HINT' | translate | async }}</small>
+      <small class="hint">{{ 'REG_FORM_AADHAR_HINT' | translate }}</small>
       <small class="error-message" *ngIf="registrationForm.get('aadharNumber')?.errors && registrationForm.get('aadharNumber')?.touched">
         {{ getErrorMessage('aadharNumber') }}
       </small>
@@ -82,9 +77,9 @@
 
     <!-- Blood Group -->
     <div class="form-group">
-      <label for="bloodGroup">{{ 'REG_FORM_BLOODGROUP_LABEL' | translate | async }}</label>
+      <label for="bloodGroup">{{ 'REG_FORM_BLOODGROUP_LABEL' | translate }}</label>
       <select id="bloodGroup" formControlName="bloodGroup">
-        <option value="">{{ 'REG_FORM_BLOODGROUP_SELECT' | translate | async }}</option>
+        <option value="">{{ 'REG_FORM_BLOODGROUP_SELECT' | translate }}</option>
         <option value="A+">A+</option>
         <option value="A-">A-</option>
         <option value="B+">B+</option>
@@ -101,11 +96,11 @@
 
     <!-- Photo Upload -->
     <div class="form-group">
-      <label for="photo">{{ 'REG_FORM_PHOTO_LABEL' | translate | async }}</label>
+      <label for="photo">{{ 'REG_FORM_PHOTO_LABEL' | translate }}</label>
       <div class="custom-file-input">
         <input type="file" id="photo" (change)="onFileSelected($event)">
         <div class="custom-file-label">
-          {{ 'REG_FORM_PHOTO_BUTTON' | translate | async }}
+          {{ 'REG_FORM_PHOTO_BUTTON' | translate }}
         </div>
       </div>
       <small class="error-message" *ngIf="registrationForm.get('photo')?.errors && registrationForm.get('photo')?.touched">
@@ -115,7 +110,7 @@
 
     <!-- Email -->
     <div class="form-group">
-      <label for="email">{{ 'REG_FORM_EMAIL_LABEL' | translate | async }}</label>
+      <label for="email">{{ 'REG_FORM_EMAIL_LABEL' | translate }}</label>
       <input type="email" id="email" formControlName="email">
       <small class="error-message" *ngIf="registrationForm.get('email')?.errors && registrationForm.get('email')?.touched">
         {{ getErrorMessage('email') }}
@@ -124,7 +119,7 @@
 
     <!-- Phone -->
     <div class="form-group">
-      <label for="phone">{{ 'REG_FORM_PHONE_LABEL' | translate | async }}</label>
+      <label for="phone">{{ 'REG_FORM_PHONE_LABEL' | translate }}</label>
       <input type="tel" id="phone" formControlName="phone">
       <small class="error-message" *ngIf="registrationForm.get('phone')?.errors && registrationForm.get('phone')?.touched">
         {{ getErrorMessage('phone') }}
@@ -133,7 +128,7 @@
 
     <!-- Emergency Contact -->
     <div class="form-group">
-      <label for="emergencyContact">{{ 'REG_FORM_EMERGENCY_CONTACT_LABEL' | translate | async }}</label>
+      <label for="emergencyContact">{{ 'REG_FORM_EMERGENCY_CONTACT_LABEL' | translate }}</label>
       <input type="tel" id="emergencyContact" formControlName="emergencyContact">
       <small class="error-message" *ngIf="registrationForm.get('emergencyContact')?.errors && registrationForm.get('emergencyContact')?.touched">
         {{ getErrorMessage('emergencyContact') }}
@@ -142,9 +137,9 @@
 
     <!-- T-shirt Size -->
     <div class="form-group">
-      <label for="tshirtSize">{{ 'REG_FORM_TSHIRT_LABEL' | translate | async }}</label>
+      <label for="tshirtSize">{{ 'REG_FORM_TSHIRT_LABEL' | translate }}</label>
       <select id="tshirtSize" formControlName="tshirtSize">
-        <option value="">{{ 'REG_FORM_TSHIRT_SELECT' | translate | async }}</option>
+        <option value="">{{ 'REG_FORM_TSHIRT_SELECT' | translate }}</option>
         <option value="S">S</option>
         <option value="M">M</option>
         <option value="L">L</option>
@@ -158,29 +153,29 @@
 
     <!-- Age Warning -->
     <div class="alert alert-warning" *ngIf="showAgeWarning">
-      {{ 'REG_FORM_AGE_WARNING' | translate | async }}
+      {{ 'REG_FORM_AGE_WARNING' | translate }}
     </div>
 
     <!-- Pledge Agreement -->
     <div class="form-group">
       <div class="info-section">
-        <h3>{{ 'REG_FORM_PLEDGE_TITLE' | translate | async }}</h3>
-        <p>{{ 'REG_FORM_PLEDGE_LINE1' | translate | async }}</p>
-        <h4>{{ 'REG_FORM_PLEDGE_COMMIT_TITLE' | translate | async }}</h4>
+        <h3>{{ 'REG_FORM_PLEDGE_TITLE' | translate }}</h3>
+        <p>{{ 'REG_FORM_PLEDGE_LINE1' | translate }}</p>
+        <h4>{{ 'REG_FORM_PLEDGE_COMMIT_TITLE' | translate }}</h4>
         <ul>
-          <li>{{ 'REG_FORM_PLEDGE_COMMIT1' | translate | async }}</li>
-          <li>{{ 'REG_FORM_PLEDGE_COMMIT2' | translate | async }}</li>
-          <li>{{ 'REG_FORM_PLEDGE_COMMIT3' | translate | async }}</li>
-          <li>{{ 'REG_FORM_PLEDGE_COMMIT4' | translate | async }}</li>
-          <li>{{ 'REG_FORM_PLEDGE_COMMIT5' | translate | async }}</li>
-          <li>{{ 'REG_FORM_PLEDGE_COMMIT6' | translate | async }}</li>
+          <li>{{ 'REG_FORM_PLEDGE_COMMIT1' | translate }}</li>
+          <li>{{ 'REG_FORM_PLEDGE_COMMIT2' | translate }}</li>
+          <li>{{ 'REG_FORM_PLEDGE_COMMIT3' | translate }}</li>
+          <li>{{ 'REG_FORM_PLEDGE_COMMIT4' | translate }}</li>
+          <li>{{ 'REG_FORM_PLEDGE_COMMIT5' | translate }}</li>
+          <li>{{ 'REG_FORM_PLEDGE_COMMIT6' | translate }}</li>
         </ul>
-        <p>{{ 'REG_FORM_PLEDGE_LINE2' | translate | async }}</p>
-        <p>{{ 'REG_FORM_PLEDGE_LINE3' | translate | async }}</p>
+        <p>{{ 'REG_FORM_PLEDGE_LINE2' | translate }}</p>
+        <p>{{ 'REG_FORM_PLEDGE_LINE3' | translate }}</p>
       </div>
       <div class="checkbox">
         <input type="checkbox" id="pledgeAgree" formControlName="pledgeAgree">
-        <label for="pledgeAgree">{{ 'REG_FORM_PLEDGE_AGREE_LABEL' | translate | async }}</label>
+        <label for="pledgeAgree">{{ 'REG_FORM_PLEDGE_AGREE_LABEL' | translate }}</label>
         <small class="error-message" *ngIf="registrationForm.get('pledgeAgree')?.errors?.['required'] && registrationForm.get('pledgeAgree')?.touched">
           {{ getErrorMessage('pledgeAgree') }}
         </small>
@@ -189,21 +184,21 @@
 
     <!-- Form Details -->
     <div class="info-section">
-      <h3>{{ 'REG_FORM_DETAILS_TITLE' | translate | async }}</h3>
-      <p>{{ 'REG_FORM_DETAILS_EVENT_DAY' | translate | async }}</p>
-      <p>{{ 'REG_FORM_DETAILS_START_LOCATION' | translate | async }}</p>
-      <p>{{ 'REG_FORM_DETAILS_MARATHON_DISTANCE' | translate | async }}</p>
-      <p>{{ 'REG_FORM_DETAILS_REG_START' | translate | async }}</p>
-      <p>{{ 'REG_FORM_DETAILS_REG_END' | translate | async }}</p>
+      <h3>{{ 'REG_FORM_DETAILS_TITLE' | translate }}</h3>
+      <p>{{ 'REG_FORM_DETAILS_EVENT_DAY' | translate }}</p>
+      <p>{{ 'REG_FORM_DETAILS_START_LOCATION' | translate }}</p>
+      <p>{{ 'REG_FORM_DETAILS_MARATHON_DISTANCE' | translate }}</p>
+      <p>{{ 'REG_FORM_DETAILS_REG_START' | translate }}</p>
+      <p>{{ 'REG_FORM_DETAILS_REG_END' | translate }}</p>
     </div>
 
     <!-- Submit and Back Buttons -->
     <div class="form-actions">
       <button type="submit" class="submit-btn" [disabled]="!registrationForm.valid">
-        {{ 'REG_FORM_SUBMIT_BUTTON' | translate | async }}
+        {{ 'REG_FORM_SUBMIT_BUTTON' | translate }}
       </button>
       <button type="button" class="back-btn" routerLink="/">
-        {{ 'REG_FORM_BACK_BUTTON' | translate | async }}
+        {{ 'REG_FORM_BACK_BUTTON' | translate }}
       </button>
     </div>
   </form>

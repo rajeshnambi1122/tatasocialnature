@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from './translate.service';
 import { Observable, of } from 'rxjs';
-import { map, switchMap, distinctUntilChanged } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Pipe({
   name: 'translate',
@@ -12,13 +12,12 @@ export class TranslatePipe implements PipeTransform {
 
   constructor(private translateService: TranslateService) {}
 
-  transform(value: string): Observable<string> {
+  transform(value: string): string | null {
     if (!value) {
-      return of('');
+      return '';
     }
-    return this.translateService.getCurrentLanguage().pipe(
-      distinctUntilChanged(),
-      map(() => this.translateService.getTranslation(value))
-    );
+    
+    // Get the translation directly
+    return this.translateService.getTranslation(value);
   }
-} 
+}
