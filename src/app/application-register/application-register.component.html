@@ -19,8 +19,8 @@
       <label for="eventType">{{ 'REG_FORM_EVENT_TYPE_LABEL' | translate | async }}</label>
       <select id="eventType" formControlName="eventType">
         <option value="">{{ 'REG_FORM_EVENT_TYPE_SELECT' | translate | async }}</option>
-        <option value="marathon">{{ 'REG_FORM_EVENT_TYPE_MARATHON' | translate | async }}</option>
         <option value="kidathon">{{ 'REG_FORM_EVENT_TYPE_KIDATHON' | translate | async }}</option>
+        <option value="marathon">{{ 'REG_FORM_EVENT_TYPE_MARATHON' | translate | async }}</option>
         <option value="kingwalkathon">{{ 'REG_FORM_EVENT_TYPE_KINGWALKATHON' | translate | async }}</option>
         <option value="walkathon_disabled">{{ 'REG_FORM_EVENT_TYPE_WALKATHON_DISABLED' | translate | async }}</option>
         <option value="drawing">{{ 'REG_FORM_EVENT_TYPE_DRAWING' | translate | async }}</option>
@@ -63,8 +63,6 @@
         <option value="">{{ 'REG_FORM_GENDER_SELECT' | translate | async }}</option>
         <option value="male">{{ 'REG_FORM_GENDER_MALE' | translate | async }}</option>
         <option value="female">{{ 'REG_FORM_GENDER_FEMALE' | translate | async }}</option>
-        <option value="boy">{{ 'REG_FORM_GENDER_BOY' | translate | async }}</option>
-        <option value="girl">{{ 'REG_FORM_GENDER_GIRL' | translate | async }}</option>
       </select>
       <small class="error-message" *ngIf="registrationForm.get('gender')?.errors?.['required'] && registrationForm.get('gender')?.touched">
         {{ getErrorMessage('gender') }}
@@ -81,37 +79,6 @@
       </small>
     </div>
 
-    <!-- School Name (Conditional) -->
-    <div class="form-group" *ngIf="isSchoolEvent">
-      <label for="schoolName">{{ 'REG_FORM_SCHOOL_LABEL' | translate | async }}</label>
-      <input type="text" id="schoolName" formControlName="schoolName">
-      <small class="error-message" *ngIf="registrationForm.get('schoolName')?.errors?.['required'] && registrationForm.get('schoolName')?.touched">
-        {{ getErrorMessage('schoolName') }}
-      </small>
-    </div>
-
-    <!-- Standard (Conditional) -->
-    <div class="form-group" *ngIf="isSchoolEvent">
-      <label for="standard">{{ 'REG_FORM_STANDARD_LABEL' | translate | async }}</label>
-      <select id="standard" formControlName="standard">
-        <option value="">{{ 'REG_FORM_STANDARD_SELECT' | translate | async }}</option>
-        <option value="1">{{ 'REG_FORM_STANDARD_1' | translate | async }}</option>
-        <option value="2">{{ 'REG_FORM_STANDARD_2' | translate | async }}</option>
-        <option value="3">{{ 'REG_FORM_STANDARD_3' | translate | async }}</option>
-        <option value="4">{{ 'REG_FORM_STANDARD_4' | translate | async }}</option>
-        <option value="5">{{ 'REG_FORM_STANDARD_5' | translate | async }}</option>
-        <option value="6">{{ 'REG_FORM_STANDARD_6' | translate | async }}</option>
-        <option value="7">{{ 'REG_FORM_STANDARD_7' | translate | async }}</option>
-        <option value="8">{{ 'REG_FORM_STANDARD_8' | translate | async }}</option>
-        <option value="9">{{ 'REG_FORM_STANDARD_9' | translate | async }}</option>
-        <option value="10">{{ 'REG_FORM_STANDARD_10' | translate | async }}</option>
-        <option value="11">{{ 'REG_FORM_STANDARD_11' | translate | async }}</option>
-        <option value="12">{{ 'REG_FORM_STANDARD_12' | translate | async }}</option>
-      </select>
-      <small class="error-message" *ngIf="registrationForm.get('standard')?.errors?.['required'] && registrationForm.get('standard')?.touched">
-        {{ getErrorMessage('standard') }}
-      </small>
-    </div>
 
     <!-- Blood Group -->
     <div class="form-group">

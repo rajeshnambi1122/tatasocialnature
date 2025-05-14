@@ -17,7 +17,6 @@ import { MetaService } from '../services/meta.service';
 export class ApplicationRegisterComponent implements OnInit {
   registrationForm: FormGroup;
   selectedEventType: string = '';
-  isSchoolEvent: boolean = false;
   showAgeWarning: boolean = false;
   currentLang$: Observable<string>;
 
@@ -35,8 +34,6 @@ export class ApplicationRegisterComponent implements OnInit {
       age: [{value: '', disabled: true}],
       gender: ['', Validators.required],
       aadharNumber: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
-      schoolName: [''],
-      standard: [''],
       bloodGroup: ['', Validators.required],
       photo: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -56,22 +53,6 @@ export class ApplicationRegisterComponent implements OnInit {
     // Subscribe to event type changes
     this.registrationForm.get('eventType')?.valueChanges.subscribe(value => {
       this.selectedEventType = value;
-      this.isSchoolEvent = value === 'drawing' || value === 'poetry';
-      
-      // Update validators for school-related fields
-      const schoolNameControl = this.registrationForm.get('schoolName');
-      const standardControl = this.registrationForm.get('standard');
-      
-      if (this.isSchoolEvent) {
-        schoolNameControl?.setValidators([Validators.required]);
-        standardControl?.setValidators([Validators.required]);
-      } else {
-        schoolNameControl?.clearValidators();
-        standardControl?.clearValidators();
-      }
-      
-      schoolNameControl?.updateValueAndValidity();
-      standardControl?.updateValueAndValidity();
     });
 
     // Subscribe to DOB changes for age calculation

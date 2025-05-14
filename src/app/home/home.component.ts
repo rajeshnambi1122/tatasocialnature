@@ -46,7 +46,11 @@ export class HomeComponent implements OnInit {
     { src: 'images/ten2.jpeg', alt: 'Tirunelveli Railway Station' },
     { src: 'images/ten3.jpeg', alt: 'Thamirabarani River' },
     { src: 'images/ten4.jpeg', alt: 'World Famous Halwa' },
-    { src: 'images/ten5.jpeg', alt: 'Cultural Heritage' }
+    { src: 'images/ten5.jpeg', alt: 'Temple' },
+    { src: 'images/ten6.jpeg', alt: 'Church' },
+    { src: 'images/ten7.jpeg', alt: 'Cultural Heritage' },
+    { src: 'images/ten8.jpeg', alt: 'Cultural Heritage' },
+    { src: 'images/ten9.jpeg', alt: 'Cultural Heritage' },
   ];
   
   autoSlideInterval: any;
