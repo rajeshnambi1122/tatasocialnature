@@ -193,5 +193,14 @@
   "CONTACT_ADDRESS": "Baskaran.U Social and Nature Conservation Trust, Tirunelveli, Tamil Nadu - 627011",
   "FOOTER_TITLE": "Halwa City Marathon",
   "FOOTER_DESCRIPTION": "A run for environment awareness in Tirunelveli, celebrating World Environment Day.",
-  "MEDICAL_AMBULANCE": "Ambulances stationed along the route"
+  "MEDICAL_AMBULANCE": "Ambulances stationed along the route",
+  "ADMIN_LOGIN_TITLE": "Admin Login",
+  "ADMIN_LOGIN_USERNAME": "Username",
+  "ADMIN_LOGIN_PASSWORD": "Password",
+  "ADMIN_LOGIN_BUTTON": "Login",
+  "ADMIN_LOGIN_ERROR": "Invalid username or password",
+  "ADMIN_LOGIN_BACK": "Back to Homepage",
+  "ADMIN_DASHBOARD_TITLE": "Admin Dashboard",
+  "ADMIN_DASHBOARD_SUBTITLE": "Marathon Participants Management",
+  "ADMIN_LOGOUT": "Logout"
 }

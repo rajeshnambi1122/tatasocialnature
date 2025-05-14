@@ -2,8 +2,13 @@
   <!-- Header Section -->
   <header class="modern-header">
     <div class="header-content">
-      <h1>Admin Dashboard</h1>
-      <p>Marathon Participants Management</p>
+      <h1>{{ 'ADMIN_DASHBOARD_TITLE' | translate }}</h1>
+      <p>{{ 'ADMIN_DASHBOARD_SUBTITLE' | translate }}</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> {{ 'ADMIN_LOGOUT' | translate }}
+      </button>
     </div>
   </header>
 

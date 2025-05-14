@@ -4,6 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParticipantService, Participant } from '../services/participant.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MetaService } from '../../services/meta.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { TranslatePipe } from '../../translate.pipe';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -13,7 +16,8 @@ import { MetaService } from '../../services/meta.service';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslatePipe
   ]
 })
 export class AdminDashboardComponent implements OnInit {
@@ -45,7 +49,9 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private participantService: ParticipantService,
     private fb: FormBuilder,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.searchForm = this.fb.group({
       searchQuery: [''],
@@ -254,5 +260,10 @@ export class AdminDashboardComponent implements OnInit {
     link.href = URL.createObjectURL(blob);
     link.download = `participants_${new Date().toISOString().split('T')[0]}.csv`;
     link.click();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/admin/login']);
   }
 } 

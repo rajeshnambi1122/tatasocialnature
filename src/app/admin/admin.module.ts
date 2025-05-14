@@ -5,9 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ParticipantService } from './services/participant.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { authGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: AdminDashboardComponent }
+  { path: 'login', component: AdminLoginComponent },
+  { path: '', component: AdminDashboardComponent, canActivate: [authGuard] }
 ];
 
 @NgModule({
@@ -17,7 +20,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    AdminLoginComponent
   ],
   providers: [ParticipantService]
 })
