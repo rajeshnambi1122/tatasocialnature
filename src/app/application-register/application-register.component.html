@@ -182,6 +182,24 @@
       </div>
     </div>
 
+    <!-- Declaration -->
+    <div class="form-group">
+      <div class="info-section">
+        <h3>{{ 'REG_FORM_DECLARATION_TITLE' | translate }}</h3>
+        <p>{{ 'REG_FORM_DECLARATION_POINT1' | translate }}</p>
+        <p>{{ 'REG_FORM_DECLARATION_POINT2' | translate }}</p>
+        <p>{{ 'REG_FORM_DECLARATION_POINT3' | translate }}</p>
+        <p>{{ 'REG_FORM_DECLARATION_POINT4' | translate }}</p>
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" id="declarationAgree" formControlName="declarationAgree">
+        <label for="declarationAgree">{{ 'REG_FORM_DECLARATION_AGREE_LABEL' | translate }}</label>
+        <small class="error-message" *ngIf="registrationForm.get('declarationAgree')?.errors?.['required'] && registrationForm.get('declarationAgree')?.touched">
+          {{ getErrorMessage('declarationAgree') }}
+        </small>
+      </div>
+    </div>
+
     <!-- Form Details -->
     <div class="info-section">
       <h3>{{ 'REG_FORM_DETAILS_TITLE' | translate }}</h3>

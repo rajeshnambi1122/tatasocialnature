@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit {
     { src: 'images/ten7.jpeg', alt: 'Cultural Heritage' },
     { src: 'images/ten8.jpeg', alt: 'Cultural Heritage' },
     { src: 'images/ten9.jpeg', alt: 'Cultural Heritage' },
+    { src: 'images/ten10.jpeg', alt: 'Cultural Heritage' },
   ];
   
   autoSlideInterval: any;

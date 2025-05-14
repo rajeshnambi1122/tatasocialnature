@@ -67,12 +67,12 @@ export class MarathonRouteComponent implements OnInit {
   
   private setMetaTags(): void {
     this.metaService.setMetaTags({
-      title: 'Marathon Route | TP Marathon 2025',
-      description: 'Explore the full marathon route for the Tirunelveli-Palayamkottai Marathon 2025. View maps, checkpoints, and aid stations.',
-      keywords: 'marathon route, Tirunelveli marathon map, race course',
-      ogTitle: 'TP Marathon 2025 - Race Route Map',
-      ogDescription: 'View the complete route map for the Tirunelveli-Palayamkottai Marathon 2025',
-      canonicalUrl: 'https://tpmarathon.com/route'
+      title: 'Marathon Route | Halwa City Marathon 2025',
+      description: 'Explore the full marathon route for the Halwa City Marathon 2025. Starting and finishing at Blind Higher Secondary School Playground (Anna Stadium Opposite).',
+      keywords: 'marathon route, Tirunelveli marathon map, Halwa City Marathon, race course',
+      ogTitle: 'Halwa City Marathon 2025 - Race Route Map',
+      ogDescription: 'View the complete route map for the Halwa City Marathon 2025 through key landmarks of Tirunelveli city.',
+      canonicalUrl: 'https://halwacitymarathon.com/route'
     });
   }
   

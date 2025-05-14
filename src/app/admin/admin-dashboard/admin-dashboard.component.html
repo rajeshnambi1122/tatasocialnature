@@ -62,11 +62,11 @@
         </div>
       </div>
       <div class="stat-card glass-card">
-        <div class="stat-icon full">
+        <div class="stat-icon marathon">
           <i class="fas fa-running"></i>
         </div>
         <div class="stat-content">
-          <h3>Full Marathon</h3>
+          <h3>Marathon</h3>
           <p class="stat-number">{{ stats.fullMarathon }}</p>
           <div class="stat-footer">
             <span class="stat-percent">{{ getPercentage(stats.fullMarathon, stats.total) }}%</span> of total
@@ -74,11 +74,11 @@
         </div>
       </div>
       <div class="stat-card glass-card">
-        <div class="stat-icon half">
-          <i class="fas fa-running"></i>
+        <div class="stat-icon kidathon">
+          <i class="fas fa-child"></i>
         </div>
         <div class="stat-content">
-          <h3>Half Marathon</h3>
+          <h3>Kidathon</h3>
           <p class="stat-number">{{ stats.halfMarathon }}</p>
           <div class="stat-footer">
             <span class="stat-percent">{{ getPercentage(stats.halfMarathon, stats.total) }}%</span> of total
@@ -86,14 +86,50 @@
         </div>
       </div>
       <div class="stat-card glass-card">
-        <div class="stat-icon fun">
-          <i class="fas fa-running"></i>
+        <div class="stat-icon walkathon">
+          <i class="fas fa-walking"></i>
         </div>
         <div class="stat-content">
-          <h3>Fun Run</h3>
+          <h3>King Walkathon</h3>
           <p class="stat-number">{{ stats.funRun }}</p>
           <div class="stat-footer">
             <span class="stat-percent">{{ getPercentage(stats.funRun, stats.total) }}%</span> of total
+          </div>
+        </div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-icon walkathon_disabled">
+          <i class="fas fa-wheelchair"></i>
+        </div>
+        <div class="stat-content">
+          <h3>Disabled Walkathon</h3>
+          <p class="stat-number">{{ stats.walkathon_disabled }}</p>
+          <div class="stat-footer">
+            <span class="stat-percent">{{ getPercentage(stats.walkathon_disabled, stats.total) }}%</span> of total
+          </div>
+        </div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-icon drawing">
+          <i class="fas fa-paint-brush"></i>
+        </div>
+        <div class="stat-content">
+          <h3>Drawing Competition</h3>
+          <p class="stat-number">{{ stats.drawing }}</p>
+          <div class="stat-footer">
+            <span class="stat-percent">{{ getPercentage(stats.drawing, stats.total) }}%</span> of total
+          </div>
+        </div>
+      </div>
+      <div class="stat-card glass-card">
+        <div class="stat-icon poetry">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="stat-content">
+          <h3>Poetry Competition</h3>
+          <p class="stat-number">{{ stats.poetry }}</p>
+          <div class="stat-footer">
+            <span class="stat-percent">{{ getPercentage(stats.poetry, stats.total) }}%</span> of total
           </div>
         </div>
       </div>
@@ -123,11 +159,14 @@
           </div>
         </div>
         <div class="demographic-card">
-          <h3>Category Distribution</h3>
+          <h3>Event Type Distribution</h3>
           <div class="chart-donut-container">
-            <div class="donut-segment full" [style.--percentage]="getPercentage(stats.fullMarathon, stats.total)"></div>
-            <div class="donut-segment half" [style.--percentage]="getPercentage(stats.halfMarathon, stats.total)"></div>
-            <div class="donut-segment fun" [style.--percentage]="getPercentage(stats.funRun, stats.total)"></div>
+            <div class="donut-segment marathon" [style.--percentage]="getPercentage(stats.fullMarathon, stats.total)"></div>
+            <div class="donut-segment kidathon" [style.--percentage]="getPercentage(stats.halfMarathon, stats.total)"></div>
+            <div class="donut-segment walkathon" [style.--percentage]="getPercentage(stats.funRun, stats.total)"></div>
+            <div class="donut-segment walkathon_disabled" [style.--percentage]="getPercentage(stats.walkathon_disabled, stats.total)"></div>
+            <div class="donut-segment drawing" [style.--percentage]="getPercentage(stats.drawing, stats.total)"></div>
+            <div class="donut-segment poetry" [style.--percentage]="getPercentage(stats.poetry, stats.total)"></div>
             <div class="donut-center">
               <span class="donut-total">{{ stats.total }}</span>
               <span class="donut-label">Total</span>
@@ -135,16 +174,28 @@
           </div>
           <div class="donut-legend">
             <div class="legend-item">
-              <span class="legend-color full"></span>
-              <span class="legend-label">Full Marathon</span>
+              <span class="legend-color marathon"></span>
+              <span class="legend-label">Marathon</span>
             </div>
             <div class="legend-item">
-              <span class="legend-color half"></span>
-              <span class="legend-label">Half Marathon</span>
+              <span class="legend-color kidathon"></span>
+              <span class="legend-label">Kidathon</span>
             </div>
             <div class="legend-item">
-              <span class="legend-color fun"></span>
-              <span class="legend-label">Fun Run</span>
+              <span class="legend-color walkathon"></span>
+              <span class="legend-label">King Walkathon</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color walkathon_disabled"></span>
+              <span class="legend-label">Disabled Walkathon</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color drawing"></span>
+              <span class="legend-label">Drawing</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color poetry"></span>
+              <span class="legend-label">Poetry</span>
             </div>
           </div>
         </div>
@@ -155,10 +206,13 @@
     <div class="filters-section glass-card">
       <h2>Search Participants</h2>
       <div class="quick-filters">
-        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === ''" (click)="setQuickFilter('')">All</button>
-        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === 'full'" (click)="setQuickFilter('full')">Full Marathon</button>
-        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === 'half'" (click)="setQuickFilter('half')">Half Marathon</button>
-        <button class="quick-filter-btn" [class.active]="searchForm.get('category')?.value === 'fun'" (click)="setQuickFilter('fun')">Fun Run</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === ''" (click)="setQuickFilter('')">All</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === 'marathon'" (click)="setQuickFilter('marathon')">Marathon</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === 'kidathon'" (click)="setQuickFilter('kidathon')">Kidathon</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === 'kingwalkathon'" (click)="setQuickFilter('kingwalkathon')">King Walkathon</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === 'walkathon_disabled'" (click)="setQuickFilter('walkathon_disabled')">Walkathon for Disabled</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === 'drawing'" (click)="setQuickFilter('drawing')">Drawing</button>
+        <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === 'poetry'" (click)="setQuickFilter('poetry')">Poetry</button>
       </div>
       <form [formGroup]="searchForm" class="search-form">
         <div class="search-input">
@@ -166,18 +220,21 @@
           <input 
             type="text" 
             formControlName="searchQuery" 
-            placeholder="Search by name or email..."
+            placeholder="Search by name, email, or aadhar..."
           >
           <button *ngIf="searchForm.get('searchQuery')?.value" class="clear-search" (click)="clearSearch()">
             <i class="fas fa-times"></i>
           </button>
         </div>
         <div class="category-filter">
-          <select formControlName="category">
-            <option value="">All Categories</option>
-            <option value="full">Full Marathon</option>
-            <option value="half">Half Marathon</option>
-            <option value="fun">Fun Run</option>
+          <select formControlName="eventType">
+            <option value="">All Event Types</option>
+            <option value="marathon">Marathon</option>
+            <option value="kidathon">Kidathon</option>
+            <option value="kingwalkathon">King Walkathon</option>
+            <option value="walkathon_disabled">Walkathon for Disabled</option>
+            <option value="drawing">Drawing Competition</option>
+            <option value="poetry">Poetry Competition</option>
           </select>
         </div>
         <button type="button" class="btn btn-primary export-btn" (click)="exportToCSV()">
@@ -209,14 +266,14 @@
                 Age <i class="fas" [ngClass]="sortColumn === 'age' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
               </th>
               <th>Gender</th>
-              <th class="sortable" (click)="sortBy('category')">
-                Category <i class="fas" [ngClass]="sortColumn === 'category' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
+              <th class="sortable" (click)="sortBy('eventType')">
+                Event Type <i class="fas" [ngClass]="sortColumn === 'eventType' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
               </th>
+              <th>Blood Group</th>
               <th class="sortable" (click)="sortBy('registrationDate')">
                 Reg. Date <i class="fas" [ngClass]="sortColumn === 'registrationDate' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
               </th>
-              <th>Emergency Contact</th>
-              <th>Actions</th>
+              <th>View</th>
             </tr>
           </thead>
           <tbody>
@@ -248,20 +305,15 @@
                 {{ participant.gender }}
               </td>
               <td>
-                <span class="category-badge" [class]="participant.category">
-                  {{ participant.category | titlecase }}
+                <span class="event-type-badge" [class]="participant.eventType">
+                  {{ participant.eventType | titlecase }}
                 </span>
               </td>
+              <td>{{ participant.bloodGroup }}</td>
               <td>{{ participant.registrationDate | date:'mediumDate' }}</td>
-              <td>{{ participant.emergencyContact }}</td>
-              <td class="table-actions">
-                <button class="action-btn view" (click)="viewDetails(participant)">
-                  <i class="fas fa-eye"></i>
-                </button>
-                <button class="action-btn compare" [class.selected]="isSelectedForComparison(participant)" 
-                  [disabled]="!isSelectedForComparison(participant) && !canAddMoreToComparison()" 
-                  (click)="toggleCompareParticipant(participant)">
-                  <i class="fas fa-balance-scale"></i>
+              <td class="view-details-cell">
+                <button class="view-details-btn" (click)="viewDetails(participant)">
+                  <i class="fas fa-eye"></i> View
                 </button>
               </td>
             </tr>
@@ -303,14 +355,15 @@
     <div class="modal-body">
       <div class="participant-profile">
         <div class="participant-avatar">
-          <div class="avatar-circle" [ngClass]="selectedParticipant.gender === 'Male' ? 'male' : 'female'">
+          <div *ngIf="!selectedParticipant.photo" class="avatar-circle" [ngClass]="selectedParticipant.gender === 'Male' ? 'male' : 'female'">
             {{ getInitials(selectedParticipant.name) }}
           </div>
+          <img *ngIf="selectedParticipant.photo" [src]="selectedParticipant.photo" alt="Participant photo" class="participant-photo">
         </div>
         <div class="participant-primary-info">
           <h3>{{ selectedParticipant.name }}</h3>
           <span class="category-badge large" [class]="selectedParticipant.category">
-            {{ selectedParticipant.category | titlecase }} Marathon
+            {{ getEventTypeDisplay(selectedParticipant.eventType) }}
           </span>
         </div>
       </div>
@@ -338,11 +391,23 @@
             <div class="detail-value">{{ selectedParticipant.age }}</div>
           </div>
           <div class="detail-row">
+            <div class="detail-label">Date of Birth</div>
+            <div class="detail-value">{{ selectedParticipant.dob | date:'mediumDate' }}</div>
+          </div>
+          <div class="detail-row">
             <div class="detail-label">Gender</div>
             <div class="detail-value">
               <i class="fas" [ngClass]="selectedParticipant.gender === 'Male' ? 'fa-mars' : 'fa-venus'"></i>
               {{ selectedParticipant.gender }}
             </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Aadhar Number</div>
+            <div class="detail-value">{{ selectedParticipant.aadharNumber }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Blood Group</div>
+            <div class="detail-value">{{ selectedParticipant.bloodGroup }}</div>
           </div>
         </div>
 
@@ -352,8 +417,16 @@
             Marathon Details
           </div>
           <div class="detail-row">
+            <div class="detail-label">Event Type</div>
+            <div class="detail-value">{{ getEventTypeDisplay(selectedParticipant.eventType) }}</div>
+          </div>
+          <div class="detail-row">
             <div class="detail-label">Category</div>
-            <div class="detail-value">{{ selectedParticipant.category | titlecase }} Marathon</div>
+            <div class="detail-value">{{ selectedParticipant.category | titlecase }}</div>
+          </div>
+          <div class="detail-row" *ngIf="selectedParticipant.tshirtSize">
+            <div class="detail-label">T-shirt Size</div>
+            <div class="detail-value">{{ selectedParticipant.tshirtSize }}</div>
           </div>
           <div class="detail-row">
             <div class="detail-label">Registration Date</div>
@@ -362,6 +435,13 @@
           <div class="detail-row">
             <div class="detail-label">Registration ID</div>
             <div class="detail-value">#{{ selectedParticipant.id.toString().padStart(4, '0') }}</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">Pledge Agreement</div>
+            <div class="detail-value">
+              <i class="fas" [ngClass]="selectedParticipant.pledgeAgree ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
+              {{ selectedParticipant.pledgeAgree ? 'Agreed' : 'Not Agreed' }}
+            </div>
           </div>
         </div>
 
@@ -464,15 +544,43 @@
               </td>
             </tr>
             <tr>
+              <td class="field-name">Date of Birth</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].dob !== participant.dob">
+                {{ participant.dob | date:'mediumDate' }}
+              </td>
+            </tr>
+            <tr>
               <td class="field-name">Gender</td>
               <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].gender !== participant.gender">
                 {{ participant.gender }}
               </td>
             </tr>
             <tr>
+              <td class="field-name">Aadhar Number</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.aadharNumber }}</td>
+            </tr>
+            <tr>
+              <td class="field-name">Blood Group</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].bloodGroup !== participant.bloodGroup">
+                {{ participant.bloodGroup }}
+              </td>
+            </tr>
+            <tr>
+              <td class="field-name">Event Type</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].eventType !== participant.eventType">
+                {{ getEventTypeDisplay(participant.eventType) }}
+              </td>
+            </tr>
+            <tr>
               <td class="field-name">Category</td>
               <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].category !== participant.category">
                 <span class="category-badge" [class]="participant.category">{{ participant.category | titlecase }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="field-name">T-shirt Size</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].tshirtSize !== participant.tshirtSize">
+                {{ participant.tshirtSize || 'N/A' }}
               </td>
             </tr>
             <tr>
@@ -485,7 +593,13 @@
               <td class="field-name">Emergency Contact</td>
               <td *ngFor="let participant of participantsToCompare">{{ participant.emergencyContact }}</td>
             </tr>
-            <tr *ngIf="participantsToCompare[0].medicalConditions">
+            <tr>
+              <td class="field-name">Pledge Agreement</td>
+              <td *ngFor="let participant of participantsToCompare" [class.highlight-difference]="participantsToCompare[0].pledgeAgree !== participant.pledgeAgree">
+                {{ participant.pledgeAgree ? 'Agreed' : 'Not Agreed' }}
+              </td>
+            </tr>
+            <tr *ngIf="anyParticipantHasMedicalConditions()">
               <td class="field-name">Medical Conditions</td>
               <td *ngFor="let participant of participantsToCompare">{{ participant.medicalConditions || 'None' }}</td>
             </tr>

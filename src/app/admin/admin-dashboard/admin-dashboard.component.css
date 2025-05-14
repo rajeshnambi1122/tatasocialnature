@@ -84,21 +84,44 @@
 }
 
 .stat-icon {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 1rem;
-  font-size: 1.5rem;
   color: white;
+  font-size: 1.5rem;
 }
 
-.stat-icon.total { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
-.stat-icon.full { background: linear-gradient(135deg, var(--danger-color), var(--danger-color-rgb)); }
-.stat-icon.half { background: linear-gradient(135deg, var(--success-color), var(--success-color-rgb)); }
-.stat-icon.fun { background: linear-gradient(135deg, var(--accent-color), var(--accent-dark)); }
+.stat-icon.total {
+  background: #4caf50;
+}
+
+.stat-icon.marathon {
+  background: var(--primary-color);
+}
+
+.stat-icon.kidathon {
+  background: var(--accent-color);
+}
+
+.stat-icon.walkathon {
+  background: #9c27b0;
+}
+
+.stat-icon.walkathon_disabled {
+  background: #607d8b;
+}
+
+.stat-icon.drawing {
+  background: #e91e63;
+}
+
+.stat-icon.poetry {
+  background: #9c27b0;
+}
 
 .stat-content h3 {
   margin: 0;
@@ -811,6 +834,30 @@ tr:hover {
   transform: rotate(calc((var(--percentage) + var(--percentage-half, 0)) * 3.6deg));
 }
 
+.donut-segment.marathon {
+  --segment-color: var(--primary-color);
+}
+
+.donut-segment.kidathon {
+  --segment-color: var(--accent-color);
+}
+
+.donut-segment.walkathon {
+  --segment-color: #9c27b0;
+}
+
+.donut-segment.walkathon_disabled {
+  --segment-color: #607d8b;
+}
+
+.donut-segment.drawing {
+  --segment-color: #e91e63;
+}
+
+.donut-segment.poetry {
+  --segment-color: #9c27b0;
+}
+
 .donut-center {
   position: absolute;
   top: 50%;
@@ -872,6 +919,30 @@ tr:hover {
 
 .legend-color.fun {
   background: var(--accent-color);
+}
+
+.legend-color.marathon {
+  background-color: var(--primary-color);
+}
+
+.legend-color.kidathon {
+  background-color: var(--accent-color);
+}
+
+.legend-color.walkathon {
+  background-color: #9c27b0;
+}
+
+.legend-color.walkathon_disabled {
+  background-color: #607d8b;
+}
+
+.legend-color.drawing {
+  background-color: #e91e63;
+}
+
+.legend-color.poetry {
+  background-color: #9c27b0;
 }
 
 /* Quick Filters */
@@ -1584,4 +1655,71 @@ th.sortable i.fa-sort-down {
     max-height: 90vh;
     overflow-y: auto;
   }
+}
+
+/* Event Type Badges */
+.event-type-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  background: var(--primary-color);
+}
+
+.event-type-badge.marathon {
+  background: var(--primary-color);
+}
+
+.event-type-badge.kidathon {
+  background: var(--accent-color);
+}
+
+.event-type-badge.kingwalkathon {
+  background: #9c27b0;
+}
+
+.event-type-badge.walkathon_disabled {
+  background: #607d8b;
+}
+
+.event-type-badge.drawing {
+  background: #e91e63;
+}
+
+.event-type-badge.poetry {
+  background: #9c27b0;
+}
+
+/* View Details Button */
+.view-details-cell {
+  text-align: center;
+}
+
+.view-details-btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--border-radius-md);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.view-details-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.view-details-btn i {
+  font-size: 0.9rem;
 } 

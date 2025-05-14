@@ -48,7 +48,10 @@ export class AdminDashboardComponent implements OnInit {
     total: 0,
     fullMarathon: 0,
     halfMarathon: 0,
-    funRun: 0
+    funRun: 0,
+    walkathon_disabled: 0,
+    drawing: 0,
+    poetry: 0
   };
 
   constructor(
@@ -60,7 +63,7 @@ export class AdminDashboardComponent implements OnInit {
   ) {
     this.searchForm = this.fb.group({
       searchQuery: [''],
-      category: ['']
+      eventType: ['']
     });
   }
 
@@ -110,22 +113,33 @@ export class AdminDashboardComponent implements OnInit {
       this.participants.filter(participant => {
         const matchesSearch = !filters.searchQuery || 
           participant.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-          participant.email.toLowerCase().includes(filters.searchQuery.toLowerCase());
+          participant.email.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+          participant.aadharNumber.includes(filters.searchQuery);
         
-        const matchesCategory = !filters.category || participant.category === filters.category;
+        const matchesEventType = !filters.eventType || participant.eventType === filters.eventType;
 
-        return matchesSearch && matchesCategory;
+        return matchesSearch && matchesEventType;
       })
     );
     this.currentPage = 1;
   }
 
   updateStats(): void {
+    const marathonCount = this.participants.filter(p => p.eventType === 'marathon').length;
+    const kidathonCount = this.participants.filter(p => p.eventType === 'kidathon').length;
+    const kingWalkathonCount = this.participants.filter(p => p.eventType === 'kingwalkathon').length;
+    const disabledWalkathonCount = this.participants.filter(p => p.eventType === 'walkathon_disabled').length;
+    const drawingCount = this.participants.filter(p => p.eventType === 'drawing').length;
+    const poetryCount = this.participants.filter(p => p.eventType === 'poetry').length;
+    
     this.stats = {
       total: this.participants.length,
-      fullMarathon: this.participants.filter(p => p.category === 'full').length,
-      halfMarathon: this.participants.filter(p => p.category === 'half').length,
-      funRun: this.participants.filter(p => p.category === 'fun').length
+      fullMarathon: marathonCount,
+      halfMarathon: kidathonCount,
+      funRun: kingWalkathonCount,
+      walkathon_disabled: disabledWalkathonCount,
+      drawing: drawingCount,
+      poetry: poetryCount
     };
   }
   
@@ -202,8 +216,8 @@ export class AdminDashboardComponent implements OnInit {
   }
   
   // Quick filters
-  setQuickFilter(category: string): void {
-    this.searchForm.get('category')?.setValue(category);
+  setQuickFilter(eventType: string): void {
+    this.searchForm.get('eventType')?.setValue(eventType);
   }
   
   clearSearch(): void {
@@ -213,7 +227,7 @@ export class AdminDashboardComponent implements OnInit {
   resetFilters(): void {
     this.searchForm.reset({
       searchQuery: '',
-      category: ''
+      eventType: ''
     });
   }
   
@@ -244,27 +258,39 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   exportToCSV(): void {
-    const headers = ['ID', 'Name', 'Email', 'Phone', 'Age', 'Gender', 'Category', 'Registration Date', 'Emergency Contact'];
+    const headers = ['ID', 'Name', 'Email', 'Phone', 'Age', 'DOB', 'Gender', 'Aadhar Number', 
+      'Blood Group', 'Event Type', 'T-shirt Size', 'Registration Date', 'Emergency Contact', 'Pledge Agreement'];
     const csvContent = [
       headers.join(','),
       ...this.filteredParticipants.map(p => [
         p.id,
-        p.name,
-        p.email,
-        p.phone,
+        `"${p.name}"`,
+        `"${p.email}"`,
+        `"${p.phone}"`,
         p.age,
+        new Date(p.dob).toLocaleDateString(),
         p.gender,
-        p.category,
-        p.registrationDate,
-        p.emergencyContact
+        `"${p.aadharNumber}"`,
+        p.bloodGroup,
+        `"${p.eventType}"`,
+        p.tshirtSize || 'N/A',
+        new Date(p.registrationDate).toLocaleDateString(),
+        `"${p.emergencyContact}"`,
+        p.pledgeAgree ? 'Yes' : 'No'
       ].join(','))
     ].join('\n');
-
+    
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `participants_${new Date().toISOString().split('T')[0]}.csv`;
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `marathon-participants-${new Date().toISOString().slice(0, 10)}.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   }
 
   logout(): void {
@@ -326,5 +352,24 @@ export class AdminDashboardComponent implements OnInit {
       max: Math.max(...ages),
       avg: Math.round(ages.reduce((a, b) => a + b, 0) / ages.length)
     };
+  }
+
+  // Helper method to translate event type to display name
+  getEventTypeDisplay(eventType: string): string {
+    const eventTypes: { [key: string]: string } = {
+      'marathon': 'Marathon (Upto 60 years)',
+      'kidathon': 'Kidathon - Butterfly Walk & Run (Up to 10 years)',
+      'kingwalkathon': 'King Walkathon (Above 60 years)',
+      'walkathon_disabled': 'Walkathon - For Disabled (All ages)',
+      'drawing': 'Drawing Competition (School students only)',
+      'poetry': 'Poetry Competition (School students only)'
+    };
+    
+    return eventTypes[eventType] || eventType;
+  }
+  
+  // Helper method to check if any participant has medical conditions
+  anyParticipantHasMedicalConditions(): boolean {
+    return this.participantsToCompare.some(p => p.medicalConditions && p.medicalConditions.trim().length > 0);
   }
 } 

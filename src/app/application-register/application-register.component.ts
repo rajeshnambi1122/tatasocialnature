@@ -40,7 +40,8 @@ export class ApplicationRegisterComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       emergencyContact: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       tshirtSize: ['', Validators.required],
-      pledgeAgree: [false, Validators.requiredTrue]
+      pledgeAgree: [false, Validators.requiredTrue],
+      declarationAgree: [false, Validators.requiredTrue]
     });
   }
 
