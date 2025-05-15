@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 export interface Participant {
   id: number;
@@ -23,103 +24,202 @@ export interface Participant {
   toString(): string;
 }
 
+// API response interface
+export interface RegistrationResponse {
+  registrations: any[];
+  totalCount: number;
+  success: boolean;
+  message: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipantService {
-  private apiUrl = 'api/participants'; // Replace with your actual API endpoint
-
-  // Mock data for development
-  private mockParticipants: Participant[] = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '1234567890',
-      age: 30,
-      dob: new Date('1994-01-15'),
-      gender: 'Male',
-      aadharNumber: '123456789012',
-      bloodGroup: 'O+',
-      category: 'full',
-      eventType: 'marathon',
-      tshirtSize: 'L',
-      registrationDate: new Date('2024-01-15'),
-      emergencyContact: 'Jane Doe (1234567890)',
-      photo: 'https://randomuser.me/api/portraits/men/1.jpg',
-      pledgeAgree: true,
-      toString() { return this.name; }
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      phone: '0987654321',
-      age: 25,
-      dob: new Date('1999-01-16'),
-      gender: 'Female',
-      aadharNumber: '098765432109',
-      bloodGroup: 'A+',
-      category: 'half',
-      eventType: 'marathon',
-      tshirtSize: 'M',
-      registrationDate: new Date('2024-01-16'),
-      emergencyContact: 'John Smith (0987654321)',
-      photo: 'https://randomuser.me/api/portraits/women/1.jpg',
-      pledgeAgree: true,
-      toString() { return this.name; }
-    },
-    {
-      id: 3,
-      name: 'Mike Johnson',
-      email: 'mike@example.com',
-      phone: '5555555555',
-      age: 35,
-      dob: new Date('1989-01-17'),
-      gender: 'Male',
-      aadharNumber: '555555555555',
-      bloodGroup: 'B-',
-      category: 'fun',
-      eventType: 'kidathon',
-      tshirtSize: 'XL',
-      registrationDate: new Date('2024-01-17'),
-      emergencyContact: 'Sarah Johnson (5555555555)',
-      photo: 'https://randomuser.me/api/portraits/men/2.jpg',
-      pledgeAgree: true,
-      toString() { return this.name; }
-    }
-  ];
-
+  private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon';
+  // Use this URL if you have CORS issues with direct API access
+  private proxyUrl = '/api'; // This uses the proxy configuration
+  
   constructor(private http: HttpClient) { }
 
+  // Choose which URL to use
+  private getApiUrl() {
+    // Use the proxy URL to avoid CORS issues
+    return this.proxyUrl;
+  }
+
+  // Helper to get HTTP options with auth token
+  private getHttpOptions() {
+    const token = localStorage.getItem('admin_token');
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'Access-Control-Allow-Origin': '*'
+      }),
+      withCredentials: false
+    };
+  }
+
   getParticipants(): Observable<Participant[]> {
-    // For development, return mock data
-    return of(this.mockParticipants);
+    console.log('Getting participants with token:', localStorage.getItem('admin_token'));
     
-    // For production, use the actual API
-    // return this.http.get<Participant[]>(this.apiUrl);
+    return this.http.get<any>(`${this.getApiUrl()}/registrations`, this.getHttpOptions())
+      .pipe(
+        map(response => {
+          // Log the raw response to understand its structure
+          console.log('Raw API Response:', response);
+          
+          // Check for different possible response structures
+          let registrations: any[] = [];
+          
+          // Case 1: Standard structure with registrations array
+          if (response && response.registrations) {
+            console.log('Found standard registrations array');
+            registrations = response.registrations;
+          }
+          // Case 2: Direct array response
+          else if (Array.isArray(response)) {
+            console.log('Found direct array response');
+            registrations = response;
+          }
+          // Case 3: Nested content or data property
+          else if (response && (response.content || response.data)) {
+            console.log('Found nested content/data property');
+            registrations = response.content || response.data;
+          }
+          // Case 4: Response has unexpected structure, log it
+          else {
+            console.log('Unexpected response structure. Response keys:', Object.keys(response));
+            // Try to find an array property that might contain registrations
+            const arrayProps = Object.keys(response).filter(key => Array.isArray(response[key]));
+            if (arrayProps.length > 0) {
+              console.log('Found potential registration arrays:', arrayProps);
+              registrations = response[arrayProps[0]];
+            }
+          }
+          
+          // If we found registrations data, map it
+          if (registrations && registrations.length > 0) {
+            console.log(`Mapping ${registrations.length} registrations`);
+            return registrations.map((reg: any) => this.mapToParticipant(reg));
+          }
+          
+          console.log('No registrations data found in response');
+          return [];
+        }),
+        catchError(error => {
+          console.error('Error fetching registrations:', error);
+          return of([]);
+        })
+      );
   }
 
   getParticipant(id: number): Observable<Participant | undefined> {
-    const participant = this.mockParticipants.find(p => p.id === id);
-    return of(participant);
+    return this.http.get<any>(`${this.getApiUrl()}/registrations/${id}`, this.getHttpOptions())
+      .pipe(
+        map(response => {
+          if (response && response.success && response.registration) {
+            return this.mapToParticipant(response.registration);
+          }
+          return undefined;
+        }),
+        catchError(error => {
+          console.error(`Error fetching participant ${id}:`, error);
+          return of(undefined);
+        })
+      );
   }
 
   searchParticipants(query: string): Observable<Participant[]> {
-    const filtered = this.mockParticipants.filter(p => 
-      p.name.toLowerCase().includes(query.toLowerCase()) ||
-      p.email.toLowerCase().includes(query.toLowerCase())
+    const params = new HttpParams().set('query', query);
+    const options = this.getHttpOptions();
+    
+    return this.http.get<RegistrationResponse>(
+      `${this.getApiUrl()}/registrations`, 
+      { ...options, params }
+    ).pipe(
+      map(response => {
+        if (response && response.success && response.registrations) {
+          return response.registrations.map((reg: any) => this.mapToParticipant(reg));
+        }
+        return [];
+      }),
+      catchError(error => {
+        console.error('Error searching registrations:', error);
+        return of([]);
+      })
     );
-    return of(filtered);
   }
 
   filterParticipants(filters: Partial<Participant>): Observable<Participant[]> {
-    let filtered = [...this.mockParticipants];
+    // Build query params based on filters
+    let params = new HttpParams();
     
-    if (filters.category) {
-      filtered = filtered.filter(p => p.category === filters.category);
+    if (filters.eventType) {
+      params = params.set('eventType', filters.eventType);
     }
     
-    return of(filtered);
+    if (filters.gender) {
+      params = params.set('gender', filters.gender);
+    }
+    
+    // Add other filter parameters as needed
+    const options = this.getHttpOptions();
+    
+    return this.http.get<RegistrationResponse>(
+      `${this.getApiUrl()}/registrations`, 
+      { ...options, params }
+    ).pipe(
+      map(response => {
+        if (response && response.success && response.registrations) {
+          return response.registrations.map((reg: any) => this.mapToParticipant(reg));
+        }
+        return [];
+      }),
+      catchError(error => {
+        console.error('Error filtering registrations:', error);
+        return of([]);
+      })
+    );
+  }
+
+  // Private helper method to map API response to our Participant model
+  private mapToParticipant(data: any): Participant {
+    // Map API fields to our model (adjust fields based on actual API response)
+    return {
+      id: data.id || 0,
+      name: data.name || '',
+      email: data.email || '',
+      phone: data.phone || '',
+      age: data.age || 0,
+      gender: data.gender || '',
+      dob: data.dob ? new Date(data.dob) : new Date(),
+      aadharNumber: data.aadharNumber || '',
+      bloodGroup: data.bloodGroup || '',
+      emergencyContact: data.emergencyContact || '',
+      eventType: data.eventType || '',
+      tshirtSize: data.tshirtSize || '',
+      category: this.getCategoryFromEventType(data.eventType),
+      registrationDate: data.registrationDate ? new Date(data.registrationDate) : new Date(),
+      photo: data.photo || '',
+      pledgeAgree: data.pledgeAgree || false,
+      medicalConditions: data.medicalConditions || '',
+      toString() { return this.name; }
+    };
+  }
+
+  // Helper method to derive category from eventType
+  private getCategoryFromEventType(eventType: string): string {
+    switch (eventType) {
+      case 'marathon':
+        return 'full';
+      case 'kidathon':
+        return 'half';
+      case 'kingwalkathon':
+        return 'fun';
+      default:
+        return eventType || '';
+    }
   }
 } 

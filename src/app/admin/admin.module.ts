@@ -6,11 +6,11 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { ParticipantService } from './services/participant.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
-import { authGuard } from './services/auth.guard';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: AdminLoginComponent },
-  { path: '', component: AdminDashboardComponent, canActivate: [authGuard] }
+  { path: '', component: AdminDashboardComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

@@ -6,6 +6,9 @@
       <p>{{ 'ADMIN_DASHBOARD_SUBTITLE' | translate }}</p>
     </div>
     <div class="header-actions">
+      <button class="btn btn-primary" (click)="useSpecificToken()" title="Use API Token">
+        <i class="fas fa-key"></i> Use API Token
+      </button>
       <button class="btn btn-logout" (click)="logout()">
         <i class="fas fa-sign-out-alt"></i> {{ 'ADMIN_LOGOUT' | translate }}
       </button>
@@ -32,6 +35,15 @@
           <i class="fas fa-sync-alt"></i>
         </button>
       </div>
+    </div>
+
+    <!-- Error Message Display -->
+    <div class="error-message" *ngIf="error">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ error }}</span>
+      <button class="close-error" (click)="error = ''">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
 
     <!-- Add comparison controls after the Quick Status Bar -->

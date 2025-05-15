@@ -87,19 +87,70 @@ export class AdminDashboardComponent implements OnInit {
 
   loadParticipants(): void {
     this.loading = true;
+    this.error = '';
+    
+    // Check if token exists before making the request
+    const token = localStorage.getItem('admin_token');
+    if (!token) {
+      this.error = 'Authentication token not found. Please login again.';
+      this.loading = false;
+      this.router.navigate(['/admin/login']);
+      return;
+    }
+    
+    console.log('Using token:', token.substring(0, 20) + '...' + token.substring(token.length - 20));
+    
+    // Define a retry function for multiple attempts
+    const fetchWithRetry = (attempt = 1) => {
+      const maxAttempts = 3;
+      
     this.participantService.getParticipants().subscribe({
       next: (data) => {
+          if (data && data.length > 0) {
         this.participants = data;
         this.filteredParticipants = this.sortData([...data]);
         this.updateStats();
+            this.lastUpdated = new Date();
+          } else {
+            console.warn('No participants data returned from API');
+            this.participants = [];
+            this.filteredParticipants = [];
+            this.updateStats();
+          }
         this.loading = false;
-        this.lastUpdated = new Date();
       },
       error: (err) => {
-        this.error = 'Failed to load participants. Please try again.';
+          console.error(`Error loading participants (attempt ${attempt}/${maxAttempts}):`, err);
+          
+          // Check for CORS error
+          if (err.name === 'HttpErrorResponse' && 
+              (err.message.includes('CORS') || err.message.includes('Access-Control'))) {
+            this.error = 'CORS error detected. API access is restricted. Please contact administrator.';
+          } 
+          // Session expired or unauthorized
+          else if (err.status === 401 || err.status === 403) {
+            this.error = 'Session expired or unauthorized. Please login again.';
+            localStorage.removeItem('admin_token');
+            this.router.navigate(['/admin/login']);
+          } 
+          // Retry logic
+          else if (attempt < maxAttempts) {
+            this.error = `Loading attempt ${attempt} failed. Retrying...`;
+            setTimeout(() => fetchWithRetry(attempt + 1), 1000); // Wait 1 second before retry
+            return;
+          } 
+          // Max attempts reached
+          else {
+            this.error = 'Failed to load participants after multiple attempts. Please try again later.';
+          }
+          
         this.loading = false;
       }
     });
+    };
+    
+    // Start the fetch process with retry logic
+    fetchWithRetry();
   }
 
   setupSearchListener(): void {
@@ -571,5 +622,17 @@ export class AdminDashboardComponent implements OnInit {
     `);
     
     printWindow.document.close();
+  }
+
+  // Method to use a specific token (for testing or when you have a token from somewhere else)
+  useSpecificToken(token?: string): void {
+    const tokenToUse = token || 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NzI4Njc0OCwiZXhwIjoxNzQ3NTQ1OTQ4fQ.M9MA0_QFUwfsJiLbfspotbmaaHl-P_dDRufJ4Wva9St9MxbOwHmJsF2LLFq8mu_1dTMo9cwmnZ7taxDi9rpl9Q';
+    
+    if (this.authService.setToken(tokenToUse)) {
+      console.log('Set token successfully');
+      this.loadParticipants();
+    } else {
+      this.error = 'Failed to set authentication token';
+    }
   }
 } 

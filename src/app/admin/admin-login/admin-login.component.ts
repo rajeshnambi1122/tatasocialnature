@@ -49,12 +49,13 @@ export class AdminLoginComponent {
         if (success) {
           this.router.navigateByUrl(this.returnUrl);
         } else {
-          this.error = 'Invalid username or password';
+          this.error = 'ADMIN_LOGIN_ERROR';
           this.isLoading = false;
         }
       },
       error: (err) => {
-        this.error = 'An error occurred during login. Please try again.';
+        console.error('Login error:', err);
+        this.error = 'ADMIN_LOGIN_ERROR';
         this.isLoading = false;
       }
     });

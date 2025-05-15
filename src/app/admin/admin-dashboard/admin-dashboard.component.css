@@ -29,6 +29,7 @@
 .header-actions {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-logout {
@@ -46,12 +47,69 @@
   transition: background-color 0.3s;
 }
 
+.btn-primary {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
 .btn-logout:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
 .btn-logout i {
   font-size: 1rem;
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  color: #b71c1c;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.error-message i {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.error-message span {
+  flex: 1;
+}
+
+.close-error {
+  background: none;
+  border: none;
+  color: #b71c1c;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-error:hover {
+  color: #f44336;
 }
 
 /* Dashboard Container */

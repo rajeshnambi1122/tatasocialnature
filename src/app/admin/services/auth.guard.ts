@@ -1,23 +1,32 @@
-import { Injectable, inject } from '@angular/core';
-import { CanActivateFn, Router, UrlTree } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { Observable, map, take } from 'rxjs';
 import { AuthService } from './auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
-  const authService = inject(AuthService);
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
   
-  return authService.isAuthenticated$.pipe(
+  constructor(private authService: AuthService, private router: Router) {}
+  
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
+    return this.authService.isAuthenticated$.pipe(
     take(1),
     map(isAuthenticated => {
       if (isAuthenticated) {
         return true;
-      } else {
-        // Redirect to login page with return URL
-        return router.createUrlTree(['/admin/login'], {
+        }
+        
+        // Store the attempted URL for redirecting after login
+        return this.router.createUrlTree(['/admin/login'], { 
           queryParams: { returnUrl: state.url }
         });
-      }
     })
   );
-}; 
+  }
+} 
