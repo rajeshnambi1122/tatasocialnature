@@ -37,7 +37,7 @@ export interface RegistrationResponse {
 })
 export class ParticipantService {
   private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon';
-  
+
   constructor(private http: HttpClient) { }
 
   // Helper to get HTTP options with auth token

@@ -265,6 +265,7 @@ nav ul li a {
   transition: color 0.3s, background-color 0.3s;
   position: relative;
   font-size: 0.90rem;
+  white-space: nowrap;
 }
 
 nav ul li a:hover {
@@ -2014,6 +2015,122 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
   
   .partner-logo {
     height: 70px;
+  }
+}
+
+/* Add desktop-specific styles for bigger header */
+@media (min-width: 993px) {
+  .modern-header {
+    padding-bottom: 8px;
+  }
+  
+  .header-top {
+    padding: 25px 40px;
+    margin-bottom: 5px;
+  }
+  
+  .logo-container {
+    margin-bottom: 18px;
+    gap: 20px;
+  }
+  
+  .logo {
+    height: 75px;
+    margin: 0 20px;
+  }
+  
+  .logo-center {
+    height: 90px;
+  }
+  
+  .nav-container {
+    height: 80px;
+    padding: 0 25px;
+  }
+  
+  nav ul {
+    gap: 8px;
+  }
+  
+  nav ul li a {
+    padding: 28px 20px;
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+  
+  .event-title {
+    padding: 25px 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .event-title h1 {
+    font-size: 32px;
+  }
+  
+  .event-title p {
+    font-size: 18px;
+    margin-top: 12px;
+  }
+  
+  .right-nav {
+    gap: 25px;
+  }
+  
+  .register-btn {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    min-width: 180px;
+  }
+}
+
+/* Add specific styles for Tamil language support */
+:host-context([data-language="ta"]) nav ul li a {
+  padding: 28px 8px;
+  font-size: 0.9rem;
+  letter-spacing: -0.2px;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+:host-context([data-language="ta"]) .nav-container {
+  padding: 0 10px;
+}
+
+:host-context([data-language="ta"]) nav ul {
+  gap: 2px;
+}
+
+:host-context([data-language="ta"]) .register-btn {
+  font-size: 0.9rem;
+  min-width: 145px;
+  padding: 12px 18px;
+}
+
+@media (max-width: 992px) {
+  :host-context([data-language="ta"]) nav ul li a {
+    padding: 15px 12px;
+    font-size: 0.85rem;
+    white-space: normal;
+    line-height: 1.2;
+  }
+  
+  :host-context([data-language="ta"]) .register-btn {
+    font-size: 0.8rem;
+    min-width: 130px;
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  :host-context([data-language="ta"]) .register-btn {
+    font-size: 0.75rem;
+    min-width: 110px;
+    padding: 8px 12px;
   }
 }
   

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, Renderer2 } from '@angular/core';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateService } from '../translate.service';
@@ -59,9 +59,16 @@ export class HomeComponent implements OnInit {
   constructor(
     private viewportScroller: ViewportScroller,
     public translateService: TranslateService,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     this.currentLang$ = this.translateService.getCurrentLanguage();
+    
+    // Subscribe to language changes to update the data-language attribute
+    this.currentLang$.subscribe(lang => {
+      this.renderer.setAttribute(this.el.nativeElement, 'data-language', lang);
+    });
   }
   
   ngOnInit() {
@@ -129,7 +136,10 @@ export class HomeComponent implements OnInit {
   }
   
   switchLanguage(lang: string) {
-    this.translateService.setLanguage(lang).subscribe();
+    this.translateService.setLanguage(lang).subscribe(() => {
+      // Update the data-language attribute when language changes
+      this.renderer.setAttribute(this.el.nativeElement, 'data-language', lang);
+    });
   }
   
   nextSlide() {
