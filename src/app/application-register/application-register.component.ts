@@ -163,7 +163,7 @@ export class ApplicationRegisterComponent implements OnInit {
       
       // Append the image file
       if (this.selectedFile) {
-        formData.append('image', this.selectedFile);
+        formData.append('imageFile', this.selectedFile);
       }
       
       formData.append('email', this.registrationForm.get('email')?.value);

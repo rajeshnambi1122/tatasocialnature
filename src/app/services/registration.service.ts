@@ -18,9 +18,16 @@ export class RegistrationService {
    * @returns Observable of the API response
    */
   submitRegistration(formData: FormData): Observable<any> {
-    // Don't set Content-Type header - browser will set it automatically with correct boundary for multipart/form-data
+    // Note: For multipart/form-data, don't set Content-Type header explicitly
+    // The browser will set it automatically with the correct boundary
     const headers = new HttpHeaders({
       'Accept': 'application/json'
+    });
+
+    // Log the form data for debugging
+    console.log('Submitting registration with FormData:');
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value instanceof File ? `File: ${value.name} (${value.type}, ${value.size} bytes)` : value}`);
     });
 
     return this.http.post<any>(this.registerEndpoint, formData, { headers });
