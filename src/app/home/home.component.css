@@ -1210,12 +1210,14 @@ nav ul li a:hover::after {
   }
   
   .right-nav {
-    margin-right: 50px;
+    margin-right: 55px;
+    gap: 12px;
   }
   
   .register-btn {
-    padding: 8px 14px;
-    font-size: 0.8rem;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    min-width: 90px;
   }
   
   .hero {
@@ -1362,19 +1364,25 @@ nav ul li a:hover::after {
   
   /* Fix for mobile navbar in Tamil language */
   .right-nav {
-    margin-right: 45px;
-    gap: 8px;
+    margin-right: 55px;
+    gap: 12px;
   }
   
   .register-btn {
     padding: 6px 10px;
     font-size: 0.75rem;
-    min-width: 100px;
+    min-width: 90px;
   }
   
   /* Make language toggle smaller */
   .language-toggle {
-    transform: scale(0.85);
+    transform: scale(0.8);
+    margin-right: 5px;
+  }
+  
+  /* Ensure hamburger menu has enough space */
+  .hamburger-menu {
+    margin-left: 15px;
   }
 }
 
