@@ -108,10 +108,10 @@ export class ApplicationRegisterComponent implements OnInit {
         isValid = age <= 10;
         break;
       case 'kingwalkathon':
-        isValid = age > 60;
+        isValid = true;
         break;
       case 'walkathon_disabled':
-        isValid = true; // All ages allowed
+        isValid = age >60; // All ages allowed
         break;
       case 'drawing':
       case 'poetry':
@@ -188,10 +188,48 @@ export class ApplicationRegisterComponent implements OnInit {
       });
     } else {
       // Mark all fields as touched to show validation errors
-      Object.keys(this.registrationForm.controls).forEach(key => {
-        const control = this.registrationForm.get(key);
-        control?.markAsTouched();
-      });
+      this.markFormGroupTouched(this.registrationForm);
+      
+      // Find first invalid control and scroll to it
+      this.scrollToFirstInvalidControl();
+      
+      // Show a toast or alert about the form errors
+      this.submissionError = 'Please correct the errors in the form before submitting.';
+      
+      // Scroll to the error summary
+      setTimeout(() => {
+        const errorSummary = document.querySelector('.form-error-summary');
+        if (errorSummary) {
+          errorSummary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }
+  
+  // Helper method to mark all form controls as touched
+  private markFormGroupTouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      control?.markAsTouched();
+      
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+  
+  // Scroll to the first invalid control in the form
+  private scrollToFirstInvalidControl() {
+    const firstInvalidControl = document.querySelector('.has-error');
+    
+    if (firstInvalidControl) {
+      // Wait for DOM to update before scrolling
+      setTimeout(() => {
+        firstInvalidControl.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center'
+        });
+      }, 100);
     }
   }
 

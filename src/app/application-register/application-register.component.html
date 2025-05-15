@@ -28,9 +28,57 @@
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="application-form" *ngIf="!submissionSuccess">
     <h2>{{ 'REG_FORM_TITLE' | translate }}</h2>
 
+    <!-- Form Error Summary -->
+    <div class="form-error-summary" *ngIf="registrationForm.invalid && registrationForm.touched">
+      <div class="alert alert-danger">
+        <h4><i class="fas fa-exclamation-circle"></i> {{ 'REG_FORM_ERROR_SUMMARY_TITLE' | translate }}</h4>
+        <ul>
+          <li *ngIf="registrationForm.get('eventType')?.invalid && registrationForm.get('eventType')?.touched">
+            {{ 'REG_FORM_EVENT_TYPE_LABEL' | translate }}: {{ getErrorMessage('eventType') }}
+          </li>
+          <li *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+            {{ 'REG_FORM_NAME_LABEL' | translate }}: {{ getErrorMessage('name') }}
+          </li>
+          <li *ngIf="registrationForm.get('dob')?.invalid && registrationForm.get('dob')?.touched">
+            {{ 'REG_FORM_DOB_LABEL' | translate }}: {{ getErrorMessage('dob') }}
+          </li>
+          <li *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched">
+            {{ 'REG_FORM_GENDER_LABEL' | translate }}: {{ getErrorMessage('gender') }}
+          </li>
+          <li *ngIf="registrationForm.get('aadharNumber')?.invalid && registrationForm.get('aadharNumber')?.touched">
+            {{ 'REG_FORM_AADHAR_LABEL' | translate }}: {{ getErrorMessage('aadharNumber') }}
+          </li>
+          <li *ngIf="registrationForm.get('bloodGroup')?.invalid && registrationForm.get('bloodGroup')?.touched">
+            {{ 'REG_FORM_BLOODGROUP_LABEL' | translate }}: {{ getErrorMessage('bloodGroup') }}
+          </li>
+          <li *ngIf="registrationForm.get('photo')?.invalid && registrationForm.get('photo')?.touched">
+            {{ 'REG_FORM_PHOTO_LABEL' | translate }}: {{ getErrorMessage('photo') }}
+          </li>
+          <li *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+            {{ 'REG_FORM_EMAIL_LABEL' | translate }}: {{ getErrorMessage('email') }}
+          </li>
+          <li *ngIf="registrationForm.get('phone')?.invalid && registrationForm.get('phone')?.touched">
+            {{ 'REG_FORM_PHONE_LABEL' | translate }}: {{ getErrorMessage('phone') }}
+          </li>
+          <li *ngIf="registrationForm.get('emergencyContact')?.invalid && registrationForm.get('emergencyContact')?.touched">
+            {{ 'REG_FORM_EMERGENCY_CONTACT_LABEL' | translate }}: {{ getErrorMessage('emergencyContact') }}
+          </li>
+          <li *ngIf="registrationForm.get('tshirtSize')?.invalid && registrationForm.get('tshirtSize')?.touched">
+            {{ 'REG_FORM_TSHIRT_LABEL' | translate }}: {{ getErrorMessage('tshirtSize') }}
+          </li>
+          <li *ngIf="registrationForm.get('pledgeAgree')?.invalid && registrationForm.get('pledgeAgree')?.touched">
+            {{ 'REG_FORM_PLEDGE_AGREE_LABEL' | translate }}: {{ getErrorMessage('pledgeAgree') }}
+          </li>
+          <li *ngIf="registrationForm.get('declarationAgree')?.invalid && registrationForm.get('declarationAgree')?.touched">
+            {{ 'REG_FORM_DECLARATION_AGREE_LABEL' | translate }}: {{ getErrorMessage('declarationAgree') }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <!-- Event Type -->
-    <div class="form-group">
-      <label for="eventType">{{ 'REG_FORM_EVENT_TYPE_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('eventType')?.invalid && registrationForm.get('eventType')?.touched">
+      <label for="eventType">{{ 'REG_FORM_EVENT_TYPE_LABEL' | translate }} <span class="required">*</span></label>
       <select id="eventType" formControlName="eventType">
         <option value="">{{ 'REG_FORM_EVENT_TYPE_SELECT' | translate }}</option>
         <option value="kidathon">{{ 'REG_FORM_EVENT_TYPE_KIDATHON' | translate }}</option>
@@ -40,27 +88,27 @@
         <option value="drawing">{{ 'REG_FORM_EVENT_TYPE_DRAWING' | translate }}</option>
         <option value="poetry">{{ 'REG_FORM_EVENT_TYPE_POETRY' | translate }}</option>
       </select>
-      <small class="error-message" *ngIf="registrationForm.get('eventType')?.errors?.['required'] && registrationForm.get('eventType')?.touched">
-        {{ getErrorMessage('eventType') }}
+      <small class="error-message" *ngIf="registrationForm.get('eventType')?.invalid && registrationForm.get('eventType')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('eventType') }}
       </small>
     </div>
 
     <!-- Name -->
-    <div class="form-group">
-      <label for="name">{{ 'REG_FORM_NAME_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+      <label for="name">{{ 'REG_FORM_NAME_LABEL' | translate }} <span class="required">*</span></label>
       <input type="text" id="name" formControlName="name">
-      <small class="error-message" *ngIf="registrationForm.get('name')?.errors && registrationForm.get('name')?.touched">
-        {{ getErrorMessage('name') }}
+      <small class="error-message" *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('name') }}
       </small>
     </div>
 
     <!-- Date of Birth -->
-    <div class="form-group">
-      <label for="dob">{{ 'REG_FORM_DOB_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('dob')?.invalid && registrationForm.get('dob')?.touched">
+      <label for="dob">{{ 'REG_FORM_DOB_LABEL' | translate }} <span class="required">*</span></label>
       <input type="date" id="dob" formControlName="dob">
       <small class="hint">{{ 'REG_FORM_DOB_HINT' | translate }}</small>
-      <small class="error-message" *ngIf="registrationForm.get('dob')?.errors?.['required'] && registrationForm.get('dob')?.touched">
-        {{ getErrorMessage('dob') }}
+      <small class="error-message" *ngIf="registrationForm.get('dob')?.invalid && registrationForm.get('dob')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('dob') }}
       </small>
     </div>
 
@@ -71,32 +119,31 @@
     </div>
 
     <!-- Gender -->
-    <div class="form-group">
-      <label for="gender">{{ 'REG_FORM_GENDER_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched">
+      <label for="gender">{{ 'REG_FORM_GENDER_LABEL' | translate }} <span class="required">*</span></label>
       <select id="gender" formControlName="gender">
         <option value="">{{ 'REG_FORM_GENDER_SELECT' | translate }}</option>
         <option value="male">{{ 'REG_FORM_GENDER_MALE' | translate }}</option>
         <option value="female">{{ 'REG_FORM_GENDER_FEMALE' | translate }}</option>
       </select>
-      <small class="error-message" *ngIf="registrationForm.get('gender')?.errors?.['required'] && registrationForm.get('gender')?.touched">
-        {{ getErrorMessage('gender') }}
+      <small class="error-message" *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('gender') }}
       </small>
     </div>
 
     <!-- Aadhar Number -->
-    <div class="form-group">
-      <label for="aadharNumber">{{ 'REG_FORM_AADHAR_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('aadharNumber')?.invalid && registrationForm.get('aadharNumber')?.touched">
+      <label for="aadharNumber">{{ 'REG_FORM_AADHAR_LABEL' | translate }} <span class="required">*</span></label>
       <input type="text" id="aadharNumber" formControlName="aadharNumber">
       <small class="hint">{{ 'REG_FORM_AADHAR_HINT' | translate }}</small>
-      <small class="error-message" *ngIf="registrationForm.get('aadharNumber')?.errors && registrationForm.get('aadharNumber')?.touched">
-        {{ getErrorMessage('aadharNumber') }}
+      <small class="error-message" *ngIf="registrationForm.get('aadharNumber')?.invalid && registrationForm.get('aadharNumber')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('aadharNumber') }}
       </small>
     </div>
 
-
     <!-- Blood Group -->
-    <div class="form-group">
-      <label for="bloodGroup">{{ 'REG_FORM_BLOODGROUP_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('bloodGroup')?.invalid && registrationForm.get('bloodGroup')?.touched">
+      <label for="bloodGroup">{{ 'REG_FORM_BLOODGROUP_LABEL' | translate }} <span class="required">*</span></label>
       <select id="bloodGroup" formControlName="bloodGroup">
         <option value="">{{ 'REG_FORM_BLOODGROUP_SELECT' | translate }}</option>
         <option value="A+">A+</option>
@@ -108,55 +155,55 @@
         <option value="O+">O+</option>
         <option value="O-">O-</option>
       </select>
-      <small class="error-message" *ngIf="registrationForm.get('bloodGroup')?.errors?.['required'] && registrationForm.get('bloodGroup')?.touched">
-        {{ getErrorMessage('bloodGroup') }}
+      <small class="error-message" *ngIf="registrationForm.get('bloodGroup')?.invalid && registrationForm.get('bloodGroup')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('bloodGroup') }}
       </small>
     </div>
 
     <!-- Photo Upload -->
-    <div class="form-group">
-      <label for="photo">{{ 'REG_FORM_PHOTO_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('photo')?.invalid && registrationForm.get('photo')?.touched">
+      <label for="photo">{{ 'REG_FORM_PHOTO_LABEL' | translate }} <span class="required">*</span></label>
       <div class="custom-file-input">
         <input type="file" id="photo" (change)="onFileSelected($event)">
         <div class="custom-file-label">
           {{ selectedFile ? selectedFile.name : ('REG_FORM_PHOTO_BUTTON' | translate) }}
         </div>
       </div>
-      <small class="error-message" *ngIf="registrationForm.get('photo')?.errors && registrationForm.get('photo')?.touched">
-        {{ getErrorMessage('photo') }}
+      <small class="error-message" *ngIf="registrationForm.get('photo')?.invalid && registrationForm.get('photo')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('photo') }}
       </small>
     </div>
 
     <!-- Email -->
-    <div class="form-group">
-      <label for="email">{{ 'REG_FORM_EMAIL_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+      <label for="email">{{ 'REG_FORM_EMAIL_LABEL' | translate }} <span class="required">*</span></label>
       <input type="email" id="email" formControlName="email">
-      <small class="error-message" *ngIf="registrationForm.get('email')?.errors && registrationForm.get('email')?.touched">
-        {{ getErrorMessage('email') }}
+      <small class="error-message" *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('email') }}
       </small>
     </div>
 
     <!-- Phone -->
-    <div class="form-group">
-      <label for="phone">{{ 'REG_FORM_PHONE_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('phone')?.invalid && registrationForm.get('phone')?.touched">
+      <label for="phone">{{ 'REG_FORM_PHONE_LABEL' | translate }} <span class="required">*</span></label>
       <input type="tel" id="phone" formControlName="phone">
-      <small class="error-message" *ngIf="registrationForm.get('phone')?.errors && registrationForm.get('phone')?.touched">
-        {{ getErrorMessage('phone') }}
+      <small class="error-message" *ngIf="registrationForm.get('phone')?.invalid && registrationForm.get('phone')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('phone') }}
       </small>
     </div>
 
     <!-- Emergency Contact -->
-    <div class="form-group">
-      <label for="emergencyContact">{{ 'REG_FORM_EMERGENCY_CONTACT_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('emergencyContact')?.invalid && registrationForm.get('emergencyContact')?.touched">
+      <label for="emergencyContact">{{ 'REG_FORM_EMERGENCY_CONTACT_LABEL' | translate }} <span class="required">*</span></label>
       <input type="tel" id="emergencyContact" formControlName="emergencyContact">
-      <small class="error-message" *ngIf="registrationForm.get('emergencyContact')?.errors && registrationForm.get('emergencyContact')?.touched">
-        {{ getErrorMessage('emergencyContact') }}
+      <small class="error-message" *ngIf="registrationForm.get('emergencyContact')?.invalid && registrationForm.get('emergencyContact')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('emergencyContact') }}
       </small>
     </div>
 
     <!-- T-shirt Size -->
-    <div class="form-group">
-      <label for="tshirtSize">{{ 'REG_FORM_TSHIRT_LABEL' | translate }}</label>
+    <div class="form-group" [class.has-error]="registrationForm.get('tshirtSize')?.invalid && registrationForm.get('tshirtSize')?.touched">
+      <label for="tshirtSize">{{ 'REG_FORM_TSHIRT_LABEL' | translate }} <span class="required">*</span></label>
       <select id="tshirtSize" formControlName="tshirtSize">
         <option value="">{{ 'REG_FORM_TSHIRT_SELECT' | translate }}</option>
         <option value="S">S</option>
@@ -165,8 +212,8 @@
         <option value="XL">XL</option>
         <option value="XXL">XXL</option>
       </select>
-      <small class="error-message" *ngIf="registrationForm.get('tshirtSize')?.errors?.['required'] && registrationForm.get('tshirtSize')?.touched">
-        {{ getErrorMessage('tshirtSize') }}
+      <small class="error-message" *ngIf="registrationForm.get('tshirtSize')?.invalid && registrationForm.get('tshirtSize')?.touched">
+        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('tshirtSize') }}
       </small>
     </div>
 
@@ -176,7 +223,7 @@
     </div>
 
     <!-- Pledge Agreement -->
-    <div class="form-group">
+    <div class="form-group" [class.has-error]="registrationForm.get('pledgeAgree')?.invalid && registrationForm.get('pledgeAgree')?.touched">
       <div class="info-section">
         <h3>{{ 'REG_FORM_PLEDGE_TITLE' | translate }}</h3>
         <p>{{ 'REG_FORM_PLEDGE_LINE1' | translate }}</p>
@@ -192,17 +239,19 @@
         <p>{{ 'REG_FORM_PLEDGE_LINE2' | translate }}</p>
         <p>{{ 'REG_FORM_PLEDGE_LINE3' | translate }}</p>
       </div>
-      <div class="checkbox">
+      <div class="checkbox" [class.has-error]="registrationForm.get('pledgeAgree')?.invalid && registrationForm.get('pledgeAgree')?.touched">
         <input type="checkbox" id="pledgeAgree" formControlName="pledgeAgree">
-        <label for="pledgeAgree">{{ 'REG_FORM_PLEDGE_AGREE_LABEL' | translate }}</label>
-        <small class="error-message" *ngIf="registrationForm.get('pledgeAgree')?.errors?.['required'] && registrationForm.get('pledgeAgree')?.touched">
-          {{ getErrorMessage('pledgeAgree') }}
+        <label for="pledgeAgree" [class.error-label]="registrationForm.get('pledgeAgree')?.invalid && registrationForm.get('pledgeAgree')?.touched">
+          {{ 'REG_FORM_PLEDGE_AGREE_LABEL' | translate }} <span class="required">*</span>
+        </label>
+        <small class="error-message" *ngIf="registrationForm.get('pledgeAgree')?.invalid && registrationForm.get('pledgeAgree')?.touched">
+          <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('pledgeAgree') }}
         </small>
       </div>
     </div>
 
     <!-- Declaration -->
-    <div class="form-group">
+    <div class="form-group" [class.has-error]="registrationForm.get('declarationAgree')?.invalid && registrationForm.get('declarationAgree')?.touched">
       <div class="info-section">
         <h3>{{ 'REG_FORM_DECLARATION_TITLE' | translate }}</h3>
         <p>{{ 'REG_FORM_DECLARATION_POINT1' | translate }}</p>
@@ -216,11 +265,13 @@
         <p>{{ 'REG_FORM_DECLARATION_POINT9' | translate }}</p>
         <p>{{ 'REG_FORM_DECLARATION_POINT10' | translate }}</p>
       </div>
-      <div class="checkbox">
+      <div class="checkbox" [class.has-error]="registrationForm.get('declarationAgree')?.invalid && registrationForm.get('declarationAgree')?.touched">
         <input type="checkbox" id="declarationAgree" formControlName="declarationAgree">
-        <label for="declarationAgree">{{ 'REG_FORM_DECLARATION_AGREE_LABEL' | translate }}</label>
-        <small class="error-message" *ngIf="registrationForm.get('declarationAgree')?.errors?.['required'] && registrationForm.get('declarationAgree')?.touched">
-          {{ getErrorMessage('declarationAgree') }}
+        <label for="declarationAgree" [class.error-label]="registrationForm.get('declarationAgree')?.invalid && registrationForm.get('declarationAgree')?.touched">
+          {{ 'REG_FORM_DECLARATION_AGREE_LABEL' | translate }} <span class="required">*</span>
+        </label>
+        <small class="error-message" *ngIf="registrationForm.get('declarationAgree')?.invalid && registrationForm.get('declarationAgree')?.touched">
+          <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('declarationAgree') }}
         </small>
       </div>
     </div>

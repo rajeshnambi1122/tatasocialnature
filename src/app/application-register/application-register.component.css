@@ -667,4 +667,106 @@ button:hover {
     animation-delay: calc(0.1s * var(--index, 1));
   }
 }
+
+/* Form Error Styling */
+.form-error-summary {
+  margin-bottom: 30px;
+  animation: shakeX 0.75s;
+}
+
+.form-error-summary .alert-danger {
+  border-left: 5px solid #dc3545;
+}
+
+.form-error-summary h4 {
+  color: #dc3545;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-error-summary ul {
+  margin: 0;
+  padding-left: 15px;
+}
+
+.form-error-summary li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.has-error input,
+.has-error select,
+.has-error .custom-file-input {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important;
+  background-color: #fff9f9 !important;
+}
+
+.has-error label {
+  color: #dc3545 !important;
+}
+
+.error-label {
+  color: #dc3545 !important;
+}
+
+.error-message {
+  display: block;
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 8px;
+  animation: fadeIn 0.3s ease;
+  font-weight: 500;
+}
+
+.required {
+  color: #dc3545;
+  margin-left: 4px;
+}
+
+.has-error .checkbox {
+  padding: 10px;
+  border-radius: var(--border-radius-md);
+  background-color: #fff9f9;
+  border: 1px solid #dc3545;
+}
+
+/* Animation for error shake */
+@keyframes shakeX {
+  from,
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}
+
+/* Override existing error message style */
+.error-message {
+  display: flex;
+  align-items: center;
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 8px;
+  animation: fadeIn 0.3s ease;
+}
+
+.error-message i {
+  margin-right: 6px;
+}
   

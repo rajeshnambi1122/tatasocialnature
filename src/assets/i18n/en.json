@@ -295,8 +295,9 @@
   "AGENCY": "Advertisement Partner",
   "AGENCY_NAME": "Uthraa Agency",
   "REG_FORM_SUCCESS_TITLE": "Registration Successful!",
-  "REG_FORM_SUCCESS_MESSAGE": "Thank you for registering for the Halwa City Marathon 2025. Your application has been submitted successfully. You will receive a confirmation email with your registration details shortly.",
-  "REG_FORM_RETURN_HOME": "Return to Homepage",
-  "REG_FORM_ERROR_TITLE": "Registration Failed",
-  "REG_FORM_SUBMITTING": "Submitting..."
+  "REG_FORM_SUCCESS_MESSAGE": "Thank you for registering for the Halwa City Marathon. We have received your application. You will receive further information via email.",
+  "REG_FORM_RETURN_HOME": "Return to Home",
+  "REG_FORM_ERROR_TITLE": "Registration Error",
+  "REG_FORM_ERROR_SUMMARY_TITLE": "Please fix the following issues:",
+  "REG_FORM_SUBMITTING": "Processing..."
 }

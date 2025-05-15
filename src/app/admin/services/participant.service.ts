@@ -75,12 +75,32 @@ export class ParticipantService {
             console.log('Found direct array response');
             registrations = response;
           }
-          // Case 3: Nested content or data property
-          else if (response && (response.content || response.data)) {
-            console.log('Found nested content/data property');
-            registrations = response.content || response.data;
+          // Case 3: Response with content property as shown in example
+          else if (response && response.content) {
+            console.log('Found content property');
+            if (Array.isArray(response.content)) {
+              registrations = response.content;
+            } else {
+              // Handle single object in content
+              registrations = [response.content];
+            }
           }
-          // Case 4: Response has unexpected structure, log it
+          // Case 4: Response with message.content structure as shown in example
+          else if (response && response.message && response.message.content) {
+            console.log('Found message.content structure');
+            if (Array.isArray(response.message.content)) {
+              registrations = response.message.content;
+            } else {
+              // Handle single object in message.content
+              registrations = [response.message.content];
+            }
+          }
+          // Case 5: Nested data property
+          else if (response && response.data) {
+            console.log('Found data property');
+            registrations = response.data;
+          }
+          // Case 6: Response has unexpected structure, log it
           else {
             console.log('Unexpected response structure. Response keys:', Object.keys(response));
             // Try to find an array property that might contain registrations
@@ -178,27 +198,42 @@ export class ParticipantService {
 
   // Private helper method to map API response to our Participant model
   private mapToParticipant(data: any): Participant {
-    // Map API fields to our model (adjust fields based on actual API response)
+    // Map API fields to our model with proper field names from the API response
     return {
       id: data.id || 0,
-      name: data.name || '',
+      name: data.participantName || '',
       email: data.email || '',
-      phone: data.phone || '',
-      age: data.age || 0,
+      phone: data.contactNumber || '',
+      age: parseInt(data.age) || 0,
       gender: data.gender || '',
       dob: data.dob ? new Date(data.dob) : new Date(),
-      aadharNumber: data.aadharNumber || '',
+      aadharNumber: data.aadhar || '',
       bloodGroup: data.bloodGroup || '',
       emergencyContact: data.emergencyContact || '',
-      eventType: data.eventType || '',
-      tshirtSize: data.tshirtSize || '',
-      category: this.getCategoryFromEventType(data.eventType),
+      eventType: this.getEventTypeFromName(data.eventName),
+      tshirtSize: data.tsize || '',
+      category: this.getCategoryFromEventType(this.getEventTypeFromName(data.eventName)),
       registrationDate: data.registrationDate ? new Date(data.registrationDate) : new Date(),
       photo: data.photo || '',
       pledgeAgree: data.pledgeAgree || false,
       medicalConditions: data.medicalConditions || '',
       toString() { return this.name; }
     };
+  }
+
+  // Helper method to convert API's eventName to our internal eventType
+  private getEventTypeFromName(eventName: string): string {
+    if (!eventName) return '';
+    
+    const normalized = eventName.toLowerCase();
+    if (normalized.includes('marathon')) return 'marathon';
+    if (normalized.includes('kidathon')) return 'kidathon';
+    if (normalized.includes('kingwalkathon')) return 'kingwalkathon';
+    if (normalized.includes('walkathon')) return 'walkathon_disabled';
+    if (normalized.includes('drawing')) return 'drawing';
+    if (normalized.includes('poetry')) return 'poetry';
+    
+    return eventName.toLowerCase();
   }
 
   // Helper method to derive category from eventType
