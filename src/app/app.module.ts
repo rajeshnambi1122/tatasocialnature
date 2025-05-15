@@ -4,7 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdminModule } from './admin/admin.module';
 import { HomeComponent } from './home/home.component';
 import { Meta, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +20,6 @@ import { AuthInterceptor } from './admin/services/auth.interceptor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminModule,
     HomeComponent
   ],
   providers: [

@@ -626,13 +626,39 @@ export class AdminDashboardComponent implements OnInit {
 
   // Method to use a specific token (for testing or when you have a token from somewhere else)
   useSpecificToken(token?: string): void {
-    const tokenToUse = token || 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NzI4Njc0OCwiZXhwIjoxNzQ3NTQ1OTQ4fQ.M9MA0_QFUwfsJiLbfspotbmaaHl-P_dDRufJ4Wva9St9MxbOwHmJsF2LLFq8mu_1dTMo9cwmnZ7taxDi9rpl9Q';
+    let tokenValue = token;
     
-    if (this.authService.setToken(tokenToUse)) {
-      console.log('Set token successfully');
-      this.loadParticipants();
+    if (!tokenValue) {
+      // Prompt user to enter a token
+      const promptValue = window.prompt('Enter your API token:', '');
+      if (promptValue !== null) {
+        tokenValue = promptValue;
+      } else {
+        return; // User cancelled the prompt
+      }
+    }
+    
+    // Check if it's a curl command and extract the token
+    if (tokenValue.includes('curl') && tokenValue.includes('Bearer')) {
+      const match = tokenValue.match(/Bearer\s+([^\s'"]+)/i);
+      if (match && match[1]) {
+        tokenValue = match[1];
+      }
+    }
+    
+    // Validate the token is not empty
+    if (tokenValue.trim()) {
+      const success = this.authService.setToken(tokenValue.trim());
+      if (success) {
+        this.error = '';
+        console.log('Token set successfully');
+        alert('Token set successfully. Refreshing data...');
+        this.loadParticipants();
+      } else {
+        this.error = 'Failed to set authentication token';
+      }
     } else {
-      this.error = 'Failed to set authentication token';
+      this.error = 'Invalid or empty token provided';
     }
   }
 } 

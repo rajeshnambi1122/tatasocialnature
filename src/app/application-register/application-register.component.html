@@ -6,7 +6,26 @@
     </div>
   </header>
 
-  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="application-form">
+  <!-- Success Message -->
+  <div class="success-message" *ngIf="submissionSuccess">
+    <div class="alert alert-success">
+      <h3>{{ 'REG_FORM_SUCCESS_TITLE' | translate }}</h3>
+      <p>{{ 'REG_FORM_SUCCESS_MESSAGE' | translate }}</p>
+      <button type="button" class="btn btn-primary" routerLink="/">
+        {{ 'REG_FORM_RETURN_HOME' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-alert" *ngIf="submissionError">
+    <div class="alert alert-danger">
+      <h3>{{ 'REG_FORM_ERROR_TITLE' | translate }}</h3>
+      <p>{{ submissionError }}</p>
+    </div>
+  </div>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="application-form" *ngIf="!submissionSuccess">
     <h2>{{ 'REG_FORM_TITLE' | translate }}</h2>
 
     <!-- Event Type -->
@@ -100,7 +119,7 @@
       <div class="custom-file-input">
         <input type="file" id="photo" (change)="onFileSelected($event)">
         <div class="custom-file-label">
-          {{ 'REG_FORM_PHOTO_BUTTON' | translate }}
+          {{ selectedFile ? selectedFile.name : ('REG_FORM_PHOTO_BUTTON' | translate) }}
         </div>
       </div>
       <small class="error-message" *ngIf="registrationForm.get('photo')?.errors && registrationForm.get('photo')?.touched">
@@ -212,10 +231,13 @@
 
     <!-- Submit and Back Buttons -->
     <div class="form-actions">
-      <button type="submit" class="submit-btn" [disabled]="!registrationForm.valid">
-        {{ 'REG_FORM_SUBMIT_BUTTON' | translate }}
+      <button type="submit" class="submit-btn" [disabled]="!registrationForm.valid || isSubmitting">
+        <span *ngIf="!isSubmitting">{{ 'REG_FORM_SUBMIT_BUTTON' | translate }}</span>
+        <span *ngIf="isSubmitting">
+          <span class="spinner"></span> {{ 'REG_FORM_SUBMITTING' | translate }}
+        </span>
       </button>
-      <button type="button" class="back-btn" routerLink="/">
+      <button type="button" class="back-btn" routerLink="/" [disabled]="isSubmitting">
         {{ 'REG_FORM_BACK_BUTTON' | translate }}
       </button>
     </div>

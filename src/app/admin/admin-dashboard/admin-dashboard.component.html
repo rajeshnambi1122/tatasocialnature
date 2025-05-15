@@ -6,8 +6,8 @@
       <p>{{ 'ADMIN_DASHBOARD_SUBTITLE' | translate }}</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-primary" (click)="useSpecificToken()" title="Use API Token">
-        <i class="fas fa-key"></i> Use API Token
+      <button class="btn btn-primary" (click)="useSpecificToken()" title="Paste your API token or the entire curl command with Bearer token">
+        <i class="fas fa-key"></i> Set API Token
       </button>
       <button class="btn btn-logout" (click)="logout()">
         <i class="fas fa-sign-out-alt"></i> {{ 'ADMIN_LOGOUT' | translate }}
@@ -62,7 +62,13 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="stats-grid">
+    <div class="stats-grid" [class.loading-state]="loading">
+      <div class="loading-overlay" *ngIf="loading">
+        <div class="spinner">
+          <i class="fas fa-circle-notch fa-spin"></i>
+          <span>Loading participants data...</span>
+        </div>
+      </div>
       <div class="stat-card glass-card">
         <div class="stat-icon total">
           <i class="fas fa-users"></i>

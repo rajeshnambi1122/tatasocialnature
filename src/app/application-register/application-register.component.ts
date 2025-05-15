@@ -6,11 +6,13 @@ import { TranslatePipe } from '../translate.pipe';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MetaService } from '../services/meta.service';
+import { RegistrationService } from '../services/registration.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-application-register',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslatePipe, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, TranslatePipe, ReactiveFormsModule, HttpClientModule],
   templateUrl: './application-register.component.html',
   styleUrls: ['./application-register.component.css']
 })
@@ -19,11 +21,16 @@ export class ApplicationRegisterComponent implements OnInit {
   selectedEventType: string = '';
   showAgeWarning: boolean = false;
   currentLang$: Observable<string>;
+  isSubmitting: boolean = false;
+  submissionSuccess: boolean = false;
+  submissionError: string = '';
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
     private translateService: TranslateService,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private registrationService: RegistrationService
   ) {
     this.currentLang$ = this.translateService.getCurrentLanguage();
     
@@ -133,20 +140,78 @@ export class ApplicationRegisterComponent implements OnInit {
         return;
       }
 
+      this.selectedFile = file;
       this.registrationForm.patchValue({ photo: file });
     }
   }
 
   onSubmit() {
     if (this.registrationForm.valid) {
-      console.log(this.registrationForm.value);
-      // Handle form submission
+      this.isSubmitting = true;
+      this.submissionError = '';
+      
+      const formData = new FormData();
+      
+      // Map form values to API field names based on the curl command
+      formData.append('eventName', this.getEventNameMapping(this.registrationForm.get('eventType')?.value));
+      formData.append('participantName', this.registrationForm.get('name')?.value);
+      formData.append('dob', this.registrationForm.get('dob')?.value);
+      formData.append('age', this.registrationForm.get('age')?.value);
+      formData.append('gender', this.registrationForm.get('gender')?.value === 'male' ? 'Male' : 'Female');
+      formData.append('aadhar', this.registrationForm.get('aadharNumber')?.value);
+      formData.append('bloodGroup', this.registrationForm.get('bloodGroup')?.value);
+      
+      // Append the image file
+      if (this.selectedFile) {
+        formData.append('image', this.selectedFile);
+      }
+      
+      formData.append('email', this.registrationForm.get('email')?.value);
+      formData.append('contactNumber', this.registrationForm.get('phone')?.value);
+      formData.append('emergencyContact', this.registrationForm.get('emergencyContact')?.value);
+      formData.append('tsize', this.registrationForm.get('tshirtSize')?.value);
+      
+      // Submit to API
+      this.registrationService.submitRegistration(formData).subscribe({
+        next: (response) => {
+          console.log('Registration successful', response);
+          this.isSubmitting = false;
+          this.submissionSuccess = true;
+          this.registrationForm.reset();
+          window.scrollTo(0, 0);
+        },
+        error: (error) => {
+          console.error('Registration failed', error);
+          this.isSubmitting = false;
+          this.submissionError = error.message || 'Something went wrong. Please try again later.';
+        }
+      });
     } else {
       // Mark all fields as touched to show validation errors
       Object.keys(this.registrationForm.controls).forEach(key => {
         const control = this.registrationForm.get(key);
         control?.markAsTouched();
       });
+    }
+  }
+
+  // Map internal event types to API event names
+  getEventNameMapping(eventType: string): string {
+    switch(eventType) {
+      case 'marathon':
+        return 'Marathon';
+      case 'kidathon':
+        return 'Kidathon';
+      case 'kingwalkathon':
+        return 'Kingwalkathon';
+      case 'walkathon_disabled':
+        return 'Walkathon';
+      case 'drawing':
+        return 'Drawing';
+      case 'poetry':
+        return 'Poetry';
+      default:
+        return eventType;
     }
   }
 

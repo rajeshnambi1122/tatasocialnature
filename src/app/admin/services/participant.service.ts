@@ -37,16 +37,8 @@ export interface RegistrationResponse {
 })
 export class ParticipantService {
   private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon';
-  // Use this URL if you have CORS issues with direct API access
-  private proxyUrl = '/api'; // This uses the proxy configuration
   
   constructor(private http: HttpClient) { }
-
-  // Choose which URL to use
-  private getApiUrl() {
-    // Use the proxy URL to avoid CORS issues
-    return this.proxyUrl;
-  }
 
   // Helper to get HTTP options with auth token
   private getHttpOptions() {
@@ -64,7 +56,7 @@ export class ParticipantService {
   getParticipants(): Observable<Participant[]> {
     console.log('Getting participants with token:', localStorage.getItem('admin_token'));
     
-    return this.http.get<any>(`${this.getApiUrl()}/registrations`, this.getHttpOptions())
+    return this.http.get<any>(`${this.apiUrl}/registrations`, this.getHttpOptions())
       .pipe(
         map(response => {
           // Log the raw response to understand its structure
@@ -116,7 +108,7 @@ export class ParticipantService {
   }
 
   getParticipant(id: number): Observable<Participant | undefined> {
-    return this.http.get<any>(`${this.getApiUrl()}/registrations/${id}`, this.getHttpOptions())
+    return this.http.get<any>(`${this.apiUrl}/registrations/${id}`, this.getHttpOptions())
       .pipe(
         map(response => {
           if (response && response.success && response.registration) {
@@ -136,7 +128,7 @@ export class ParticipantService {
     const options = this.getHttpOptions();
     
     return this.http.get<RegistrationResponse>(
-      `${this.getApiUrl()}/registrations`, 
+      `${this.apiUrl}/registrations`, 
       { ...options, params }
     ).pipe(
       map(response => {
@@ -168,7 +160,7 @@ export class ParticipantService {
     const options = this.getHttpOptions();
     
     return this.http.get<RegistrationResponse>(
-      `${this.getApiUrl()}/registrations`, 
+      `${this.apiUrl}/registrations`, 
       { ...options, params }
     ).pipe(
       map(response => {

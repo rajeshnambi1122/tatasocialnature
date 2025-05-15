@@ -66,8 +66,8 @@
   "REGISTER_CTA_TITLE": "Register now and be a part of the movement",
   "REGISTER_CTA_SUBTITLE": "FREE for all participants!",
   "REGISTER_CTA_BENEFITS_TITLE": "All registered participants will receive:",
-  "PRIZES_FOR_WINNERS": "🏆 Prizes for Winners & Runners",
-  "BENEFIT_CERTIFICATE": "🎓 Official Participation Certificate",
+  "PRIZES_FOR_WINNERS": "Prizes for Winners & Runners",
+  "BENEFIT_CERTIFICATE": "Official Participation Certificate",
   "BENEFIT_MEDAL": "Marathon Medal",
   "BENEFIT_TSHIRT": "Event T-shirt",
   "BENEFIT_CAP": "Snacks Box",
@@ -77,7 +77,7 @@
   "REGISTER_CTA_NOTE": "(Limited slots available! Hurry up!)",
   "RULES_TITLE": "Rules And Regulations",
   "RULE_ROUTE": "Participants must follow the designated route",
-  "RULE_MEDICAL": "Medical certificate recommended for all participants",
+  "RULE_MEDICAL": "Medical Fitness is recommended for all participants",
   "RULE_ECO": "Eco-friendly approach - No plastic bottles or waste",
   "RULE_ATTIRE": "Proper running attire and footwear required",
   "MEDICAL_TITLE": "Medical Facilities",
@@ -287,5 +287,10 @@
   "PHOTOGRAPHY_PARTNER": "Social Media & Photography Partner",
   "PHOTOGRAPHY_PARTNER_NAME": "SP Raja Studio",
   "AGENCY": "Advertisement Partner",
-  "AGENCY_NAME": "Uthraa Agency"
+  "AGENCY_NAME": "Uthraa Agency",
+  "REG_FORM_SUCCESS_TITLE": "Registration Successful!",
+  "REG_FORM_SUCCESS_MESSAGE": "Thank you for registering for the Halwa City Marathon 2025. Your application has been submitted successfully. You will receive a confirmation email with your registration details shortly.",
+  "REG_FORM_RETURN_HOME": "Return to Homepage",
+  "REG_FORM_ERROR_TITLE": "Registration Failed",
+  "REG_FORM_SUBMITTING": "Submitting..."
 }

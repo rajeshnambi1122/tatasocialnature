@@ -12,17 +12,10 @@ export class AuthService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon';
-  private proxyUrl = '/api'; // This uses the proxy configuration
 
   constructor(private http: HttpClient) {
     // Check if there's a token in localStorage during initialization
     this.isAuthenticatedSubject.next(this.hasToken());
-  }
-
-  // Get the API URL to use (proxy or direct)
-  private getApiUrl() {
-    // Use the proxy URL to avoid CORS issues
-    return this.proxyUrl;
   }
 
   // Get HTTP options for API calls
@@ -47,7 +40,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    return this.http.post<any>(`${this.getApiUrl()}/login`, {
+    return this.http.post<any>(`${this.apiUrl}/login`, {
       userName: username,
       passWord: password
     }, this.getHttpOptions()).pipe(
