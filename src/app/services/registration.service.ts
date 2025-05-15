@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistrationService {
-  private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon/register';
+  private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon';
+  private registerEndpoint = `${this.apiUrl}/register`;
+  private registrationsEndpoint = `${this.apiUrl}/registrations`;
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +23,19 @@ export class RegistrationService {
       'Accept': 'application/json'
     });
 
-    return this.http.post<any>(this.apiUrl, formData, { headers });
+    return this.http.post<any>(this.registerEndpoint, formData, { headers });
+  }
+
+  /**
+   * Get all registrations
+   * @returns Observable of the registrations list
+   */
+  getRegistrations(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+
+    return this.http.get<any>(this.registrationsEndpoint, { headers });
   }
 } 
