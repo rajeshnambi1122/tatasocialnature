@@ -16,6 +16,11 @@ export class RegistrationService {
    * @returns Observable of the API response
    */
   submitRegistration(formData: FormData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, formData);
+    // Don't set Content-Type header - browser will set it automatically with correct boundary for multipart/form-data
+    const headers = new HttpHeaders({
+      'Accept': 'application/json'
+    });
+
+    return this.http.post<any>(this.apiUrl, formData, { headers });
   }
 } 
