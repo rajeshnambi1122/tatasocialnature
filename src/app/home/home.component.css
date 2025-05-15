@@ -1979,6 +1979,13 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
   display: inline-block;
 }
 
+.partner-subtitle {
+  font-size: 13px;
+  color: var(--text-color-light);
+  margin-top: 8px;
+  font-style: italic;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .partners-grid {
