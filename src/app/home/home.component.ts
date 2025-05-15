@@ -38,7 +38,8 @@ export class HomeComponent implements OnInit {
     { src: 'images/gallery8.jpg', alt: 'Gallery Image 8' },
     { src: 'images/gallery9.jpg', alt: 'Gallery Image 9' },
     { src: 'images/gallery10.jpg', alt: 'Gallery Image 10' },
-    { src: 'images/gallery11.jpg', alt: 'Gallery Image 11' }
+    { src: 'images/gallery11.jpg', alt: 'Gallery Image 11' },
+    { src: 'images/gallery12.jpeg', alt: 'Gallery Image 12' }
   ];
   
   tirunelveliImages = [
