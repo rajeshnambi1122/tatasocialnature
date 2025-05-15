@@ -612,19 +612,22 @@ nav ul li a:hover::after {
 .about-content {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 40px;
   margin-top: 40px;
   align-items: stretch; /* Make children same height */
 }
 
 .about-text {
-  flex: 1.5;
+  flex: 0 1 800px;
   min-width: 300px;
   padding: 35px;
   line-height: 1.8;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
+  margin: 0 auto;
   animation: slideInFromLeft 0.8s ease-out;
 }
 
@@ -633,50 +636,9 @@ nav ul li a:hover::after {
   font-size: 1.05rem;
 }
 
+/* Hide the about-info section since it's empty */
 .about-info {
-  flex: 1;
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.info-box {
-  background: var(--glass-background);
-  backdrop-filter: var(--glass-backdrop-filter);
-  -webkit-backdrop-filter: var(--glass-backdrop-filter);
-  border: var(--glass-border);
-  border-radius: var(--border-radius-lg);
-  padding: 30px;
-  box-shadow: var(--box-shadow-sm);
-  flex-grow: 1; /* Allow info box to grow */
-  animation: slideInFromRight 0.8s ease-out;
-}
-
-.info-box h3 {
-  margin-bottom: 20px;
-  color: var(--accent-color);
-  font-size: 1.3rem;
-}
-
-.info-box ul {
-  list-style: none;
-  padding: 0;
-}
-
-.info-box li {
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  font-size: 0.95rem;
-}
-
-.info-icon {
-  margin-right: 15px;
-  font-size: 1.3rem;
-  color: var(--primary-color);
-  width: 25px; /* Ensure consistent icon spacing */
-  text-align: center;
+  display: none;
 }
 
 .about-image {
@@ -1392,9 +1354,27 @@ nav ul li a:hover::after {
     width: 35px;
     height: 35px;
   }
+  
   .social-link svg {
     width: 16px;
     height: 16px;
+  }
+  
+  /* Fix for mobile navbar in Tamil language */
+  .right-nav {
+    margin-right: 45px;
+    gap: 8px;
+  }
+  
+  .register-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    min-width: 100px;
+  }
+  
+  /* Make language toggle smaller */
+  .language-toggle {
+    transform: scale(0.85);
   }
 }
 
