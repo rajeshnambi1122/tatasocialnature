@@ -7,6 +7,7 @@ import { MetaService } from '../../services/meta.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '../../translate.pipe';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -53,6 +54,12 @@ export class AdminDashboardComponent implements OnInit {
     drawing: 0,
     poetry: 0
   };
+
+  // Excel upload properties
+  selectedExcelFile: File | null = null;
+  isUploading = false;
+  isDragging = false;
+  uploadResult: { success: boolean, message: string, count?: number } | null = null;
 
   constructor(
     private participantService: ParticipantService,
@@ -676,5 +683,143 @@ export class AdminDashboardComponent implements OnInit {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
+  }
+
+  // Excel file upload methods
+  onExcelFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedExcelFile = input.files[0];
+      console.log('Excel file selected:', this.selectedExcelFile.name);
+    }
+  }
+  
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+  
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+  
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+    
+    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      if (this.isExcelFile(file)) {
+        this.selectedExcelFile = file;
+        console.log('Excel file dropped:', this.selectedExcelFile.name);
+      } else {
+        this.error = 'Invalid file type. Please upload an Excel file (.xlsx or .xls).';
+      }
+    }
+  }
+  
+  isExcelFile(file: File): boolean {
+    const validTypes = [
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+    return validTypes.includes(file.type) || 
+           file.name.endsWith('.xlsx') || 
+           file.name.endsWith('.xls');
+  }
+  
+  clearExcelFile() {
+    this.selectedExcelFile = null;
+    this.uploadResult = null;
+    
+    // Reset the file input
+    const fileInput = document.getElementById('excel-upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+  
+  uploadExcelFile() {
+    if (!this.selectedExcelFile) {
+      this.error = 'Please select an Excel file first.';
+      return;
+    }
+    
+    this.isUploading = true;
+    this.error = '';
+    this.uploadResult = null;
+    
+    this.participantService.uploadExcelFile(this.selectedExcelFile).subscribe({
+      next: (response) => {
+        console.log('Upload successful:', response);
+        this.isUploading = false;
+        
+        // Handle different response formats
+        let message = 'File uploaded successfully.';
+        let count = 0;
+        
+        if (response) {
+          if (typeof response === 'string') {
+            message = response;
+          } else if (response.message) {
+            message = response.message;
+          } else if (response.status === 'OK' || response.success) {
+            message = response.message || 'Excel file uploaded successfully.';
+          }
+          
+          // Try to extract the count if available
+          if (response.count) {
+            count = response.count;
+          } else if (typeof response === 'string' && response.includes('successfully')) {
+            const match = response.match(/(\d+)\s+participants?/i);
+            if (match && match[1]) {
+              count = parseInt(match[1], 10);
+            }
+          }
+        }
+        
+        this.uploadResult = {
+          success: true,
+          message: message,
+          count: count || undefined
+        };
+        
+        // Reload participants to reflect the new data
+        this.loadParticipants();
+        
+        // Clear file after successful upload
+        setTimeout(() => {
+          this.clearExcelFile();
+        }, 5000); // Clear after 5 seconds
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Upload failed:', error);
+        this.isUploading = false;
+        
+        let errorMessage = 'Failed to upload the file. Please try again.';
+        
+        if (error.error && typeof error.error === 'string') {
+          errorMessage = error.error;
+        } else if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        this.uploadResult = {
+          success: false,
+          message: errorMessage
+        };
+      }
+    });
+  }
+  
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 } 

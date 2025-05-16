@@ -37,6 +37,79 @@
       </div>
     </div>
 
+    <!-- Bulk Upload Section -->
+    <div class="bulk-upload-section glass-card">
+      <h2><i class="fas fa-file-excel"></i> Bulk Participant Upload</h2>
+      <p class="section-description">Upload an Excel file to register multiple participants at once.</p>
+      
+      <div class="upload-container">
+        <div class="file-upload-area" 
+             [class.has-file]="selectedExcelFile"
+             [class.drag-over]="isDragging"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event)">
+          
+          <input type="file" 
+                 id="excel-upload" 
+                 (change)="onExcelFileSelected($event)"
+                 accept=".xlsx,.xls" 
+                 [disabled]="isUploading">
+          
+          <div class="upload-icon">
+            <i *ngIf="!selectedExcelFile" class="fas fa-file-upload"></i>
+            <i *ngIf="selectedExcelFile" class="fas fa-file-excel"></i>
+          </div>
+          
+          <div class="upload-text" *ngIf="!selectedExcelFile">
+            <p>Drag & drop an Excel file here, or <span class="browse-link">browse</span></p>
+            <p class="small-text">Supported formats: .xlsx, .xls</p>
+          </div>
+          
+          <div class="file-details" *ngIf="selectedExcelFile">
+            <p class="file-name">{{ selectedExcelFile.name }}</p>
+            <p class="file-size">{{ formatFileSize(selectedExcelFile.size) }}</p>
+          </div>
+        </div>
+        
+        <div class="upload-actions">
+          <button class="btn btn-primary" 
+                  (click)="uploadExcelFile()" 
+                  [disabled]="!selectedExcelFile || isUploading">
+            <i *ngIf="!isUploading" class="fas fa-upload"></i>
+            <i *ngIf="isUploading" class="fas fa-spinner fa-spin"></i>
+            {{ isUploading ? 'Uploading...' : 'Upload Excel File' }}
+          </button>
+          
+          <button class="btn btn-secondary" 
+                  (click)="clearExcelFile()" 
+                  [disabled]="!selectedExcelFile || isUploading">
+            <i class="fas fa-times"></i> Clear
+          </button>
+          
+          <a href="assets/templates/bulk_upload_template.xlsx" 
+             class="btn btn-outline template-link" 
+             download>
+            <i class="fas fa-download"></i> Download Template
+          </a>
+        </div>
+      </div>
+      
+      <div class="upload-result" *ngIf="uploadResult">
+        <div class="alert" [ngClass]="uploadResult.success ? 'alert-success' : 'alert-danger'">
+          <i class="fas" [ngClass]="uploadResult.success ? 'fa-check-circle' : 'fa-exclamation-circle'"></i>
+          <span>{{ uploadResult.message }}</span>
+          <button class="close-btn" (click)="uploadResult = null">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        
+        <div class="result-details" *ngIf="uploadResult.success && uploadResult.count">
+          <p class="success-details">Successfully imported {{ uploadResult.count }} participants.</p>
+        </div>
+      </div>
+    </div>
+    
     <!-- Error Message Display -->
     <div class="error-message" *ngIf="error">
       <i class="fas fa-exclamation-triangle"></i>

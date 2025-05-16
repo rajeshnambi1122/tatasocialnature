@@ -249,8 +249,44 @@ export class ParticipantService {
         return 'half';
       case 'kingwalkathon':
         return 'fun';
+      case 'walkathon_disabled':
+        return 'walkathon';
+      case 'drawing':
+        return 'drawing';
+      case 'poetry': 
+        return 'poetry';
       default:
-        return eventType || '';
+        return 'other';
     }
+  }
+  
+  // New method for bulk upload of participants via Excel file
+  uploadExcelFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    // Get token from localStorage
+    const token = localStorage.getItem('admin_token');
+    
+    // Prepare headers with the auth token
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    // Note: Don't set Content-Type header when using FormData, browser will set it with boundary
+    
+    return this.http.post<any>(
+      `${this.apiUrl}/uploadExcel`, 
+      formData,
+      { headers }
+    ).pipe(
+      map(response => {
+        console.log('Excel upload response:', response);
+        return response;
+      }),
+      catchError(error => {
+        console.error('Error uploading Excel file:', error);
+        throw error;
+      })
+    );
   }
 } 
