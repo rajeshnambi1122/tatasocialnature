@@ -115,6 +115,19 @@ export class ParticipantService {
           // If we found registrations data, map it
           if (registrations && registrations.length > 0) {
             console.log(`Mapping ${registrations.length} registrations`);
+            // Log the first registration to help debug image fields
+            if (registrations[0]) {
+              console.log('First registration data:', {
+                hasImageField: 'image' in registrations[0],
+                hasImageFileField: 'imageFile' in registrations[0],
+                imageFieldType: typeof registrations[0].image,
+                imageFileFieldType: typeof registrations[0].imageFile,
+                imageFieldSnippet: registrations[0].image ? 
+                  registrations[0].image.substring(0, 50) + '...' : 'undefined',
+                imageFileSnippet: registrations[0].imageFile ? 
+                  registrations[0].imageFile.substring(0, 50) + '...' : 'undefined'
+              });
+            }
             return registrations.map((reg: any) => this.mapToParticipant(reg));
           }
           
@@ -216,9 +229,7 @@ export class ParticipantService {
       tshirtSize: data.tsize || '',
       category: this.getCategoryFromEventType(this.getEventTypeFromName(data.eventName)),
       registrationDate: data.registrationDate ? new Date(data.registrationDate) : new Date(),
-      photo: data.imageFile ? 
-             (data.imageFile.startsWith('data:image') ? data.imageFile : `data:image/jpeg;base64,${data.imageFile}`) 
-             : '',
+      photo: this.processImageData(data.image || data.imageFile),
       pledgeAgree: data.pledgeAgree || false,
       medicalConditions: data.medicalConditions || '',
       toString() { return this.name; }
@@ -288,5 +299,63 @@ export class ParticipantService {
         throw error;
       })
     );
+  }
+
+  // Helper method to properly process image data
+  private processImageData(imageData: string | null | undefined): string {
+    if (!imageData) {
+      console.log('No image data provided');
+      return '';
+    }
+
+    console.log('Processing image data:', {
+      dataLength: imageData.length,
+      startsWithDataImage: imageData.startsWith('data:image'),
+      firstFewChars: imageData.substring(0, 20)
+    });
+
+    // If it's already a properly formatted data URL, return it
+    if (imageData.startsWith('data:image')) {
+      console.log('Image already has data:image prefix');
+      return imageData;
+    }
+
+    // Fix for truncated base64 data (like from your example)
+    if (imageData.startsWith('/9j/')) {
+      console.log('Found JPEG base64 data without prefix, adding it');
+      return `data:image/jpeg;base64,${imageData}`;
+    }
+
+    try {
+      // Clean the string - sometimes there might be whitespace or newlines
+      const cleanedData = imageData.trim();
+      
+      // Attempt direct image type detection instead of regex validation
+      // This allows malformed base64 data to still attempt to display
+      let imageType = 'jpeg'; // Default to JPEG
+      
+      if (cleanedData.startsWith('iVBOR')) {
+        console.log('Detected PNG image from base64 signature');
+        imageType = 'png';
+      } else if (cleanedData.startsWith('R0lGOD')) {
+        console.log('Detected GIF image from base64 signature');
+        imageType = 'gif';
+      } else if (cleanedData.startsWith('PHN2Z')) {
+        console.log('Detected SVG image from base64 signature');
+        imageType = 'svg+xml';
+      } else if (cleanedData.startsWith('UklGR')) {
+        console.log('Detected WebP image from base64 signature');
+        imageType = 'webp';
+      } else {
+        console.log('Could not detect image type, using default (JPEG)');
+      }
+      
+      // Always try to return something that might work
+      return `data:image/${imageType};base64,${cleanedData}`;
+    } catch (err) {
+      console.error('Error processing image data:', err);
+      // In case of error, still try to return something that might work
+      return `data:image/jpeg;base64,${imageData}`;
+    }
   }
 } 

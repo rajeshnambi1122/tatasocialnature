@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParticipantService, Participant } from '../services/participant.service';
@@ -21,7 +21,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     TranslatePipe
   ]
 })
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit, OnDestroy {
   participants: Participant[] = [];
   filteredParticipants: Participant[] = [];
   searchForm: FormGroup;
@@ -31,6 +31,12 @@ export class AdminDashboardComponent implements OnInit {
   showDetailsModal = false;
   lastUpdated = new Date();
   Math = Math; // For accessing Math in the template
+  
+  // Debug mode for testing images
+  debugMode = false;
+  
+  // Mobile responsive additions
+  showScrollButton = false;
   
   // Sorting
   sortColumn: string = 'id';
@@ -78,6 +84,9 @@ export class AdminDashboardComponent implements OnInit {
     this.loadParticipants();
     this.setupSearchListener();
     this.setMetaTags();
+    
+    // Add scroll event listener for mobile UI features
+    window.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
   private setMetaTags(): void {
@@ -293,11 +302,51 @@ export class AdminDashboardComponent implements OnInit {
   viewDetails(participant: Participant): void {
     this.selectedParticipant = participant;
     this.showDetailsModal = true;
+    
+    // Log the image data to help with debugging
+    if (participant.photo) {
+      console.log('Participant photo data:', {
+        length: participant.photo.length,
+        startsWithDataImage: participant.photo.startsWith('data:image'),
+        snippet: participant.photo.substring(0, 50) + '...'
+      });
+    }
   }
 
   closeDetailsModal(): void {
     this.showDetailsModal = false;
     this.selectedParticipant = null;
+  }
+  
+  // Safe method to get participant photo URL with fallback
+  getParticipantPhotoUrl(participant: Participant): string {
+    if (!participant || !participant.photo) {
+      return ''; // No photo available
+    }
+    
+    try {
+      // Make sure the URL is valid
+      if (!participant.photo.startsWith('data:image')) {
+        console.warn('Invalid photo URL format for participant:', participant.id);
+        return '';
+      }
+      
+      return participant.photo;
+    } catch (err) {
+      console.error('Error retrieving participant photo:', err);
+      return '';
+    }
+  }
+  
+  // Handle image errors with proper type casting
+  handleImageError(event: Event): void {
+    console.error('Image failed to load');
+    
+    // Type cast to HTMLImageElement to access style property
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement && imgElement.style) {
+      imgElement.style.display = 'none';
+    }
   }
   
   // Helper methods
@@ -676,13 +725,24 @@ export class AdminDashboardComponent implements OnInit {
   downloadParticipantPhoto(): void {
     if (!this.selectedParticipant || !this.selectedParticipant.photo) return;
     
-    // Create an anchor element and trigger download
-    const downloadLink = document.createElement('a');
-    downloadLink.href = this.selectedParticipant.photo;
-    downloadLink.download = `${this.selectedParticipant.name.replace(/\s+/g, '_')}_photo.jpg`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    try {
+      const photoUrl = this.getParticipantPhotoUrl(this.selectedParticipant);
+      if (!photoUrl) {
+        console.error('Invalid photo URL for download');
+        return;
+      }
+      
+      // Create an anchor element and trigger download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = photoUrl;
+      downloadLink.download = `${this.selectedParticipant.name.replace(/\s+/g, '_')}_photo.jpg`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } catch (err) {
+      console.error('Error downloading participant photo:', err);
+      this.error = 'Failed to download the photo. Please try again.';
+    }
   }
 
   // Excel file upload methods
@@ -821,5 +881,32 @@ export class AdminDashboardComponent implements OnInit {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+
+  // Toggle debug mode
+  toggleDebugMode(): void {
+    this.debugMode = !this.debugMode;
+  }
+
+  // Mobile navigation methods
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  
+  handleScroll(): void {
+    // Show scroll button when user scrolls down 300px
+    this.showScrollButton = window.scrollY > 300;
+  }
+  
+  // Clean up event listeners when component is destroyed
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.handleScroll.bind(this));
   }
 } 

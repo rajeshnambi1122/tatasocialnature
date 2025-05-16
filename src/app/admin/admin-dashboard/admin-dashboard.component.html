@@ -6,9 +6,6 @@
       <p>{{ 'ADMIN_DASHBOARD_SUBTITLE' | translate }}</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-primary" (click)="useSpecificToken()" title="Paste your API token or the entire curl command with Bearer token">
-        <i class="fas fa-key"></i> Set API Token
-      </button>
       <button class="btn btn-logout" (click)="logout()">
         <i class="fas fa-sign-out-alt"></i> {{ 'ADMIN_LOGOUT' | translate }}
       </button>
@@ -38,7 +35,7 @@
     </div>
 
     <!-- Bulk Upload Section -->
-    <div class="bulk-upload-section glass-card">
+    <div id="upload" class="bulk-upload-section glass-card">
       <h2><i class="fas fa-file-excel"></i> Bulk Participant Upload</h2>
       <p class="section-description">Upload an Excel file to register multiple participants at once.</p>
       
@@ -119,6 +116,26 @@
       </button>
     </div>
 
+    <!-- Debug Image Display (will be hidden in production) -->
+    <div *ngIf="debugMode" class="debug-image-container glass-card">
+      <h3>Debug: Base64 Image Test</h3>
+      <div class="debug-controls">
+        <button class="btn btn-sm btn-primary" (click)="toggleDebugMode()">Hide Debug Panel</button>
+      </div>
+      <div class="debug-image-item" *ngIf="participants && participants.length > 0 && participants[0].photo">
+        <h4>First Participant Image</h4>
+        <div class="debug-info">
+          <p>Photo data length: {{ participants[0].photo.length }}</p>
+          <p>Photo URL starts with: {{ participants[0].photo.substring(0, 30) }}...</p>
+        </div>
+        <img [src]="participants[0].photo" alt="Debug image" class="debug-image" onError="this.style.border='2px solid red'">
+      </div>
+      <div class="debug-image-item">
+        <h4>Test Image (data:image/jpeg;base64)</h4>
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAABAAEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKAP/2Q==" alt="Test image" class="debug-image">
+      </div>
+    </div>
+
     <!-- Add comparison controls after the Quick Status Bar -->
     <div class="comparison-controls" *ngIf="participantsToCompare.length > 0">
       <div class="comparison-badge">
@@ -135,7 +152,7 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="stats-grid" [class.loading-state]="loading">
+    <div id="stats" class="stats-grid" [class.loading-state]="loading">
       <div class="loading-overlay" *ngIf="loading">
         <div class="spinner">
           <i class="fas fa-circle-notch fa-spin"></i>
@@ -294,7 +311,7 @@
     </div>
 
     <!-- Search and Filters -->
-    <div class="filters-section glass-card">
+    <div id="search" class="filters-section glass-card">
       <h2>Search Participants</h2>
       <div class="quick-filters">
         <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === ''" (click)="setQuickFilter('')">All</button>
@@ -335,7 +352,7 @@
     </div>
 
     <!-- Participants Table -->
-    <div class="table-container glass-card">
+    <div id="table" class="table-container glass-card">
       <div class="table-header">
         <h2>Participants List</h2>
         <div class="table-summary">Showing {{ filteredParticipants.length }} of {{ participants.length }} participants</div>
@@ -346,7 +363,7 @@
           <thead>
             <tr>
               <th>
-                Participant ID
+                Chest No
               </th>
               <th class="sortable" (click)="sortBy('name')">
                 Photo/Name <i class="fas" [ngClass]="sortColumn === 'name' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
@@ -382,14 +399,14 @@
               </td>
             </tr>
             <tr *ngFor="let participant of filteredParticipants" class="animate-row">
-              <td>{{ participant.id }}</td>
-              <td>{{ participant.participantId }}</td>
+              <td>{{ participant.participantId || participant.id }}</td>
               <td class="participant-name-cell">
                 <div class="participant-mini-profile">
                   <div *ngIf="!participant.photo" class="avatar-mini" [ngClass]="participant.gender === 'Male' ? 'male' : 'female'">
                     {{ getInitials(participant.name) }}
                   </div>
-                  <img *ngIf="participant.photo" [src]="participant.photo" alt="Participant photo" class="participant-mini-photo">
+                  <img *ngIf="participant.photo" [src]="getParticipantPhotoUrl(participant)" alt="Participant photo" class="participant-mini-photo"
+                       (error)="handleImageError($event)">
                   <span class="participant-name">{{ participant.name }}</span>
                 </div>
               </td>
@@ -458,15 +475,15 @@
           <div *ngIf="!selectedParticipant.photo" class="avatar-circle" [ngClass]="selectedParticipant.gender === 'Male' ? 'male' : 'female'">
             {{ getInitials(selectedParticipant.name) }}
           </div>
-          <img *ngIf="selectedParticipant.photo" [src]="selectedParticipant.photo" alt="Participant photo" class="participant-photo">
+          <img *ngIf="selectedParticipant.photo" [src]="getParticipantPhotoUrl(selectedParticipant)" alt="Participant photo" class="participant-photo"
+               (error)="handleImageError($event)">
         </div>
         <div class="participant-primary-info">
           <h3>{{ selectedParticipant.name }}</h3>
           <span class="event-type-badge large" [class]="selectedParticipant.eventType">
             {{ getEventTypeDisplay(selectedParticipant.eventType) }}
           </span>
-          <div class="participant-id">ID: #{{ selectedParticipant.id.toString().padStart(4, '0') }}</div>
-          <div class="participant-id">Participant ID: {{ selectedParticipant.participantId }}</div>
+          <div class="participant-id">Chest No: {{ selectedParticipant.participantId }}</div>
           <div *ngIf="selectedParticipant.photo" class="photo-actions">
             <button class="btn btn-sm btn-secondary" (click)="downloadParticipantPhoto()">
               <i class="fas fa-download"></i> Download Photo
@@ -621,7 +638,7 @@
               <td *ngFor="let participant of participantsToCompare">{{ participant.id }}</td>
             </tr>
             <tr>
-              <td class="field-name">Participant ID</td>
+              <td class="field-name">Chest No</td>
               <td *ngFor="let participant of participantsToCompare">{{ participant.participantId }}</td>
             </tr>
             <tr>
@@ -697,4 +714,9 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
+
+<!-- Add a scroll to top button -->
+<button class="scroll-to-top" [class.show]="showScrollButton" (click)="scrollToTop()">
+  <i class="fas fa-arrow-up"></i>
+</button> 

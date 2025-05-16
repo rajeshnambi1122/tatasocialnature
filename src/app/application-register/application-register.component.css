@@ -844,6 +844,57 @@ button:hover {
   gap: 10px;
 }
 
+/* Tamil language specific styles for declaration modal */
+:host-context([data-language="ta"]) .modal-footer {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+:host-context([data-language="ta"]) .modal-footer .btn {
+  margin-bottom: 8px;
+  white-space: normal;
+  height: auto;
+  padding: 12px;
+}
+
+/* Fix for register button in header */
+:host-context([data-language="ta"]) .register-btn {
+  font-size: 0.8rem;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.2;
+  height: auto;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-height: 80vh;
+  }
+  
+  .modal-body {
+    max-height: 50vh;
+  }
+  
+  .modal-footer {
+    padding: 12px;
+  }
+  
+  :host-context([data-language="ta"]) .modal-content {
+    width: 98%;
+  }
+  
+  :host-context([data-language="ta"]) .btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
 .btn-info {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: white;

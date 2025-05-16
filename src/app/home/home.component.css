@@ -2129,5 +2129,35 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
     min-width: 110px;
     padding: 8px 12px;
   }
+  
+  /* Improved Tamil mobile register button */
+  :host-context([data-language="ta"]) .right-nav .register-btn {
+    font-size: 0.7rem;
+    min-width: 90px;
+    padding: 8px 10px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+    height: auto;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Make space for hamburger and language toggle */
+  :host-context([data-language="ta"]) .right-nav {
+    margin-right: 65px;
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small screens */
+  :host-context([data-language="ta"]) .right-nav .register-btn {
+    font-size: 0.65rem;
+    min-width: 80px;
+    padding: 6px 8px;
+  }
 }
   
