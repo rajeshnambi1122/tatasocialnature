@@ -26,6 +26,7 @@ export class ApplicationRegisterComponent implements OnInit {
   submissionError: string = '';
   selectedFile: File | null = null;
   participantNumber: string = '';
+  showDeclarationModal: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -333,5 +334,13 @@ export class ApplicationRegisterComponent implements OnInit {
     if (errors['invalidSize']) return 'File size should be less than 2MB';
     
     return '';
+  }
+
+  // Method to handle "I Agree" button click in the declaration modal
+  agreeToDeclaration() {
+    this.registrationForm.patchValue({
+      declarationAgree: true
+    });
+    this.showDeclarationModal = false;
   }
 }

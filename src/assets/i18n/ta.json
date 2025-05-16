@@ -201,5 +201,8 @@
   "REG_FORM_ERROR_TITLE": "பதிவு தோல்வியடைந்தது",
   "REG_FORM_ERROR_SUMMARY_TITLE": "பின்வரும் பிரச்சனைகளை சரிசெய்யவும்:",
   "REG_FORM_SUBMITTING": "செயலாக்குகிறது...",
-  "VIEW_DETAILED_ROUTE": "விரிவான பாதையைக் காண்க"
+  "VIEW_DETAILED_ROUTE": "விரிவான பாதையைக் காண்க",
+  "VIEW_DECLARATION": "அறிவிப்பைக் காண்க",
+  "I_AGREE": "நான் ஒப்புக்கொள்கிறேன்",
+  "CLOSE": "மூடு"
 } 

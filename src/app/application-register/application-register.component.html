@@ -255,16 +255,7 @@
     <div class="form-group" [class.has-error]="registrationForm.get('declarationAgree')?.invalid && registrationForm.get('declarationAgree')?.touched">
       <div class="info-section">
         <h3>{{ 'REG_FORM_DECLARATION_TITLE' | translate }}</h3>
-        <p>{{ 'REG_FORM_DECLARATION_POINT1' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT2' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT3' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT4' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT5' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT6' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT7' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT8' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT9' | translate }}</p>
-        <p>{{ 'REG_FORM_DECLARATION_POINT10' | translate }}</p>
+        <button type="button" class="btn btn-info" (click)="showDeclarationModal = true">{{ 'VIEW_DECLARATION' | translate }}</button>
       </div>
       <div class="checkbox" [class.has-error]="registrationForm.get('declarationAgree')?.invalid && registrationForm.get('declarationAgree')?.touched">
         <input type="checkbox" id="declarationAgree" formControlName="declarationAgree">
@@ -300,5 +291,31 @@
       </button>
     </div>
   </form>
+</div>
+
+<!-- Declaration Modal -->
+<div class="modal-overlay" *ngIf="showDeclarationModal" (click)="showDeclarationModal = false">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ 'REG_FORM_DECLARATION_TITLE' | translate }}</h3>
+      <button type="button" class="close-btn" (click)="showDeclarationModal = false">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>{{ 'REG_FORM_DECLARATION_POINT1' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT2' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT3' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT4' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT5' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT6' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT7' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT8' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT9' | translate }}</p>
+      <p>{{ 'REG_FORM_DECLARATION_POINT10' | translate }}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="agreeToDeclaration()">{{ 'I_AGREE' | translate }}</button>
+      <button type="button" class="btn btn-secondary" (click)="showDeclarationModal = false">{{ 'CLOSE' | translate }}</button>
+    </div>
+  </div>
 </div>
   
