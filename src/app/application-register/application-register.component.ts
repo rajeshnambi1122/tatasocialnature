@@ -25,6 +25,7 @@ export class ApplicationRegisterComponent implements OnInit {
   submissionSuccess: boolean = false;
   submissionError: string = '';
   selectedFile: File | null = null;
+  participantNumber: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -177,6 +178,16 @@ export class ApplicationRegisterComponent implements OnInit {
           console.log('Registration successful', response);
           this.isSubmitting = false;
           this.submissionSuccess = true;
+          
+          // Store participant number from the response
+          if (response && response.message) {
+            // Extract participant number from message like "Data inserted successfully and the paticipant number is: 6"
+            const match = response.message.match(/participant number is: (\d+)/i);
+            if (match && match[1]) {
+              this.participantNumber = match[1];
+            }
+          }
+          
           this.registrationForm.reset();
           window.scrollTo(0, 0);
         },

@@ -10,7 +10,7 @@
   <div class="success-message" *ngIf="submissionSuccess">
     <div class="alert alert-success">
       <h3>{{ 'REG_FORM_SUCCESS_TITLE' | translate }}</h3>
-      <p>{{ 'REG_FORM_SUCCESS_MESSAGE' | translate }}</p>
+      <p>{{ 'REG_FORM_SUCCESS_MESSAGE' | translate }} {{ participantNumber }}</p>
       <button type="button" class="btn btn-primary" routerLink="/">
         {{ 'REG_FORM_RETURN_HOME' | translate }}
       </button>
