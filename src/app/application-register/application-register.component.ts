@@ -103,7 +103,7 @@ export class ApplicationRegisterComponent implements OnInit {
 
     switch(eventType) {
       case 'marathon':
-        isValid = age >= 10 && age <= 60;
+        isValid = age <= 60;
         break;
       case 'kidathon':
         isValid = age <= 10;
@@ -180,22 +180,52 @@ export class ApplicationRegisterComponent implements OnInit {
           this.submissionSuccess = true;
           
           // Store participant number from the response
-          if (response && response.message) {
-            console.log('Response message:', response.message);
-            // Extract participant number from message like "Data inserted successfully and the paticipant number is: 9"
-            const match = response.message.match(/paticipant number is: (\d+)/i);
-            console.log('Regex match result:', match);
-            if (match && match[1]) {
-              this.participantNumber = match[1];
-              console.log('Extracted participant number:', this.participantNumber);
-            } else {
-              // If no match found with the regex, try a direct extraction from the end of the string
-              const parts = response.message.split(':');
-              if (parts.length > 1) {
-                const potentialNumber = parts[parts.length - 1].trim();
-                if (!isNaN(Number(potentialNumber))) {
-                  this.participantNumber = potentialNumber;
-                  console.log('Fallback extraction participant number:', this.participantNumber);
+          if (response) {
+            console.log('Full API response:', response);
+            
+            // Try to extract from the response message first
+            if (response.message) {
+              console.log('Response message:', response.message);
+              // Extract participant number from message like "Data inserted successfully and the paticipant number is: 9"
+              const match = response.message.match(/paticipant number is: (\d+)/i);
+              console.log('Regex match result:', match);
+              
+              if (match && match[1]) {
+                this.participantNumber = match[1];
+                console.log('Extracted participant number from regex:', this.participantNumber);
+              } else {
+                // If no match found with the regex, try a direct extraction from the end of the string
+                const parts = response.message.split(':');
+                if (parts.length > 1) {
+                  const potentialNumber = parts[parts.length - 1].trim();
+                  if (!isNaN(Number(potentialNumber))) {
+                    this.participantNumber = potentialNumber;
+                    console.log('Extracted participant number from split:', this.participantNumber);
+                  }
+                }
+              }
+            }
+            
+            // If still no participant number and response is the number itself
+            if (!this.participantNumber && typeof response === 'number') {
+              this.participantNumber = response.toString();
+              console.log('Using response as participant number:', this.participantNumber);
+            }
+            
+            // If still no participant number, check if it's directly in the response object
+            if (!this.participantNumber && response.participantNumber) {
+              this.participantNumber = response.participantNumber.toString();
+              console.log('Using response.participantNumber:', this.participantNumber);
+            }
+            
+            // Last resort: use any numeric field that might contain the participant number
+            if (!this.participantNumber) {
+              for (const key in response) {
+                if (typeof response[key] === 'number' || 
+                   (typeof response[key] === 'string' && !isNaN(Number(response[key])))) {
+                  console.log('Potential number field found:', key, response[key]);
+                  this.participantNumber = response[key].toString();
+                  break;
                 }
               }
             }
