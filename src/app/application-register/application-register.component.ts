@@ -181,10 +181,23 @@ export class ApplicationRegisterComponent implements OnInit {
           
           // Store participant number from the response
           if (response && response.message) {
-            // Extract participant number from message like "Data inserted successfully and the paticipant number is: 6"
-            const match = response.message.match(/participant number is: (\d+)/i);
+            console.log('Response message:', response.message);
+            // Extract participant number from message like "Data inserted successfully and the paticipant number is: 9"
+            const match = response.message.match(/paticipant number is: (\d+)/i);
+            console.log('Regex match result:', match);
             if (match && match[1]) {
               this.participantNumber = match[1];
+              console.log('Extracted participant number:', this.participantNumber);
+            } else {
+              // If no match found with the regex, try a direct extraction from the end of the string
+              const parts = response.message.split(':');
+              if (parts.length > 1) {
+                const potentialNumber = parts[parts.length - 1].trim();
+                if (!isNaN(Number(potentialNumber))) {
+                  this.participantNumber = potentialNumber;
+                  console.log('Fallback extraction participant number:', this.participantNumber);
+                }
+              }
             }
           }
           
