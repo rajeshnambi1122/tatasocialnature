@@ -58,7 +58,7 @@
   "REGISTER_CTA_TITLE": "இப்போதே பதிவு செய்து இயக்கத்தின் ஒரு பகுதியாகுங்கள்",
   "REGISTER_CTA_FREE": "அனைத்து பங்கேற்பாளர்களுக்கும் இலவசம்!",
   "BENEFITS_TITLE": "அனைத்து பதிவு செய்யப்பட்ட பங்கேற்பாளர்களுக்கும் கிடைப்பவை:",
-  "PRIZES_FOR_WINNERS": "வெற்றியாளர்கள பரிசுகள்",
+  "PRIZES_FOR_WINNERS": "வெற்றியாளர்களுக்குப் பரிசுகள்",
   "BENEFIT_CERTIFICATE": "அதிகாரப்பூர்வ பங்கேற்பு சான்றிதழ்",
   "BENEFIT_MEDAL": "மாரத்தான் பதக்கம்",
   "BENEFIT_TSHIRT": "நிகழ்வு சட்டை",
@@ -113,7 +113,7 @@
   "REG_FORM_EVENT_TYPE_MARATHON": "மாரத்தான் (வயது 60 வரை)",
   "REG_FORM_EVENT_TYPE_KIDATHON": "குழந்தைகள் ஓட்டம் - பட்டாம்பூச்சி நடை & ஓட்டம் (10 வயது வரை)",
   "REG_FORM_EVENT_TYPE_KINGWALKATHON": "ராஜ நடை (60 வயதுக்கு மேல்)",
-  "REG_FORM_EVENT_TYPE_WALKATHON_DISABLED": "வாக்காதான் - மாற்றுத்திறனாளிகளுக்கானது (அனைத்து வயதினரும்)",
+  "REG_FORM_EVENT_TYPE_WALKATHON_DISABLED": "வாக்காதான் - மாற்றுத்திறனாளிகளுக்கானது (60 வயதுக்கு மேல்)",
   "REG_FORM_EVENT_TYPE_DRAWING": "வரைதல் போட்டி (பள்ளி மாணவர்கள் மட்டும்)",
   "REG_FORM_EVENT_TYPE_POETRY": "கவிதை போட்டி (பள்ளி மாணவர்கள் மட்டும்)",
   "REG_FORM_NAME_LABEL": "பெயர்:",
@@ -204,5 +204,5 @@
   "VIEW_DETAILED_ROUTE": "விரிவான பாதையைக் காண்க",
   "VIEW_DECLARATION": "அறிவிப்பைக் காண்க",
   "I_AGREE": "நான் ஒப்புக்கொள்கிறேன்",
-  "CLOSE": "மூடு"
+  "CLOSE": "மூடுக"
 }
