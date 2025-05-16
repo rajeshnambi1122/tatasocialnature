@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 
 export interface Participant {
   id: number;
+  participantId?: number;
   name: string;
   email: string;
   phone: string;
@@ -201,6 +202,7 @@ export class ParticipantService {
     // Map API fields to our model with proper field names from the API response
     return {
       id: data.id || 0,
+      participantId: data.participantId || 1,
       name: data.participantName || '',
       email: data.email || '',
       phone: data.contactNumber || '',
@@ -214,7 +216,9 @@ export class ParticipantService {
       tshirtSize: data.tsize || '',
       category: this.getCategoryFromEventType(this.getEventTypeFromName(data.eventName)),
       registrationDate: data.registrationDate ? new Date(data.registrationDate) : new Date(),
-      photo: data.photo || '',
+      photo: data.imageFile ? 
+             (data.imageFile.startsWith('data:image') ? data.imageFile : `data:image/jpeg;base64,${data.imageFile}`) 
+             : '',
       pledgeAgree: data.pledgeAgree || false,
       medicalConditions: data.medicalConditions || '',
       toString() { return this.name; }

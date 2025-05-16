@@ -593,6 +593,10 @@ export class AdminDashboardComponent implements OnInit {
                   <div class="info-value">#${participant.id.toString().padStart(4, '0')}</div>
                 </div>
                 <div class="info-row">
+                  <div class="info-label">Participant ID</div>
+                  <div class="info-value">${participant.participantId}</div>
+                </div>
+                <div class="info-row">
                   <div class="info-label">Emergency Contact</div>
                   <div class="info-value">${participant.emergencyContact}</div>
                 </div>
@@ -660,5 +664,17 @@ export class AdminDashboardComponent implements OnInit {
     } else {
       this.error = 'Invalid or empty token provided';
     }
+  }
+
+  downloadParticipantPhoto(): void {
+    if (!this.selectedParticipant || !this.selectedParticipant.photo) return;
+    
+    // Create an anchor element and trigger download
+    const downloadLink = document.createElement('a');
+    downloadLink.href = this.selectedParticipant.photo;
+    downloadLink.download = `${this.selectedParticipant.name.replace(/\s+/g, '_')}_photo.jpg`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 } 

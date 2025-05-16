@@ -275,8 +275,11 @@
               <th class="sortable" (click)="sortBy('id')">
                 ID <i class="fas" [ngClass]="sortColumn === 'id' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
               </th>
+              <th>
+                Participant ID
+              </th>
               <th class="sortable" (click)="sortBy('name')">
-                Name <i class="fas" [ngClass]="sortColumn === 'name' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
+                Photo/Name <i class="fas" [ngClass]="sortColumn === 'name' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
               </th>
               <th>Email</th>
               <th>Phone</th>
@@ -296,13 +299,13 @@
           </thead>
           <tbody>
             <tr *ngIf="loading">
-              <td colspan="10" class="loading-cell">
+              <td colspan="11" class="loading-cell">
                 <div class="loading-spinner"></div>
                 Loading participants...
               </td>
             </tr>
             <tr *ngIf="!loading && filteredParticipants.length === 0">
-              <td colspan="10" class="no-data">
+              <td colspan="11" class="no-data">
                 <i class="fas fa-search"></i>
                 <p>No participants found</p>
                 <button class="btn btn-outline reset-btn" (click)="resetFilters()">Reset Filters</button>
@@ -310,7 +313,16 @@
             </tr>
             <tr *ngFor="let participant of filteredParticipants" class="animate-row">
               <td>{{ participant.id }}</td>
-              <td>{{ participant.name }}</td>
+              <td>{{ participant.participantId }}</td>
+              <td class="participant-name-cell">
+                <div class="participant-mini-profile">
+                  <div *ngIf="!participant.photo" class="avatar-mini" [ngClass]="participant.gender === 'Male' ? 'male' : 'female'">
+                    {{ getInitials(participant.name) }}
+                  </div>
+                  <img *ngIf="participant.photo" [src]="participant.photo" alt="Participant photo" class="participant-mini-photo">
+                  <span class="participant-name">{{ participant.name }}</span>
+                </div>
+              </td>
               <td>
                 <a [href]="'mailto:' + participant.email">{{ participant.email }}</a>
               </td>
@@ -384,6 +396,12 @@
             {{ getEventTypeDisplay(selectedParticipant.eventType) }}
           </span>
           <div class="participant-id">ID: #{{ selectedParticipant.id.toString().padStart(4, '0') }}</div>
+          <div class="participant-id">Participant ID: {{ selectedParticipant.participantId }}</div>
+          <div *ngIf="selectedParticipant.photo" class="photo-actions">
+            <button class="btn btn-sm btn-secondary" (click)="downloadParticipantPhoto()">
+              <i class="fas fa-download"></i> Download Photo
+            </button>
+          </div>
         </div>
       </div>
       
@@ -531,6 +549,10 @@
             <tr>
               <td class="field-name">ID</td>
               <td *ngFor="let participant of participantsToCompare">{{ participant.id }}</td>
+            </tr>
+            <tr>
+              <td class="field-name">Participant ID</td>
+              <td *ngFor="let participant of participantsToCompare">{{ participant.participantId }}</td>
             </tr>
             <tr>
               <td class="field-name">Name</td>

@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class ApplicationRegisterComponent implements OnInit {
   registrationForm: FormGroup;
-  selectedEventType: string = '';
+  selectedEventType: string = ''; 
   showAgeWarning: boolean = false;
   currentLang$: Observable<string>;
   isSubmitting: boolean = false;
