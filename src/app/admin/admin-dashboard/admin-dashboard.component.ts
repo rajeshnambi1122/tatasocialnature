@@ -645,11 +645,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
                   <div class="info-value">${new Date(participant.registrationDate).toLocaleDateString()}</div>
                 </div>
                 <div class="info-row">
-                  <div class="info-label">Registration ID</div>
-                  <div class="info-value">#${participant.id.toString().padStart(4, '0')}</div>
-                </div>
-                <div class="info-row">
-                  <div class="info-label">Participant ID</div>
+                  <div class="info-label">Chest Number</div>
                   <div class="info-value">${participant.participantId}</div>
                 </div>
                 <div class="info-row">
