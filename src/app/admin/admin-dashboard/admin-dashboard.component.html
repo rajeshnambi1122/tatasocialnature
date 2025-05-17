@@ -13,81 +13,83 @@
   </header>
 
   <div class="dashboard-container container">
-    <!-- Quick Status Bar -->
+    <!-- Quick Status Bar that matches the design in the image -->
     <div class="quick-status-bar">
       <div class="status-item">
         <i class="fas fa-users"></i>
         <span class="status-label">Total Registrations:</span>
         <span class="status-value">{{ stats.total }}</span>
       </div>
+      
       <div class="status-divider"></div>
+      
       <div class="status-item">
         <i class="fas fa-calendar-alt"></i>
         <span class="status-label">Last Updated:</span>
-        <span class="status-value">{{ lastUpdated | date:'medium' }}</span>
+        <span class="status-value">{{ lastUpdated | date:'MMM d, yyyy, h:mm:ss a' }}</span>
       </div>
-      <div class="status-divider"></div>
-      <div class="status-item">
-        <button class="btn-icon refresh-icon" (click)="loadParticipants()" [class.spinning]="loading">
-          <i class="fas fa-sync-alt"></i>
-        </button>
-      </div>
+      
+      <button class="btn-icon" (click)="loadPaginatedParticipants()">
+        <i class="fas fa-sync-alt"></i>
+      </button>
     </div>
 
-    <!-- Bulk Upload Section -->
+    <!-- Bulk Upload Section - Always visible for both admin types -->
     <div id="upload" class="bulk-upload-section glass-card">
       <h2><i class="fas fa-file-excel"></i> Bulk Participant Upload</h2>
       <p class="section-description">Upload an Excel file to register multiple participants at once.</p>
       
       <div class="upload-container">
         <div class="file-upload-area" 
-             [class.has-file]="selectedExcelFile"
+             (dragover)="onDragOver($event)" 
+             (dragleave)="onDragLeave($event)" 
+             (drop)="onDrop($event)"
              [class.drag-over]="isDragging"
-             (dragover)="onDragOver($event)"
-             (dragleave)="onDragLeave($event)"
-             (drop)="onDrop($event)">
-          
+             (click)="fileInput.click()">
+          <div *ngIf="!selectedExcelFile; else fileSelected">
+            <div class="upload-icon">
+              <i class="fas fa-upload"></i>
+            </div>
+            <div class="upload-text">
+              <p>Drag & drop an Excel file here, or <span class="browse-link">browse</span></p>
+              <p class="small-text">Supported formats: .xlsx, .xls</p>
+            </div>
+          </div>
+          <ng-template #fileSelected>
+            <div class="upload-icon">
+              <i class="fas fa-file-excel"></i>
+            </div>
+            <div class="upload-text">
+              <p><strong>{{ selectedExcelFile?.name }}</strong></p>
+              <p class="small-text">{{ formatFileSize(selectedExcelFile?.size || 0) }}</p>
+            </div>
+          </ng-template>
           <input type="file" 
                  id="excel-upload" 
-                 (change)="onExcelFileSelected($event)"
                  accept=".xlsx,.xls" 
-                 [disabled]="isUploading">
-          
-          <div class="upload-icon">
-            <i *ngIf="!selectedExcelFile" class="fas fa-file-upload"></i>
-            <i *ngIf="selectedExcelFile" class="fas fa-file-excel"></i>
-          </div>
-          
-          <div class="upload-text" *ngIf="!selectedExcelFile">
-            <p>Drag & drop an Excel file here, or <span class="browse-link">browse</span></p>
-            <p class="small-text">Supported formats: .xlsx, .xls</p>
-          </div>
-          
-          <div class="file-details" *ngIf="selectedExcelFile">
-            <p class="file-name">{{ selectedExcelFile.name }}</p>
-            <p class="file-size">{{ formatFileSize(selectedExcelFile.size) }}</p>
-          </div>
+                 (change)="onExcelFileSelected($event)" 
+                 style="display: none;"
+                 #fileInput>
         </div>
         
         <div class="upload-actions">
-          <button class="btn btn-primary" 
-                  (click)="uploadExcelFile()" 
-                  [disabled]="!selectedExcelFile || isUploading">
-            <i *ngIf="!isUploading" class="fas fa-upload"></i>
-            <i *ngIf="isUploading" class="fas fa-spinner fa-spin"></i>
-            {{ isUploading ? 'Uploading...' : 'Upload Excel File' }}
+          <button class="btn-primary" 
+                  [disabled]="!selectedExcelFile || isUploading" 
+                  (click)="uploadExcelFile()">
+            <i class="fas fa-upload"></i>
+            Upload Excel File
           </button>
           
-          <button class="btn btn-secondary" 
-                  (click)="clearExcelFile()" 
-                  [disabled]="!selectedExcelFile || isUploading">
-            <i class="fas fa-times"></i> Clear
+          <button class="btn-secondary" 
+                  [disabled]="!selectedExcelFile || isUploading" 
+                  (click)="clearExcelFile()">
+            <i class="fas fa-times"></i>
+            Clear
           </button>
           
-          <a href="assets/templates/bulk_upload_template.xlsx" 
-             class="btn btn-outline template-link" 
-             download>
-            <i class="fas fa-download"></i> Download Template
+          <a class="template-link" href="assets/tp.xlsx" download>
+            <i class="fas fa-download"></i>
+            Download Template
           </a>
         </div>
       </div>
@@ -116,27 +118,29 @@
       </button>
     </div>
 
-    <!-- Debug Image Display (will be hidden in production) -->
-    <div *ngIf="debugMode" class="debug-image-container glass-card">
-      <h3>Debug: Base64 Image Test</h3>
-      <div class="debug-controls">
-        <button class="btn btn-sm btn-primary" (click)="toggleDebugMode()">Hide Debug Panel</button>
-      </div>
-      <div class="debug-image-item" *ngIf="participants && participants.length > 0 && participants[0].photo">
-        <h4>First Participant Image</h4>
-        <div class="debug-info">
-          <p>Photo data length: {{ participants[0].photo.length }}</p>
-          <p>Photo URL starts with: {{ participants[0].photo.substring(0, 30) }}...</p>
+    <!-- All other sections only visible for regular admins -->
+    <ng-container *ngIf="!isTataAdmin">
+      <!-- Debug Image Display (will be hidden in production) -->
+      <div *ngIf="debugMode" class="debug-image-container glass-card">
+        <h3>Debug: Base64 Image Test</h3>
+        <div class="debug-controls">
+          <button class="btn btn-sm btn-primary" (click)="toggleDebugMode()">Hide Debug Panel</button>
         </div>
-        <img [src]="participants[0].photo" alt="Debug image" class="debug-image" onError="this.style.border='2px solid red'">
+        <div class="debug-image-item" *ngIf="participants && participants.length > 0 && participants[0].photo">
+          <h4>First Participant Image</h4>
+          <div class="debug-info">
+            <p>Photo data length: {{ participants[0].photo.length }}</p>
+            <p>Photo URL starts with: {{ participants[0].photo.substring(0, 30) }}...</p>
+          </div>
+          <img [src]="participants[0].photo" alt="Debug image" class="debug-image" onError="this.style.border='2px solid red'">
+        </div>
+        <div class="debug-image-item">
+          <h4>Test Image (data:image/jpeg;base64)</h4>
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAABAAEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKAP/2Q==" alt="Test image" class="debug-image">
+        </div>
       </div>
-      <div class="debug-image-item">
-        <h4>Test Image (data:image/jpeg;base64)</h4>
-        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMBwkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAABAAEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKAP/2Q==" alt="Test image" class="debug-image">
-      </div>
-    </div>
 
-    <!-- Add comparison controls after the Quick Status Bar -->
+      <!-- Comparison controls -->
     <div class="comparison-controls" *ngIf="participantsToCompare.length > 0">
       <div class="comparison-badge">
         <span>{{ participantsToCompare.length }} participants selected</span>
@@ -152,11 +156,10 @@
     </div>
 
     <!-- Stats Cards -->
-    <div id="stats" class="stats-grid" [class.loading-state]="loading">
+      <div id="stats" class="stats-grid" [class.loading-state]="loading">
       <div class="loading-overlay" *ngIf="loading">
         <div class="spinner">
           <i class="fas fa-circle-notch fa-spin"></i>
-          <span>Loading participants data...</span>
         </div>
       </div>
       <div class="stat-card glass-card">
@@ -169,6 +172,7 @@
           <div class="stat-footer">All registered participants</div>
         </div>
       </div>
+        <!--
       <div class="stat-card glass-card">
         <div class="stat-icon marathon">
           <i class="fas fa-running"></i>
@@ -241,9 +245,11 @@
           </div>
         </div>
       </div>
+        -->
     </div>
 
     <!-- Demographics Summary -->
+      <!--
     <div class="demographics-section glass-card">
       <h2>Demographics Overview</h2>
       <div class="demographics-grid">
@@ -309,9 +315,11 @@
         </div>
       </div>
     </div>
+      -->
 
     <!-- Search and Filters -->
-    <div id="search" class="filters-section glass-card">
+      <!--
+      <div id="search" class="filters-section glass-card">
       <h2>Search Participants</h2>
       <div class="quick-filters">
         <button class="quick-filter-btn" [class.active]="searchForm.get('eventType')?.value === ''" (click)="setQuickFilter('')">All</button>
@@ -350,20 +358,32 @@
         </button>
       </form>
     </div>
+      -->
 
     <!-- Participants Table -->
-    <div id="table" class="table-container glass-card">
+      <div id="table" class="table-container glass-card">
       <div class="table-header">
         <h2>Participants List</h2>
-        <div class="table-summary">Showing {{ filteredParticipants.length }} of {{ participants.length }} participants</div>
+          <div class="table-actions">
+            <button type="button" class="btn btn-primary export-btn" (click)="exportToCSV()">
+              <i class="fas fa-download"></i> Export to CSV
+            </button>
+          </div>
+          <div class="table-summary" *ngIf="!serverSidePagination">Showing {{ filteredParticipants.length }} of {{ participants.length }} participants</div>
+          <div class="table-summary" *ngIf="serverSidePagination">Showing {{ filteredParticipants.length }} participants (page {{ currentPage }} of {{ totalPages }})</div>
       </div>
 
       <div class="table-responsive">
+          <div class="table-loading-overlay" *ngIf="loading">
+            <div class="loading-spinner">
+              <i class="fas fa-circle-notch fa-spin"></i>
+            </div>
+          </div>
         <table>
           <thead>
             <tr>
               <th>
-                Chest No
+                  Chest No
               </th>
               <th class="sortable" (click)="sortBy('name')">
                 Photo/Name <i class="fas" [ngClass]="sortColumn === 'name' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
@@ -387,26 +407,26 @@
           <tbody>
             <tr *ngIf="loading">
               <td colspan="11" class="loading-cell">
-                <div class="loading-spinner"></div>
-                Loading participants...
+                <div class="loading-spinner">
+                  <i class="fas fa-circle-notch fa-spin"></i>
+                </div>
               </td>
             </tr>
             <tr *ngIf="!loading && filteredParticipants.length === 0">
               <td colspan="11" class="no-data">
-                <i class="fas fa-search"></i>
-                <p>No participants found</p>
-                <button class="btn btn-outline reset-btn" (click)="resetFilters()">Reset Filters</button>
+                  <i class="fas fa-info-circle"></i>
+                  <p>No participants to display</p>
               </td>
             </tr>
             <tr *ngFor="let participant of filteredParticipants" class="animate-row">
-              <td>{{ participant.participantId || participant.id }}</td>
+                <td>{{ participant.participantId || participant.id }}</td>
               <td class="participant-name-cell">
                 <div class="participant-mini-profile">
                   <div *ngIf="!participant.photo" class="avatar-mini" [ngClass]="participant.gender === 'Male' ? 'male' : 'female'">
                     {{ getInitials(participant.name) }}
                   </div>
-                  <img *ngIf="participant.photo" [src]="getParticipantPhotoUrl(participant)" alt="Participant photo" class="participant-mini-photo"
-                       (error)="handleImageError($event)">
+                    <img *ngIf="participant.photo" [src]="getParticipantPhotoUrl(participant)" alt="Participant photo" class="participant-mini-photo"
+                         (error)="handleImageError($event)">
                   <span class="participant-name">{{ participant.name }}</span>
                 </div>
               </td>
@@ -438,28 +458,50 @@
         </table>
       </div>
       
+        <!-- Participants Table Pagination Section -->
       <div class="table-pagination" *ngIf="filteredParticipants.length > 0">
         <div class="pagination-info">
-          Showing {{ Math.min(currentPage * pageSize, filteredParticipants.length) }} of {{ filteredParticipants.length }} entries
+            <span *ngIf="!serverSidePagination">
+              Showing {{ Math.min(currentPage * pageSize, filteredParticipants.length) }} of {{ filteredParticipants.length }} participants
+            </span>
+            <span *ngIf="serverSidePagination">
+              Showing page {{ currentPage }} of {{ totalPages || 1 }} ({{ totalElements }} total participants)
+            </span>
+            <span *ngIf="loading" class="pagination-loading">
+              <i class="fas fa-circle-notch fa-spin"></i>
+            </span>
         </div>
         <div class="pagination-controls">
-          <button class="pagination-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+            <button class="pagination-btn" 
+                    [disabled]="currentPage <= 1 || loading" 
+                    (click)="goToPage(currentPage - 1)"
+                    title="Previous Page">
             <i class="fas fa-chevron-left"></i>
           </button>
           <div class="pagination-pages">
-            <button *ngFor="let page of getPageNumbers()" class="page-btn" [class.active]="page === currentPage" (click)="goToPage(page)">
+              <button *ngFor="let page of getPageNumbers()" 
+                      class="page-btn" 
+                      [class.active]="page === currentPage" 
+                      [disabled]="loading"
+                      (click)="goToPage(page)">
               {{ page }}
             </button>
           </div>
-          <button class="pagination-btn" [disabled]="currentPage === getTotalPages()" (click)="goToPage(currentPage + 1)">
+            <button class="pagination-btn" 
+                    [disabled]="currentPage >= totalPages || loading" 
+                    (click)="goToPage(currentPage + 1)"
+                    title="Next Page">
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
       </div>
     </div>
+    </ng-container>
   </div>
 </div>
 
+<!-- Modals - Only render when needed and for regular admins -->
+<ng-container *ngIf="!isTataAdmin">
 <!-- Participant Details Modal -->
 <div class="modal" *ngIf="showDetailsModal && selectedParticipant" (click)="closeDetailsModal()">
   <div class="modal-content glass-card" (click)="$event.stopPropagation()">
@@ -475,15 +517,15 @@
           <div *ngIf="!selectedParticipant.photo" class="avatar-circle" [ngClass]="selectedParticipant.gender === 'Male' ? 'male' : 'female'">
             {{ getInitials(selectedParticipant.name) }}
           </div>
-          <img *ngIf="selectedParticipant.photo" [src]="getParticipantPhotoUrl(selectedParticipant)" alt="Participant photo" class="participant-photo"
-               (error)="handleImageError($event)">
+            <img *ngIf="selectedParticipant.photo" [src]="getParticipantPhotoUrl(selectedParticipant)" alt="Participant photo" class="participant-photo"
+                 (error)="handleImageError($event)">
         </div>
         <div class="participant-primary-info">
           <h3>{{ selectedParticipant.name }}</h3>
           <span class="event-type-badge large" [class]="selectedParticipant.eventType">
             {{ getEventTypeDisplay(selectedParticipant.eventType) }}
           </span>
-          <div class="participant-id">Chest No: {{ selectedParticipant.participantId }}</div>
+            <div class="participant-id">Chest No: {{ selectedParticipant.participantId }}</div>
           <div *ngIf="selectedParticipant.photo" class="photo-actions">
             <button class="btn btn-sm btn-secondary" (click)="downloadParticipantPhoto()">
               <i class="fas fa-download"></i> Download Photo
@@ -638,7 +680,7 @@
               <td *ngFor="let participant of participantsToCompare">{{ participant.id }}</td>
             </tr>
             <tr>
-              <td class="field-name">Chest No</td>
+                <td class="field-name">Chest No</td>
               <td *ngFor="let participant of participantsToCompare">{{ participant.participantId }}</td>
             </tr>
             <tr>
@@ -714,7 +756,8 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
+</ng-container>
 
 <!-- Add a scroll to top button -->
 <button class="scroll-to-top" [class.show]="showScrollButton" (click)="scrollToTop()">

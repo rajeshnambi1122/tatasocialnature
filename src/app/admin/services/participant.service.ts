@@ -33,6 +33,18 @@ export interface RegistrationResponse {
   message: string;
 }
 
+// Paginated response interface
+export interface PaginatedResponse {
+  content: any[];
+  totalElements: number;
+  totalPages: number;
+  number: number; // current page
+  size: number;   // page size
+  first: boolean; // is first page
+  last: boolean;  // is last page
+  // Any other properties from the API response
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,6 +66,117 @@ export class ParticipantService {
     };
   }
 
+  // New method for paginated participant retrieval
+  getPaginatedParticipants(page: number = 0, size: number = 20, sortBy: string = 'id', sortDir: string = 'asc'): Observable<{
+    participants: Participant[],
+    totalElements: number,
+    totalPages: number
+  }> {
+    // API URL format exactly matches the curl command format
+    const url = `${this.apiUrl}/registrations?page=${page}&size=${size}`;
+    
+    console.log(`Getting paginated participants: ${url}`);
+    
+    return this.http.get<any>(url, this.getHttpOptions()).pipe(
+      map(response => {
+        console.log('Raw paginated API response:', response);
+        
+        // Default values
+        let participants: any[] = [];
+        let totalElements = 0;
+        let totalPages = 1;
+        
+        // Response format from example (status/message/page structure)
+        if (response && response.status === "OK" && response.message) {
+          console.log('Found status/message structure');
+          
+          // Extract content array
+          if (Array.isArray(response.message.content)) {
+            participants = response.message.content;
+          } else if (response.message.content) {
+            participants = [response.message.content];
+          }
+          
+          // Extract pagination details from page object
+          if (response.message.page) {
+            totalElements = response.message.page.totalElements || 0;
+            totalPages = response.message.page.totalPages || 1;
+            console.log(`Found pagination details in page object: totalElements=${totalElements}, totalPages=${totalPages}`);
+          }
+        }
+        // Case 1: Spring Boot standard pagination response
+        else if (response && Array.isArray(response.content)) {
+          console.log('Found standard Spring pagination response');
+          participants = response.content;
+          totalElements = response.totalElements || 0;
+          totalPages = response.totalPages || 1;
+        }
+        // Case 2: Custom API pagination format
+        else if (response && response.registrations && Array.isArray(response.registrations)) {
+          console.log('Found custom pagination format with registrations array');
+          participants = response.registrations;
+          totalElements = response.totalCount || participants.length;
+          totalPages = Math.ceil(totalElements / size);
+        }
+        // Case 3: Direct array response
+        else if (Array.isArray(response)) {
+          console.log('Found direct array response');
+          participants = response;
+          totalElements = participants.length;
+          totalPages = 1;
+        }
+        // Case 4: Nested response structure
+        else if (response && response.message && response.message.content) {
+          console.log('Found nested pagination response');
+          if (Array.isArray(response.message.content)) {
+            participants = response.message.content;
+          } else {
+            participants = [response.message.content];
+          }
+          totalElements = response.message.totalElements || participants.length;
+          totalPages = response.message.totalPages || 1;
+        }
+        // Case 5: Unexpected structure - analyze and log it for debugging
+        else {
+          console.log('Unexpected response structure:', Object.keys(response));
+          console.log('Response sample:', JSON.stringify(response).substring(0, 500) + '...');
+          
+          // Try to find an array property
+          const arrayProps = Object.keys(response).filter(key => Array.isArray(response[key]));
+          if (arrayProps.length > 0) {
+            console.log('Found potential registration arrays:', arrayProps);
+            participants = response[arrayProps[0]];
+            totalElements = participants.length;
+            // Estimate totalPages based on size
+            totalPages = Math.max(1, Math.ceil(totalElements / size));
+          }
+        }
+        
+        // Map the participants
+        const mappedParticipants = participants.map((reg: any) => this.mapToParticipant(reg));
+        
+        // Log pagination details for debugging
+        console.log(`Pagination details: currentPage=${page}, pageSize=${size}`);
+        console.log(`Found ${mappedParticipants.length} participants, totalElements=${totalElements}, totalPages=${totalPages}`);
+        
+        return {
+          participants: mappedParticipants,
+          totalElements,
+          totalPages
+        };
+      }),
+      catchError(error => {
+        console.error('Error fetching paginated participants:', error);
+        return of({
+          participants: [],
+          totalElements: 0,
+          totalPages: 0
+        });
+      })
+    );
+  }
+  
+  // Original method (kept for backward compatibility)
   getParticipants(): Observable<Participant[]> {
     console.log('Getting participants with token:', localStorage.getItem('admin_token'));
     

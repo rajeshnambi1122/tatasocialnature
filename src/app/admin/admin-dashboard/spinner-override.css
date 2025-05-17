@@ -1,0 +1,92 @@
+/* Override styles for loading spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.loading-spinner i {
+  font-size: 28px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner:after {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  top: 12px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: var(--primary-color);
+  border-bottom-color: var(--accent-color);
+  opacity: 0.7;
+  animation: spinAround 1.5s linear infinite;
+}
+
+.loading-spinner span {
+  font-size: 16px;
+  color: var(--text-color-dark);
+  font-weight: 500;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+}
+
+.pagination-loading i {
+  margin-right: 6px;
+  color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+/* Stats grid loading overlay */
+.stats-grid .loading-overlay {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.stats-grid .spinner {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+  padding: 20px;
+}
+
+.stats-grid .spinner i {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+/* Animation Keyframes */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinAround {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Override button styling */
+.btn-primary {
+  background-color: #4CAF50 !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #2E7D32 !important;
+} 

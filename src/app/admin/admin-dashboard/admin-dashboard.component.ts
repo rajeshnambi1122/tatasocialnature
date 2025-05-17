@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css'],
+  styleUrls: ['./admin-dashboard.component.css', './spinner-override.css', './restore-original-ui.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -44,7 +44,10 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   
   // Pagination
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 20;
+  totalElements: number = 0;
+  totalPages: number = 0;
+  serverSidePagination: boolean = true; // Flag to toggle between client and server-side pagination
   
   // Comparison
   participantsToCompare: Participant[] = [];
@@ -67,6 +70,9 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   isDragging = false;
   uploadResult: { success: boolean, message: string, count?: number } | null = null;
 
+  // Add this property to check if user is Tata Admin
+  isTataAdmin = false;
+
   constructor(
     private participantService: ParticipantService,
     private fb: FormBuilder,
@@ -78,10 +84,26 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       searchQuery: [''],
       eventType: ['']
     });
+
+    // Check if user is Tata Admin
+    this.isTataAdmin = this.authService.isTataAdmin();
+    
+    // Subscribe to role changes (if needed in the future)
+    this.authService.userRole$.subscribe(role => {
+      this.isTataAdmin = role === 'Tata Admin';
+    });
   }
 
   ngOnInit(): void {
-    this.loadParticipants();
+    // Only load participants data if not Tata Admin
+    if (!this.isTataAdmin) {
+      if (this.serverSidePagination) {
+        this.loadPaginatedParticipants();
+      } else {
+        this.loadParticipants();
+      }
+    }
+    
     this.setupSearchListener();
     this.setMetaTags();
     
@@ -176,19 +198,27 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   }
 
   applyFilters(filters: any): void {
-    this.filteredParticipants = this.sortData(
-      this.participants.filter(participant => {
-        const matchesSearch = !filters.searchQuery || 
-          participant.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-          participant.email.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-          participant.aadharNumber.includes(filters.searchQuery);
-        
-        const matchesEventType = !filters.eventType || participant.eventType === filters.eventType;
+    if (this.serverSidePagination) {
+      // Reset to first page when applying filters
+      this.currentPage = 1;
+      // TODO: Update to support server-side filtering
+      // For now, we'll just reload the current page
+      this.loadPaginatedParticipants();
+    } else {
+      this.filteredParticipants = this.sortData(
+        this.participants.filter(participant => {
+          const matchesSearch = !filters.searchQuery || 
+            participant.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+            participant.email.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+            participant.aadharNumber.includes(filters.searchQuery);
+          
+          const matchesEventType = !filters.eventType || participant.eventType === filters.eventType;
 
-        return matchesSearch && matchesEventType;
-      })
-    );
-    this.currentPage = 1;
+          return matchesSearch && matchesEventType;
+        })
+      );
+      this.currentPage = 1;
+    }
   }
 
   updateStats(): void {
@@ -199,8 +229,11 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     const drawingCount = this.participants.filter(p => p.eventType === 'drawing').length;
     const poetryCount = this.participants.filter(p => p.eventType === 'poetry').length;
     
+    // When using server-side pagination, use the API's totalElements for the total count
+    const totalCount = this.serverSidePagination ? this.totalElements : this.participants.length;
+    
     this.stats = {
-      total: this.participants.length,
+      total: totalCount,
       fullMarathon: marathonCount,
       halfMarathon: kidathonCount,
       funRun: kingWalkathonCount,
@@ -208,6 +241,8 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       drawing: drawingCount,
       poetry: poetryCount
     };
+    
+    console.log(`Stats updated. Total participants: ${totalCount} (from API: ${this.serverSidePagination})`);
   }
   
   // Sort data
@@ -219,7 +254,13 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       this.sortDirection = 'asc';
     }
     
-    this.filteredParticipants = this.sortData([...this.filteredParticipants]);
+    if (this.serverSidePagination) {
+      // For server-side pagination, reload with new sort parameters
+      this.loadPaginatedParticipants();
+    } else {
+      // For client-side pagination, sort the existing data
+      this.filteredParticipants = this.sortData([...this.filteredParticipants]);
+    }
   }
   
   sortData(data: Participant[]): Participant[] {
@@ -245,29 +286,66 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   
   // Pagination methods
   goToPage(page: number): void {
-    this.currentPage = page;
+    console.log(`goToPage called with page=${page}, currentPage=${this.currentPage}, totalPages=${this.totalPages}`);
+    
+    // First check if we have pages
+    if (this.totalPages <= 0) {
+      console.log('No pages available, cannot navigate');
+      return;
+    }
+    
+    // Make sure page is valid
+    if (page < 1) {
+      page = 1;
+      console.log(`Adjusted page to minimum: ${page}`);
+    } else if (page > this.totalPages) {
+      page = this.totalPages;
+      console.log(`Adjusted page to maximum: ${page}`);
+    }
+    
+    // Only load if page actually changed
+    if (page !== this.currentPage) {
+      console.log(`Changing page from ${this.currentPage} to ${page}`);
+      this.currentPage = page;
+      
+      if (this.serverSidePagination) {
+        this.loadPaginatedParticipants();
+      }
+    } else {
+      console.log(`Page ${page} is already current, no change needed`);
+    }
   }
   
   getTotalPages(): number {
-    return Math.ceil(this.filteredParticipants.length / this.pageSize);
+    if (this.serverSidePagination && this.totalPages > 0) {
+      return this.totalPages;
+    }
+    return Math.max(1, Math.ceil(this.filteredParticipants.length / this.pageSize));
   }
   
   getPageNumbers(): number[] {
-    const totalPages = this.getTotalPages();
     const maxPagesToShow = 5;
     
-    if (totalPages <= maxPagesToShow) {
-      return Array.from({length: totalPages}, (_, i) => i + 1);
+    // If no pages or invalid total, return empty array
+    if (this.totalPages <= 0) {
+      console.log('No pages to display');
+      return [];
     }
     
-    let startPage = Math.max(1, this.currentPage - 2);
+    if (this.totalPages <= maxPagesToShow) {
+      console.log(`Showing all ${this.totalPages} pages`);
+      return Array.from({length: this.totalPages}, (_, i) => i + 1);
+    }
+    
+    let startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
     let endPage = startPage + maxPagesToShow - 1;
     
-    if (endPage > totalPages) {
-      endPage = totalPages;
+    if (endPage > this.totalPages) {
+      endPage = this.totalPages;
       startPage = Math.max(1, endPage - maxPagesToShow + 1);
     }
     
+    console.log(`Showing page range ${startPage}-${endPage} of ${this.totalPages} total pages`);
     return Array.from({length: endPage - startPage + 1}, (_, i) => startPage + i);
   }
   
@@ -904,5 +982,115 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   // Clean up event listeners when component is destroyed
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.handleScroll.bind(this));
+  }
+
+  // New method for loading paginated participants
+  loadPaginatedParticipants(): void {
+    this.loading = true;
+    this.error = '';
+    
+    // Check if token exists before making the request
+    const token = localStorage.getItem('admin_token');
+    if (!token) {
+      this.error = 'Authentication token not found. Please login again.';
+      this.loading = false;
+      this.router.navigate(['/admin/login']);
+      return;
+    }
+    
+    // Convert from UI page numbering (1-based) to API page numbering (0-based)
+    const apiPage = this.currentPage - 1;
+    
+    // Default page size is 20 for this API
+    const pageSize = 20;
+    
+    // Determine sort parameters
+    const sortField = this.getSortFieldForApi(this.sortColumn);
+    const sortDirection = this.sortDirection;
+    
+    console.log(`Loading paginated participants: page=${this.currentPage} (apiPage=${apiPage}), size=${pageSize}, sort=${sortField},${sortDirection}`);
+    
+    const fetchWithRetry = (attempt = 1) => {
+      const maxAttempts = 3;
+      
+      this.participantService.getPaginatedParticipants(apiPage, pageSize, sortField, sortDirection).subscribe({
+        next: (result) => {
+          console.log(`Received paginated data: ${result.participants.length} participants, totalElements=${result.totalElements}, totalPages=${result.totalPages}`);
+          
+          this.participants = result.participants;
+          this.filteredParticipants = [...result.participants];
+          this.totalElements = result.totalElements;
+          this.totalPages = Math.max(1, result.totalPages); // Ensure at least 1 page
+          
+          console.log(`Updated component state: currentPage=${this.currentPage}, totalPages=${this.totalPages}, totalElements=${this.totalElements}`);
+          
+          // If the current page is now invalid (beyond total pages), adjust it
+          if (this.currentPage > this.totalPages && this.totalPages > 0) {
+            console.log(`Current page ${this.currentPage} is beyond totalPages ${this.totalPages}, adjusting to last page`);
+            this.currentPage = this.totalPages;
+            // Reload with correct page
+            this.loadPaginatedParticipants();
+            return;
+          }
+          
+          this.updateStats();
+          this.lastUpdated = new Date();
+          this.loading = false;
+          
+          // Additional debug to check pagination values
+          console.log('Pagination state after data load:');
+          console.log(`- Current page: ${this.currentPage}`);
+          console.log(`- Total pages: ${this.totalPages}`);
+          console.log(`- Total elements: ${this.totalElements}`);
+          console.log(`- Page size: ${this.pageSize}`);
+          console.log(`- Prev button disabled: ${this.currentPage <= 1}`);
+          console.log(`- Next button disabled: ${this.currentPage >= this.totalPages}`);
+        },
+        error: (err) => {
+          console.error(`Error loading paginated participants (attempt ${attempt}/${maxAttempts}):`, err);
+          
+          // Check for CORS error
+          if (err.name === 'HttpErrorResponse' && 
+              (err.message.includes('CORS') || err.message.includes('Access-Control'))) {
+            this.error = 'CORS error detected. API access is restricted. Please contact administrator.';
+          } 
+          // Session expired or unauthorized
+          else if (err.status === 401 || err.status === 403) {
+            this.error = 'Session expired or unauthorized. Please login again.';
+            localStorage.removeItem('admin_token');
+            this.router.navigate(['/admin/login']);
+          } 
+          // Retry logic
+          else if (attempt < maxAttempts) {
+            this.error = `Loading attempt ${attempt} failed. Retrying...`;
+            setTimeout(() => fetchWithRetry(attempt + 1), 1000); // Wait 1 second before retry
+            return;
+          } 
+          // Max attempts reached
+          else {
+            this.error = 'Failed to load participants after multiple attempts. Please try again later.';
+          }
+          
+          this.loading = false;
+        }
+      });
+    };
+    
+    // Start the fetch process with retry logic
+    fetchWithRetry();
+  }
+  
+  // Helper method to convert UI sort field to API sort field
+  getSortFieldForApi(uiSortField: string): string {
+    // Map UI field names to API field names
+    const fieldMapping: {[key: string]: string} = {
+      'id': 'id',
+      'name': 'participantName',
+      'age': 'age',
+      'eventType': 'eventName',
+      'registrationDate': 'registrationDate'
+    };
+    
+    return fieldMapping[uiSortField] || 'id';
   }
 } 

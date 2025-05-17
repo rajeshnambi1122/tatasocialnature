@@ -1,0 +1,59 @@
+/* Table loading overlay */
+.table-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  border-radius: var(--border-radius-md);
+  animation: fadeIn 0.3s ease-in-out;
+  backdrop-filter: blur(3px);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner i {
+  font-size: 28px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.loading-spinner span {
+  font-size: 16px;
+  color: var(--text-color-dark);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Pagination loading indicator */
+.pagination-loading {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 12px;
+  font-size: 14px;
+  color: var(--text-color-light);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.pagination-loading i {
+  margin-right: 6px;
+  color: var(--primary-color);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+} 

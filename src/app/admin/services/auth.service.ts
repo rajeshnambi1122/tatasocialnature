@@ -10,12 +10,15 @@ import { LoginResponse } from './login-response.model';
 export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  private userRoleSubject = new BehaviorSubject<string | null>(this.getUserRole());
+  public userRole$ = this.userRoleSubject.asObservable();
 
   private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon';
 
   constructor(private http: HttpClient) {
     // Check if there's a token in localStorage during initialization
     this.isAuthenticatedSubject.next(this.hasToken());
+    this.userRoleSubject.next(this.getUserRole());
   }
 
   // Get HTTP options for API calls
@@ -30,9 +33,13 @@ export class AuthService {
   }
 
   // Method to set token directly (can be used to pass in a token from curl or elsewhere)
-  setToken(token: string): boolean {
+  setToken(token: string, role?: string): boolean {
     if (token && token.length > 0) {
       localStorage.setItem('admin_token', token);
+      if (role) {
+        localStorage.setItem('user_role', role);
+        this.userRoleSubject.next(role);
+      }
       this.isAuthenticatedSubject.next(true);
       return true;
     }
@@ -40,7 +47,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    return this.http.post<any>(`${this.apiUrl}/login`, {
+    return this.http.post<LoginResponse | string>(`${this.apiUrl}/login`, {
       userName: username,
       passWord: password
     }, this.getHttpOptions()).pipe(
@@ -48,19 +55,33 @@ export class AuthService {
         console.log('Login response:', response); // Log the response for debugging
         
         // Store token if received
-        if (response && response.token) {
+        if (response && typeof response === 'object' && response.token) {
           const token = response.token;
           console.log('Storing token:', token);
           localStorage.setItem('admin_token', token);
+          
+          // Store role if available
+          if (response.role) {
+            localStorage.setItem('user_role', response.role);
+            this.userRoleSubject.next(response.role);
+          }
+          
           this.isAuthenticatedSubject.next(true);
           return true;
         }
         
         // For the specific API response structure
-        if (response && response.jwttoken) {
+        if (response && typeof response === 'object' && response.jwttoken) {
           const token = response.jwttoken;
           console.log('Storing JWT token:', token);
           localStorage.setItem('admin_token', token);
+          
+          // Store role if available
+          if (response.role) {
+            localStorage.setItem('user_role', response.role);
+            this.userRoleSubject.next(response.role);
+          }
+          
           this.isAuthenticatedSubject.next(true);
           return true;
         }
@@ -74,12 +95,19 @@ export class AuthService {
         }
         
         // If success flag is available, use it
-        if (response && response.success !== undefined) {
+        if (response && typeof response === 'object' && response.success !== undefined) {
           if (response.success) {
             // Some APIs might not return a token directly
             const token = response.token || 'authenticated';
             console.log('Storing success token:', token);
             localStorage.setItem('admin_token', token);
+            
+            // Store role if available
+            if (response.role) {
+              localStorage.setItem('user_role', response.role);
+              this.userRoleSubject.next(response.role);
+            }
+            
             this.isAuthenticatedSubject.next(true);
             return true;
           }
@@ -96,10 +124,20 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('admin_token');
+    localStorage.removeItem('user_role');
     this.isAuthenticatedSubject.next(false);
+    this.userRoleSubject.next(null);
   }
 
   private hasToken(): boolean {
     return !!localStorage.getItem('admin_token');
+  }
+  
+  getUserRole(): string | null {
+    return localStorage.getItem('user_role');
+  }
+  
+  isTataAdmin(): boolean {
+    return this.getUserRole() === 'Tata Admin';
   }
 } 
