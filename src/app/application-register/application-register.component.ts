@@ -27,6 +27,7 @@ export class ApplicationRegisterComponent implements OnInit {
   selectedFile: File | null = null;
   participantNumber: string = '';
   showDeclarationModal: boolean = false;
+  formSubmitted: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -148,6 +149,8 @@ export class ApplicationRegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.formSubmitted = true;
+    
     if (this.registrationForm.valid) {
       this.isSubmitting = true;
       this.submissionError = '';

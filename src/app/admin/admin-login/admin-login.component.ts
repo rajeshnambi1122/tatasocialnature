@@ -17,6 +17,7 @@ export class AdminLoginComponent {
   isLoading = false;
   error = '';
   returnUrl: string = '/admin';
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -59,5 +60,9 @@ export class AdminLoginComponent {
         this.isLoading = false;
       }
     });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 } 

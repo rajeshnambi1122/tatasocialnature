@@ -37,7 +37,7 @@
           <li *ngIf="registrationForm.get('eventType')?.invalid && registrationForm.get('eventType')?.touched">
             {{ 'REG_FORM_EVENT_TYPE_LABEL' | translate }}: {{ getErrorMessage('eventType') }}
           </li>
-          <li *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+          <li *ngIf="registrationForm.get('name')?.invalid && (formSubmitted || registrationForm.get('name')?.dirty)">
             {{ 'REG_FORM_NAME_LABEL' | translate }}: {{ getErrorMessage('name') }}
           </li>
           <li *ngIf="registrationForm.get('dob')?.invalid && registrationForm.get('dob')?.touched">
@@ -95,11 +95,11 @@
     </div>
 
     <!-- Name -->
-    <div class="form-group" [class.has-error]="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+    <div class="form-group" [class.has-error]="registrationForm.get('name')?.invalid && (formSubmitted || registrationForm.get('name')?.dirty)">
       <label for="name">{{ 'REG_FORM_NAME_LABEL' | translate }} <span class="required">*</span></label>
-      <input type="text" id="name" formControlName="name">
-      <small class="error-message" *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
-        <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('name') }}
+      <input type="text" id="name" class="form-control" formControlName="name">
+      <small class="error-message" *ngIf="registrationForm.get('name')?.invalid && (formSubmitted || registrationForm.get('name')?.dirty)">
+        {{ getErrorMessage('name') }}
       </small>
     </div>
 

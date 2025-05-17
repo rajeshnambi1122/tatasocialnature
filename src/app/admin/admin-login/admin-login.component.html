@@ -21,13 +21,21 @@
       
       <div class="form-group">
         <label for="password">{{ 'ADMIN_LOGIN_PASSWORD' | translate }}</label>
-        <input 
-          type="password" 
-          id="password" 
-          formControlName="password"
-          class="form-control"
-          [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-          placeholder="{{ 'ADMIN_LOGIN_PASSWORD' | translate }}">
+        <div class="password-input-container">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password" 
+            formControlName="password"
+            class="form-control"
+            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            placeholder="{{ 'ADMIN_LOGIN_PASSWORD' | translate }}">
+          <button 
+            type="button" 
+            class="password-toggle-btn" 
+            (click)="togglePasswordVisibility()">
+            <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
         <div class="invalid-feedback" *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched">
           {{ 'ADMIN_LOGIN_PASSWORD' | translate }} is required
         </div>

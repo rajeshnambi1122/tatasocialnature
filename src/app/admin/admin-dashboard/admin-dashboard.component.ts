@@ -442,34 +442,150 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     window.open(`mailto:${this.selectedParticipant.email}?subject=Marathon Registration Information&body=Hello ${this.selectedParticipant.name},%0D%0A%0D%0AThank you for registering for the marathon.%0D%0A%0D%0ABest regards,%0D%0AMarathon Organizers`, '_blank');
   }
 
+  // This method is now kept for backward compatibility but is no longer used directly from UI
   exportToCSV(): void {
+    // Ask user if they want to export ALL participants from all pages? This might take longer to process.
+    if (confirm('Do you want to export ALL participants from all pages? This might take longer to process.\n\nClick OK to export ALL pages, or Cancel to export only the current page.')) {
+      this.exportAllToCSV();
+    } else {
+      this.exportCurrentPageToCSV();
+    }
+  }
+
+  exportCurrentPageToCSV(): void {
+    // Show a brief loading indicator for current page export
+    this.loading = true;
+    this.error = 'Exporting current page data...';
+    
+    setTimeout(() => {
+      const headers = ['ID', 'Name', 'Email', 'Phone', 'Age', 'DOB', 'Gender', 'Aadhar Number', 
+        'Blood Group', 'Event Type', 'T-shirt Size', 'Registration Date', 'Emergency Contact'];
+      const csvContent = [
+        headers.join(','),
+        ...this.filteredParticipants.map(p => [
+          p.participantId || p.id, // Use participantId if available, fall back to id
+          `"${p.name}"`,
+          `"${p.email}"`,
+          `"${p.phone}"`,
+          p.age,
+          new Date(p.dob).toLocaleDateString(),
+          p.gender,
+          `"${p.aadharNumber}"`,
+          p.bloodGroup,
+          `"${p.eventType}"`,
+          p.tshirtSize || 'N/A',
+          new Date(p.registrationDate).toLocaleDateString(),
+          `"${p.emergencyContact}"`
+        ].join(','))
+      ].join('\n');
+      
+      this.downloadCSV(csvContent, `marathon-participants-page-${this.currentPage}-${new Date().toISOString().slice(0, 10)}.csv`);
+      
+      // Clear loading state
+      this.loading = false;
+      this.error = '';
+    }, 300); // Short timeout to allow the loading indicator to show
+  }
+
+  exportAllToCSV(): void {
+    // Show loading indicator
+    this.loading = true;
+    this.error = 'Exporting all participants data... This may take some time. Please wait.';
+    
+    const originalPage = this.currentPage;
+    const allParticipants: Participant[] = [];
+    
+    // Get the headers ready
     const headers = ['ID', 'Name', 'Email', 'Phone', 'Age', 'DOB', 'Gender', 'Aadhar Number', 
       'Blood Group', 'Event Type', 'T-shirt Size', 'Registration Date', 'Emergency Contact'];
-    const csvContent = [
-      headers.join(','),
-      ...this.filteredParticipants.map(p => [
-        p.id,
-        `"${p.name}"`,
-        `"${p.email}"`,
-        `"${p.phone}"`,
-        p.age,
-        new Date(p.dob).toLocaleDateString(),
-        p.gender,
-        `"${p.aadharNumber}"`,
-        p.bloodGroup,
-        `"${p.eventType}"`,
-        p.tshirtSize || 'N/A',
-        new Date(p.registrationDate).toLocaleDateString(),
-        `"${p.emergencyContact}"`
-      ].join(','))
-    ].join('\n');
     
+    // Function to fetch participants from all pages recursively
+    const fetchAllPages = (page: number = 0, totalPages: number = 1) => {
+      // API is 0-based while UI is 1-based for page numbers
+      const apiPage = page;
+      const pageSize = 100; // Get more participants per request
+      
+      // Update loading message with progress
+      this.error = `Exporting participants data... Fetching page ${page + 1} of ${totalPages}. Please wait.`;
+      
+      this.participantService.getPaginatedParticipants(apiPage, pageSize).subscribe({
+        next: (result) => {
+          allParticipants.push(...result.participants);
+          
+          // Update totalPages on first fetch
+          if (page === 0) {
+            totalPages = result.totalPages;
+          }
+          
+          // Update loading message
+          this.error = `Exporting participants data... Fetched ${allParticipants.length} of ${result.totalElements} participants. Please wait.`;
+          
+          // If we have more pages to fetch
+          if (page < result.totalPages - 1) {
+            fetchAllPages(page + 1, result.totalPages);
+          } else {
+            // We've fetched all pages, now create and download the CSV
+            this.error = `Preparing CSV file with ${allParticipants.length} participants...`;
+            
+            const csvContent = [
+              headers.join(','),
+              ...allParticipants.map(p => [
+                p.participantId || p.id, // Use participantId if available, fall back to id
+                `"${p.name}"`,
+                `"${p.email}"`,
+                `"${p.phone}"`,
+                p.age,
+                new Date(p.dob).toLocaleDateString(),
+                p.gender,
+                `"${p.aadharNumber}"`,
+                p.bloodGroup,
+                `"${p.eventType}"`,
+                p.tshirtSize || 'N/A',
+                new Date(p.registrationDate).toLocaleDateString(),
+                `"${p.emergencyContact}"`
+              ].join(','))
+            ].join('\n');
+            
+            this.downloadCSV(csvContent, `all-marathon-participants-${new Date().toISOString().slice(0, 10)}.csv`);
+            
+            // Restore original state
+            setTimeout(() => {
+              this.currentPage = originalPage;
+              this.loading = false;
+              this.error = `Successfully exported ${allParticipants.length} participants to CSV.`;
+              this.loadPaginatedParticipants();
+              
+              // Clear success message after a few seconds
+              setTimeout(() => {
+                if (this.error === `Successfully exported ${allParticipants.length} participants to CSV.`) {
+                  this.error = '';
+                }
+              }, 5000);
+            }, 1000);
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching all participants:', err);
+          this.loading = false;
+          this.error = 'Failed to export all participants. Please try again.';
+          // Restore original page
+          this.currentPage = originalPage;
+          this.loadPaginatedParticipants();
+        }
+      });
+    };
+    
+    // Start fetching from page 0
+    fetchAllPages();
+  }
+
+  downloadCSV(csvContent: string, filename: string): void {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     
     link.setAttribute('href', url);
-    link.setAttribute('download', `marathon-participants-${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('download', filename);
     link.style.visibility = 'hidden';
     
     document.body.appendChild(link);

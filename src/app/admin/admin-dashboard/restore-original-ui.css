@@ -348,25 +348,46 @@
   font-size: 0.9rem;
 }
 
-/* Export Button */
+/* Export Buttons */
 .export-btn {
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   transition: all var(--transition-speed) var(--transition-bounce);
-  background-color: var(--primary-color);
-  color: white;
   border: none;
   padding: 0.75rem 1.25rem;
   border-radius: var(--border-radius-md);
   cursor: pointer;
 }
 
+.btn-primary.export-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-secondary.export-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
 .export-btn:hover {
   transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary.export-btn:hover {
   background-color: var(--primary-dark);
   box-shadow: 0 4px 8px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.btn-secondary.export-btn:hover {
+  background-color: #5a6268;
+}
+
+.table-actions {
+  display: flex;
+  gap: 0.5rem;
 }
 
 /* Table Loading Spinner */
