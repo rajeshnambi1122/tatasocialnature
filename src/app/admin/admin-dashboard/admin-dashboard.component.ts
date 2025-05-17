@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css', './spinner-override.css', './restore-original-ui.css'],
+  styleUrls: ['./admin-dashboard.component.css', './spinner-override.css', './restore-original-ui.css', './mobile-enhancements.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -1087,12 +1087,17 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   }
   
   scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Use smooth scrolling for better UX
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
   
   handleScroll(): void {
-    // Show scroll button when user scrolls down 300px
-    this.showScrollButton = window.scrollY > 300;
+    // Show scroll button when user scrolls down 300px from the top
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    this.showScrollButton = scrollPosition > 300;
   }
   
   // Clean up event listeners when component is destroyed
