@@ -51,6 +51,8 @@ export class AuthService {
       userName: username,
       passWord: password
     }, this.getHttpOptions()).pipe(
+      // Add a minimum delay to ensure the loading spinner is visible
+      delay(800),
       map(response => {
         console.log('Login response:', response); // Log the response for debugging
         
@@ -117,7 +119,8 @@ export class AuthService {
       }),
       catchError(error => {
         console.error('Login error:', error);
-        return of(false);
+        // Add delay on error as well to show the spinner
+        return of(false).pipe(delay(800));
         })
       );
   }

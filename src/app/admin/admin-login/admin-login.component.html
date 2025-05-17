@@ -47,7 +47,7 @@
           class="btn btn-primary login-btn" 
           [disabled]="loginForm.invalid || isLoading">
           <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-          {{ 'ADMIN_LOGIN_BUTTON' | translate }}
+          {{ isLoading ? 'Logging in...' : ('ADMIN_LOGIN_BUTTON' | translate) }}
         </button>
       </div>
       
