@@ -137,8 +137,8 @@ export class ApplicationRegisterComponent implements OnInit {
         return;
       }
       
-      // Validate file size (max 2MB)
-      if (file.size > 2 * 1024 * 1024) {
+      // Validate file size (max 1MB)
+      if (file.size > 1 * 1024 * 1024) {
         this.registrationForm.get('photo')?.setErrors({ 'invalidSize': true });
         return;
       }
@@ -334,7 +334,7 @@ export class ApplicationRegisterComponent implements OnInit {
     }
     if (errors['invalidAge']) return 'Age does not meet event requirements';
     if (errors['invalidType']) return 'Please select an image file';
-    if (errors['invalidSize']) return 'File size should be less than 2MB';
+    if (errors['invalidSize']) return 'File size should be less than 1MB';
     
     return '';
   }

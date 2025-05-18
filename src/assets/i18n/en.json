@@ -160,6 +160,7 @@
   "REG_FORM_BLOODGROUP_SELECT": "-- Select Blood Group --",
   "REG_FORM_PHOTO_LABEL": "Photo (passport-size):",
   "REG_FORM_PHOTO_BUTTON": "Choose a passport-size photo",
+  "REG_FORM_PHOTO_HINT": "Photo must be less than 1MB in size",
   "REG_FORM_EMAIL_LABEL": "Email:",
   "REG_FORM_PHONE_LABEL": "Phone Number:",
   "REG_FORM_EMERGENCY_CONTACT_LABEL": "Emergency Contact Number:",

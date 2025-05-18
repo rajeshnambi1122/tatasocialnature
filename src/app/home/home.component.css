@@ -170,6 +170,15 @@ section {
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
 }
 
+/* Specific style for logos in desktop view */
+img[src="images/logoleft.png"].logo {
+  height: 75px;
+}
+
+img[src="images/logoright.jpg"].logo {
+  height: 120px;
+}
+
 .logo:hover {
   transform: scale(1.05);
 }
@@ -1283,6 +1292,10 @@ nav ul li a:hover::after {
   
   .about-image {
     height: 200px;
+  }
+  
+  img[src="images/logoleft.png"].logo {
+    height: 55px; /* Reset to normal size on mobile */
   }
 }
 

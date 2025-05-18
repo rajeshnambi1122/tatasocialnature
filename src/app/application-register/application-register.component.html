@@ -170,6 +170,7 @@
           {{ selectedFile ? selectedFile.name : ('REG_FORM_PHOTO_BUTTON' | translate) }}
         </div>
       </div>
+      <small class="hint">{{ 'REG_FORM_PHOTO_HINT' | translate }}</small>
       <small class="error-message" *ngIf="registrationForm.get('photo')?.invalid && registrationForm.get('photo')?.touched">
         <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('photo') }}
       </small>
