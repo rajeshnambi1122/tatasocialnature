@@ -34,32 +34,33 @@
   align-items: center;
   margin-bottom: 10px;
   animation: scaleIn 0.5s ease-out;
+  gap: 20px;
 }
 
 .logo {
   height: 55px;
-  margin: 0 12px;
   transition: transform 0.3s var(--transition-bounce);
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
+  margin: 0;
 }
 
-/* Specific style for logos in desktop view */
-img[src="images/logoleft.png"].logo {
+/* Specific styles for each logo */
+.logo-left {
   height: 75px;
-}
-
-img[src="images/logoright.jpg"].logo {
-  height: 120px;
-}
-
-.logo:hover {
-  transform: scale(1.05);
 }
 
 .logo-center {
   height: 65px;
   animation: pulse 2s infinite ease-in-out;
-  animation-delay: 1.5s; /* Start animation after 1.5 seconds */
+  animation-delay: 1.5s;
+}
+
+.logo-right {
+  height: 120px;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 @keyframes pulse {
@@ -506,7 +507,6 @@ nav ul li a:hover::after {
   
   .logo {
     height: 50px;
-    margin: 0 10px;
   }
   
   .logo-center {
@@ -573,23 +573,22 @@ nav ul li a:hover::after {
   }
 
   .logo {
-    height: 40px;
+    height: 50px;
   }
   
-  img[src="images/logoleft.png"].logo {
-    height: 40px; /* Reset to normal size on mobile */
+  .logo-left {
+    height: 50px;
+  }
+  
+  .logo-right {
+    height: 60px;
   }
   
   .logo-center {
     height: 55px;
   }
   
-  /* Ensure logos remain horizontal on mobile too */
-  .logo-container {
-    flex-direction: row;
-    justify-content: center;
-  }
-  
+  /* Navigation styles */
   nav {
     padding: 0;
     flex-wrap: wrap;
