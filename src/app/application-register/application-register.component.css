@@ -722,8 +722,15 @@ button:hover {
 }
 
 .required {
-  color: #dc3545;
+  color: var(--error-color);
   margin-left: 4px;
+}
+
+.optional {
+  color: var(--text-color-light);
+  font-size: 0.85em;
+  margin-left: 4px;
+  font-style: italic;
 }
 
 .has-error .checkbox {

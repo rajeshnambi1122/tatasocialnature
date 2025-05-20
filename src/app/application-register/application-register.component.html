@@ -30,14 +30,14 @@
     <h2>{{ 'REG_FORM_TITLE' | translate }}</h2>
 
     <!-- Form Error Summary -->
-    <div class="form-error-summary" *ngIf="registrationForm.invalid && registrationForm.touched">
+    <div class="form-error-summary" *ngIf="registrationForm.invalid && formSubmitted">
       <div class="alert alert-danger">
         <h4><i class="fas fa-exclamation-circle"></i> {{ 'REG_FORM_ERROR_SUMMARY_TITLE' | translate }}</h4>
         <ul>
           <li *ngIf="registrationForm.get('eventType')?.invalid && registrationForm.get('eventType')?.touched">
             {{ 'REG_FORM_EVENT_TYPE_LABEL' | translate }}: {{ getErrorMessage('eventType') }}
           </li>
-          <li *ngIf="registrationForm.get('name')?.invalid && (formSubmitted || registrationForm.get('name')?.dirty)">
+          <li *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
             {{ 'REG_FORM_NAME_LABEL' | translate }}: {{ getErrorMessage('name') }}
           </li>
           <li *ngIf="registrationForm.get('dob')?.invalid && registrationForm.get('dob')?.touched">
@@ -163,7 +163,7 @@
 
     <!-- Photo Upload -->
     <div class="form-group" [class.has-error]="registrationForm.get('photo')?.invalid && registrationForm.get('photo')?.touched">
-      <label for="photo">{{ 'REG_FORM_PHOTO_LABEL' | translate }} <span class="required">*</span></label>
+      <label for="photo">{{ 'REG_FORM_PHOTO_LABEL' | translate }} <span class="optional">(Optional)</span></label>
       <div class="custom-file-input">
         <input type="file" id="photo" (change)="onFileSelected($event)">
         <div class="custom-file-label">

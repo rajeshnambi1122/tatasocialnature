@@ -45,7 +45,7 @@ export class ApplicationRegisterComponent implements OnInit {
       gender: ['', Validators.required],
       aadharNumber: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
       bloodGroup: ['', Validators.required],
-      photo: [null, Validators.required],
+      photo: [null],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       emergencyContact: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
@@ -64,6 +64,8 @@ export class ApplicationRegisterComponent implements OnInit {
     // Subscribe to event type changes
     this.registrationForm.get('eventType')?.valueChanges.subscribe(value => {
       this.selectedEventType = value;
+      // Only mark eventType as touched, not the entire form
+      this.registrationForm.get('eventType')?.markAsTouched();
     });
 
     // Subscribe to DOB changes for age calculation
@@ -166,7 +168,7 @@ export class ApplicationRegisterComponent implements OnInit {
       formData.append('aadhar', this.registrationForm.get('aadharNumber')?.value);
       formData.append('bloodGroup', this.registrationForm.get('bloodGroup')?.value);
       
-      // Append the image file
+      // Append the image file only if it exists
       if (this.selectedFile) {
         formData.append('imageFile', this.selectedFile);
       }
