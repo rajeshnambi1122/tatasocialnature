@@ -517,6 +517,15 @@ nav ul li a:hover::after {
   .logo-container {
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: 15px;
+  }
+  
+  .logo-left {
+    height: 60px;
+  }
+  
+  .logo-right {
+    height: 80px;
   }
 }
 
@@ -573,7 +582,7 @@ nav ul li a:hover::after {
   }
 
   .logo {
-    height: 50px;
+    height: 45px;
   }
   
   .logo-left {
@@ -585,7 +594,14 @@ nav ul li a:hover::after {
   }
   
   .logo-center {
-    height: 55px;
+    height: 50px;
+  }
+  
+  /* Keep logos horizontal with adjusted sizes */
+  .logo-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
   }
   
   /* Navigation styles */
@@ -701,10 +717,32 @@ nav ul li a:hover::after {
 }
 
 @media (max-width: 576px) {
-  /* Only stack logos on very small screens */
+  /* Small mobile styles */
+  .header-top {
+    padding: 8px;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .logo-left {
+    height: 45px;
+  }
+  
+  .logo-right {
+    height: 55px;
+  }
+  
+  .logo-center {
+    height: 45px;
+  }
+  
+  /* Keep logos horizontal with minimal gap */
   .logo-container {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
   }
   
   .right-nav {
@@ -715,6 +753,36 @@ nav ul li a:hover::after {
   .register-btn {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 320px) {
+  /* Extra small screens */
+  .header-top {
+    padding: 5px;
+  }
+  
+  .logo {
+    height: 35px;
+  }
+  
+  .logo-left {
+    height: 40px;
+  }
+  
+  .logo-right {
+    height: 50px;
+  }
+  
+  .logo-center {
+    height: 40px;
+  }
+  
+  /* Keep logos horizontal with minimal gap */
+  .logo-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
   }
 }
 
