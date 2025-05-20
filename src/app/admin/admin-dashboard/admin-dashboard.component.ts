@@ -100,7 +100,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       if (this.serverSidePagination) {
         this.loadPaginatedParticipants();
       } else {
-        this.loadParticipants();
+    this.loadParticipants();
       }
     }
     
@@ -205,19 +205,19 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       // For now, we'll just reload the current page
       this.loadPaginatedParticipants();
     } else {
-      this.filteredParticipants = this.sortData(
-        this.participants.filter(participant => {
-          const matchesSearch = !filters.searchQuery || 
-            participant.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-            participant.email.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-            participant.aadharNumber.includes(filters.searchQuery);
-          
-          const matchesEventType = !filters.eventType || participant.eventType === filters.eventType;
+    this.filteredParticipants = this.sortData(
+      this.participants.filter(participant => {
+        const matchesSearch = !filters.searchQuery || 
+          participant.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+          participant.email.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
+          participant.aadharNumber.includes(filters.searchQuery);
+        
+        const matchesEventType = !filters.eventType || participant.eventType === filters.eventType;
 
-          return matchesSearch && matchesEventType;
-        })
-      );
-      this.currentPage = 1;
+        return matchesSearch && matchesEventType;
+      })
+    );
+    this.currentPage = 1;
     }
   }
 
@@ -259,7 +259,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       this.loadPaginatedParticipants();
     } else {
       // For client-side pagination, sort the existing data
-      this.filteredParticipants = this.sortData([...this.filteredParticipants]);
+    this.filteredParticipants = this.sortData([...this.filteredParticipants]);
     }
   }
   
@@ -306,7 +306,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     // Only load if page actually changed
     if (page !== this.currentPage) {
       console.log(`Changing page from ${this.currentPage} to ${page}`);
-      this.currentPage = page;
+    this.currentPage = page;
       
       if (this.serverSidePagination) {
         this.loadPaginatedParticipants();
@@ -458,27 +458,27 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.error = 'Exporting current page data...';
     
     setTimeout(() => {
-      const headers = ['ID', 'Name', 'Email', 'Phone', 'Age', 'DOB', 'Gender', 'Aadhar Number', 
-        'Blood Group', 'Event Type', 'T-shirt Size', 'Registration Date', 'Emergency Contact'];
-      const csvContent = [
-        headers.join(','),
-        ...this.filteredParticipants.map(p => [
+    const headers = ['ID', 'Name', 'Email', 'Phone', 'Age', 'DOB', 'Gender', 'Aadhar Number', 
+      'Blood Group', 'Event Type', 'T-shirt Size', 'Registration Date', 'Emergency Contact'];
+    const csvContent = [
+      headers.join(','),
+      ...this.filteredParticipants.map(p => [
           p.participantId || p.id, // Use participantId if available, fall back to id
-          `"${p.name}"`,
-          `"${p.email}"`,
-          `"${p.phone}"`,
-          p.age,
-          new Date(p.dob).toLocaleDateString(),
-          p.gender,
-          `"${p.aadharNumber}"`,
-          p.bloodGroup,
-          `"${p.eventType}"`,
-          p.tshirtSize || 'N/A',
-          new Date(p.registrationDate).toLocaleDateString(),
-          `"${p.emergencyContact}"`
-        ].join(','))
-      ].join('\n');
-      
+        `"${p.name}"`,
+        `"${p.email}"`,
+        `"${p.phone}"`,
+        p.age,
+        new Date(p.dob).toLocaleDateString(),
+        p.gender,
+        `"${p.aadharNumber}"`,
+        p.bloodGroup,
+        `"${p.eventType}"`,
+        p.tshirtSize || 'N/A',
+        new Date(p.registrationDate).toLocaleDateString(),
+        `"${p.emergencyContact}"`
+      ].join(','))
+    ].join('\n');
+    
       this.downloadCSV(csvContent, `marathon-participants-page-${this.currentPage}-${new Date().toISOString().slice(0, 10)}.csv`);
       
       // Clear loading state
@@ -921,14 +921,14 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         console.error('Invalid photo URL for download');
         return;
       }
-      
-      // Create an anchor element and trigger download
-      const downloadLink = document.createElement('a');
+    
+    // Create an anchor element and trigger download
+    const downloadLink = document.createElement('a');
       downloadLink.href = photoUrl;
-      downloadLink.download = `${this.selectedParticipant.name.replace(/\s+/g, '_')}_photo.jpg`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+    downloadLink.download = `${this.selectedParticipant.name.replace(/\s+/g, '_')}_photo.jpg`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
     } catch (err) {
       console.error('Error downloading participant photo:', err);
       this.error = 'Failed to download the photo. Please try again.';
