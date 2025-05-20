@@ -1,0 +1,21 @@
+{
+  "name": "TP Marathon 2025",
+  "short_name": "TP Marathon",
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/icons/logocenter.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/logocenter.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 
