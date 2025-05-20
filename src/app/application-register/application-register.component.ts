@@ -168,9 +168,14 @@ export class ApplicationRegisterComponent implements OnInit {
       formData.append('aadhar', this.registrationForm.get('aadharNumber')?.value);
       formData.append('bloodGroup', this.registrationForm.get('bloodGroup')?.value);
       
-      // Append the image file only if it exists
+      // Append the image file if it exists, otherwise append a default photo
       if (this.selectedFile) {
         formData.append('imageFile', this.selectedFile);
+      } else {
+        // Create a default photo using a data URL
+        const defaultPhoto = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+        const blob = this.dataURLtoBlob(defaultPhoto);
+        formData.append('imageFile', blob, 'default.png');
       }
       
       formData.append('email', this.registrationForm.get('email')?.value);
@@ -347,5 +352,18 @@ export class ApplicationRegisterComponent implements OnInit {
       declarationAgree: true
     });
     this.showDeclarationModal = false;
+  }
+
+  // Add this helper method to convert data URL to Blob
+  private dataURLtoBlob(dataURL: string): Blob {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/png';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
   }
 }
