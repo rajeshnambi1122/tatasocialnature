@@ -145,7 +145,6 @@ section {
 }
 
 .header-top {
-  padding: 15px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -155,39 +154,141 @@ section {
     rgba(var(--accent-color-rgb), 0.03) 100%);
 }
 
+/* Logo Styles */
 .logo-container {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
   animation: scaleIn 0.5s ease-out;
-  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 20px;
+  position: relative;
 }
 
 .logo {
-  height: 55px;
   transition: transform 0.3s var(--transition-bounce);
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
   margin: 0;
 }
 
-/* Specific styles for each logo */
-.logo-left {
-  height: 75px;
-}
-
-.logo-center {
-  height: 65px;
-  animation: pulse 2s infinite ease-in-out;
-  animation-delay: 1.5s;
-}
-
-.logo-right {
-  height: 120px;
-  }
-
 .logo:hover {
   transform: scale(1.05);
+}
+
+/* Desktop Logo Sizes */
+@media (min-width: 993px) {
+  .logo-left {
+    height: 75px;
+    margin-right: auto;
+  }
+  
+  .logo-center {
+    height: 65px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: pulse 2s infinite ease-in-out;
+    animation-delay: 1.5s;
+  }
+  
+  .logo-center:hover {
+    transform: translateX(-50%) scale(1.05);
+  }
+  
+  .logo-right {
+    height: 150px;
+    margin-left: auto;
+  }
+}
+
+/* Base logo hover effect for left and right logos */
+.logo-left:hover,
+.logo-right:hover {
+  transform: scale(1.05);
+}
+
+/* Tablet Logo Sizes */
+@media (max-width: 992px) {
+  .logo-container {
+    justify-content: center;
+    gap: 15px;
+    padding: 0 10px;
+  }
+  
+  .logo-left {
+    height: 50px;
+    margin-right: 0;
+  }
+  
+  .logo-center {
+    height: 55px;
+    position: static;
+    transform: none;
+  }
+  
+  .logo-right {
+    height: 70px;
+    margin-left: 0;
+  }
+}
+
+/* Mobile Logo Sizes */
+@media (max-width: 768px) {
+  .logo-left {
+    height: 45px;
+  }
+  
+  .logo-center {
+    height: 50px;
+  }
+  
+  .logo-right {
+    height: 60px;
+  }
+}
+
+/* Small Mobile Logo Sizes */
+@media (max-width: 576px) {
+  .logo-left {
+    height: 40px;
+  }
+  
+  .logo-center {
+    height: 45px;
+  }
+  
+  .logo-right {
+    height: 55px;
+  }
+}
+
+/* Extra Small Mobile Logo Sizes */
+@media (max-width: 480px) {
+  .logo-left {
+    height: 35px;
+  }
+  
+  .logo-center {
+    height: 40px;
+  }
+  
+  .logo-right {
+    height: 50px;
+  }
+}
+
+/* Tamil Language Support */
+:host-context([data-language="ta"]) {
+  .logo-center {
+    animation: none; /* Disable pulse animation for Tamil */
+  }
+  
+  .logo-container {
+    gap: 10px;
+  }
 }
 
 .event-title {
@@ -1156,13 +1257,26 @@ nav ul li a:hover::after {
     padding: 12px 10px;
   }
   
-  .logo {
+  .logo-container {
+    justify-content: center;
+    gap: 15px;
+    padding: 0 10px;
+  }
+  
+  .logo-left {
+    margin-right: 0;
     height: 50px;
-    margin: 0 10px;
+  }
+  
+  .logo-right {
+    margin-left: 0;
+    height: 70px;
   }
   
   .logo-center {
-    height: 60px;
+    position: static;
+    transform: none;
+    height: 55px;
   }
   
   nav {
@@ -1266,20 +1380,24 @@ nav ul li a:hover::after {
     padding: 10px;
   }
 
+  .logo-container {
+    gap: 10px;
+  }
+  
   .logo {
     height: 50px;
   }
   
   .logo-left {
-    height: 50px;
+    height: 45px;
   }
   
   .logo-right {
-    height: 70px;
+    height: 60px;
   }
   
   .logo-center {
-    height: 55px;
+    height: 50px;
   }
   
   .event-title h1 {
@@ -2104,20 +2222,13 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
     padding-bottom: 8px;
   }
   
-  .header-top {
-    padding: 25px 40px;
-    margin-bottom: 5px;
-  }
   
   .logo-container {
     margin-bottom: 18px;
     gap: 20px;
   }
   
-  .logo {
-    height: 75px;
-    margin: 0 20px;
-  }
+
   
   .logo-center {
     height: 90px;
@@ -2236,15 +2347,85 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
 }
 
 @media (max-width: 480px) {
-  /* Extra small screens */
-  :host-context([data-language="ta"]) .right-nav .register-btn {
+  .hero-content-overlay {
+    padding: 20px 15px;
+  }
+  
+  .hero-content-overlay h1 {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  
+  .hero-content-overlay p {
+    font-size: 0.7rem;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+  
+  .hashtag {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    padding: 0 5px;
+    line-height: 1.3;
+    white-space: normal;
+    word-break: keep-all;
+  }
+  
+  :host-context([data-language="ta"]) .hashtag {
+    font-size: 0.85rem;
+    letter-spacing: 0.2px;
+    padding: 0 3px;
+  }
+  
+  .btn-hero {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    white-space: normal;
+    line-height: 1.2;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .event-title {
+    padding: 15px;
+  }
+  
+  .event-title h1 {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  
+  .event-title p {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  
+  .right-nav {
+    margin-right: 50px;
+    gap: 8px;
+  }
+  
+  .register-btn {
     font-size: 0.65rem;
-    min-width: 80px;
-    padding: 6px 8px;
+    min-width: 75px;
+    padding: 5px 8px;
+    white-space: normal;
+    line-height: 1.2;
+    height: auto;
+    min-height: 35px;
+  }
+  
+  :host-context([data-language="ta"]) .right-nav .register-btn {
+    font-size: 0.6rem;
+    min-width: 70px;
+    padding: 5px 6px;
   }
 }
 
-/* Extra small screens - 320px specific styles */
+/* Keep the 320px styles for even smaller screens */
 @media (max-width: 320px) {
   .hero-content-overlay {
     padding: 20px 15px;

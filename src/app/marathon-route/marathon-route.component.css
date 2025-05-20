@@ -30,11 +30,13 @@
 .logo-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
   animation: scaleIn 0.5s ease-out;
-  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 20px;
 }
 
 .logo {
@@ -47,16 +49,19 @@
 /* Specific styles for each logo */
 .logo-left {
   height: 75px;
+  margin-right: auto;
 }
 
 .logo-center {
   height: 65px;
   animation: pulse 2s infinite ease-in-out;
   animation-delay: 1.5s;
+  margin: 0 auto;
 }
 
 .logo-right {
   height: 120px;
+  margin-left: auto;
 }
 
 .logo:hover {
@@ -513,19 +518,22 @@ nav ul li a:hover::after {
     height: 60px;
   }
   
-  /* Ensure logos remain horizontal */
   .logo-container {
-    flex-direction: row;
-    flex-wrap: nowrap;
+    justify-content: center;
     gap: 15px;
+    padding: 0 10px;
   }
   
   .logo-left {
-    height: 60px;
+    margin-right: 0;
   }
   
   .logo-right {
-    height: 80px;
+    margin-left: 0;
+  }
+  
+  .logo-center {
+    margin: 0;
   }
 }
 
@@ -597,10 +605,7 @@ nav ul li a:hover::after {
     height: 50px;
   }
   
-  /* Keep logos horizontal with adjusted sizes */
   .logo-container {
-    flex-direction: row;
-    flex-wrap: nowrap;
     gap: 10px;
   }
   
@@ -738,10 +743,7 @@ nav ul li a:hover::after {
     height: 45px;
   }
   
-  /* Keep logos horizontal with minimal gap */
   .logo-container {
-    flex-direction: row;
-    flex-wrap: nowrap;
     gap: 8px;
   }
   
@@ -778,10 +780,7 @@ nav ul li a:hover::after {
     height: 40px;
   }
   
-  /* Keep logos horizontal with minimal gap */
   .logo-container {
-    flex-direction: row;
-    flex-wrap: nowrap;
     gap: 5px;
   }
 }
