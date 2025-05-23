@@ -396,6 +396,11 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.selectedParticipant = null;
   }
   
+  editParticipant(participant: Participant): void {
+    // Navigate to edit page with participant ID
+    this.router.navigate(['/admin/edit-participant', participant.id]);
+  }
+  
   // Safe method to get participant photo URL with fallback
   getParticipantPhotoUrl(participant: Participant): string {
     if (!participant || !participant.photo) {
