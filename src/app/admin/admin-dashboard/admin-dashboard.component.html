@@ -216,9 +216,6 @@
                 Event Type <i class="fas" [ngClass]="sortColumn === 'eventType' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
               </th>
               <th>Blood Group</th>
-              <th class="sortable" (click)="sortBy('registrationDate')">
-                Reg. Date <i class="fas" [ngClass]="sortColumn === 'registrationDate' ? (sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort'"></i>
-              </th>
               <th>View</th>
             </tr>
           </thead>
@@ -265,7 +262,6 @@
                 </span>
               </td>
               <td>{{ participant.bloodGroup }}</td>
-              <td>{{ participant.registrationDate | date:'mediumDate' }}</td>
               <td class="view-details-cell">
                 <button class="view-details-btn" (click)="viewDetails(participant)">
                   <i class="fas fa-eye"></i> View
@@ -581,10 +577,6 @@
 </ng-container>
 
 <!-- Add a scroll to top button -->
-<button class="scroll-to-top" [class.show]="showScrollButton" (click)="scrollToTop()">
-  <i class="fas fa-arrow-up"></i>
-</button>
-
 <button 
   *ngIf="showScrollButton" 
   class="scroll-top-btn" 
