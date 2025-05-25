@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistrationService {
-  private apiUrl = 'tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net';
+  private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon/';
   private registerEndpoint = `${this.apiUrl}/register`;
   private registrationsEndpoint = `${this.apiUrl}/registrations`;
 

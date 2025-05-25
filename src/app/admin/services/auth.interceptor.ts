@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     
     if (token) {
       // Add token to API requests
-      if (request.url.includes('tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net')) {
+      if (request.url.includes('tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon/')) {
         console.log('Adding auth token to request:', request.url);
         
         // Create headers with CORS headers

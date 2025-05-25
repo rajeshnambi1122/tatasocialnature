@@ -49,7 +49,7 @@ export interface PaginatedResponse {
   providedIn: 'root'
 })
 export class ParticipantService {
-  private apiUrl = 'tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net';
+  private apiUrl = 'https://tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net/halwaCityMarathon/';
 
   constructor(private http: HttpClient) { }
 
