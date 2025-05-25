@@ -13,7 +13,7 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string | null>(this.getUserRole());
   public userRole$ = this.userRoleSubject.asObservable();
 
-  private apiUrl = 'https://halwacitymarathon-fzeubeexg9hybsfx.canadacentral-01.azurewebsites.net/halwaCityMarathon';
+  private apiUrl = 'tpmarathon-a8bvf2cpafbrake8.canadacentral-01.azurewebsites.net';
 
   constructor(private http: HttpClient) {
     // Check if there's a token in localStorage during initialization
