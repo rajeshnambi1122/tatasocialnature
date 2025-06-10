@@ -1132,6 +1132,8 @@ nav ul li a:hover::after {
 }
 
 .info-card p {
+  word-break: break-word;
+  overflow-wrap: anywhere;
   font-size: 0.95rem;
 }
 
