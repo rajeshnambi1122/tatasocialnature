@@ -305,5 +305,7 @@
   "REG_FORM_SUBMITTING": "Processing...",
   "VIEW_DECLARATION": "View Declaration",
   "I_AGREE": "I Agree",
-  "CLOSE": "Close"
+  "CLOSE": "Close",
+  "REGISTRATIONS_CLOSED": "Registrations are now closed",
+  "REGISTRATIONS_CLOSED_MESSAGE": "We are no longer accepting new registrations for this event. Thank you for your interest."
 }

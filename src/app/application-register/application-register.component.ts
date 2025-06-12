@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { TranslateService } from '../translate.service';
 import { TranslatePipe } from '../translate.pipe';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -23,17 +23,19 @@ export class ApplicationRegisterComponent implements OnInit {
   currentLang$: Observable<string>;
   isSubmitting: boolean = false;
   submissionSuccess: boolean = false;
-  submissionError: string = '';
+  submissionError: string | null = null;
   selectedFile: File | null = null;
-  participantNumber: string = '';
+  participantNumber: string | null = null;
   showDeclarationModal: boolean = false;
   formSubmitted: boolean = false;
+  registrationsClosed = true;
 
   constructor(
     private fb: FormBuilder,
     private translateService: TranslateService,
     private metaService: MetaService,
-    private registrationService: RegistrationService
+    private registrationService: RegistrationService,
+    private router: Router
   ) {
     this.currentLang$ = this.translateService.getCurrentLanguage();
     
@@ -151,6 +153,9 @@ export class ApplicationRegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.registrationsClosed) {
+      return; // Prevent form submission if registrations are closed
+    }
     this.formSubmitted = true;
     
     if (this.registrationForm.valid) {

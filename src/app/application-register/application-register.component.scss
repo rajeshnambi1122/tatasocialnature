@@ -1,0 +1,23 @@
+.registration-closed {
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem 0;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+
+  h2 {
+    color: #856404;
+    margin-bottom: 1rem;
+    
+    i {
+      margin-right: 0.5rem;
+    }
+  }
+
+  p {
+    color: #856404;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+} 
