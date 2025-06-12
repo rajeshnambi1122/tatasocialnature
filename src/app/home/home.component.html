@@ -32,6 +32,21 @@
     </nav>
 </header>
 
+<!-- Event Postponement Notice -->
+<div class="postponement-alert">
+    <div class="container">
+        <div class="alert-content">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-text">
+                <h2>{{ 'EVENT_POSTPONED_TITLE' | translate }}</h2>
+                <p><strong>{{ 'EVENT_POSTPONED_MESSAGE' | translate }}</strong></p>
+                <p>{{ 'EVENT_POSTPONED_DETAILS' | translate }}</p>
+                <p>{{ 'EVENT_POSTPONED_CONTACT' | translate }} <a href="mailto:halwacitymarathon&#64;gmail.com">halwacitymarathon&#64;gmail.com</a> {{ 'OR_CALL' | translate }} <strong>+91 9500415515</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section id="home" class="hero">
     <div class="carousel-container">
         <div class="carousel-slide" *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentSlideIndex">
