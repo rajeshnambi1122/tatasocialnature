@@ -13,7 +13,7 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string | null>(this.getUserRole());
   public userRole$ = this.userRoleSubject.asObservable();
 
-  private apiUrl = 'https://halwacityrajeshserver.duckdns.org/halwaCityMarathon';
+  private apiUrl = 'https://halwa-marathon-production.up.railway.app/halwaCityMarathon';
 
   constructor(private http: HttpClient) {
     // Check if there's a token in localStorage during initialization

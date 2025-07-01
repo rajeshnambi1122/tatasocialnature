@@ -49,7 +49,7 @@ export interface PaginatedResponse {
   providedIn: 'root'
 })
 export class ParticipantService {
-  private apiUrl = 'https://halwacityrajeshserver.duckdns.org/halwaCityMarathon';
+  private apiUrl = 'https://halwa-marathon-production.up.railway.app/halwaCityMarathon';
 
   constructor(private http: HttpClient) { }
 
