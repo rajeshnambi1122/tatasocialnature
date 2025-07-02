@@ -1,59 +1,76 @@
-# Tpmarathon
+# Halwa City Marathon (TP Marathon)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
+This is the official web application for the **Halwa City Marathon 2025** (TP Marathon), a grand nature festival and marathon event held in Tirunelveli, Tamil Nadu, to celebrate World Environment Day. The event is organized by the Social and Nature Conservation Trust (SANCT) and Sponsored by TP Solar Limited, a Tata Enterprise. The webiste provides information, registration, and engagement for participants and the community.
 
-## Development server
+## Project Overview
+- **Purpose:** Raise awareness for environmental protection, especially the Thamirabarani River, and promote a greener Tirunelveli through a city-wide marathon and related events.
+- **Audience:** Runners, students, families, and the general public interested in participating or learning about the event.
+- **Tech Stack:** Angular 19, RxJS, TypeScript, SCSS/CSS, i18n (English/Tamil)
 
+## Main Features
+- **Event Information:** Details about the marathon, its route, and the cause.
+- **Online Registration:** Easy registration for various event categories (Marathon, Walkathon, Drawing/Poetry competitions, etc.).
+- **Gallery:** Photo carousel showcasing past and present marathon moments.
+- **Rules & Medical Info:** Guidelines for participants and available medical facilities.
+- **About Tirunelveli:** Highlights of the city's heritage and landmarks.
+- **Partners Section:** Acknowledgement of sponsors and partners.
+- **Multilingual Support:** English and Tamil language toggle.
+- **Admin Dashboard:** (Under `/admin`) For event organizers to manage registrations and participants (login required).
+
+## Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- [Angular CLI](https://angular.io/cli) (v19+)
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone <repo-url>
+   cd socialnature
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Development Server
 To start a local development server, run:
-
 ```bash
 ng serve
 ```
+Open your browser at [http://localhost:4200/](http://localhost:4200/).
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
+### Building for Production
+To build the project:
 ```bash
 ng build
 ```
+The build artifacts will be stored in the `dist/` directory.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Running Tests
+- **Unit tests:**
+  ```bash
+  ng test
+  ```
+- **End-to-end tests:**
+  ```bash
+  ng e2e
+  ```
 
-## Running unit tests
+## Project Structure
+- `src/app/home/` – Main landing page and event info
+- `src/app/application-register/` – Registration form
+- `src/app/marathon-route/` – Route details
+- `src/app/admin/` – Admin dashboard and login
+- `src/assets/i18n/` – Language files (English/Tamil)
+- `public/images/` – Event and gallery images
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Credits
+- **Organized by:** Social and Nature Conservation Trust (SANCT)
+- **Sponsored:** TP Solar Limited, a Tata Enterprise
+- **Design & Development:** rajeshnambi1122
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+*This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10. For more Angular CLI commands and help, see the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).*
