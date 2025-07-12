@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistrationService {
-  private apiUrl = 'https://api.sanct.in/halwaCityMarathon';
+  private apiUrl = 'http://api.vetrinitchayam.com:8080/halwaCityMarathon';
   private registerEndpoint = `${this.apiUrl}/register`;
   private registrationsEndpoint = `${this.apiUrl}/registrations`;
 
