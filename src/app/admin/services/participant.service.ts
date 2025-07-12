@@ -49,7 +49,7 @@ export interface PaginatedResponse {
   providedIn: 'root'
 })
 export class ParticipantService {
-  private apiUrl = 'http://api.vetrinitchayam.com:8080/halwaCityMarathon';
+  private apiUrl = 'https://api.vetrinitchayam.com/halwaCityMarathon';
 
   constructor(private http: HttpClient) { }
 
