@@ -444,23 +444,40 @@ nav ul li a:hover::after {
   display: none;
 }
 
-.register-btn {
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 50px;
-  font-weight: 600;
-  transition: all 0.3s;
-  display: inline-block;
-  border: none;
-  box-shadow: var(--box-shadow-sm);
-  font-size: 0.9rem;
-  min-width: 150px;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* --- Register Button Consistency (cleaned up) --- */
+.register-btn, .btn-hero {
+  min-width: 120px !important;
+  max-width: 220px !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-align: center !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1rem !important;
+}
+
+@media (max-width: 768px) {
+  .register-btn, .btn-hero {
+    min-width: 110px !important;
+    max-width: 180px !important;
+    font-size: 0.85rem !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-btn, .btn-hero {
+    min-width: 90px !important;
+    max-width: 140px !important;
+    font-size: 0.75rem !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
 }
 
 .register-btn:hover {
@@ -1537,10 +1554,7 @@ nav ul li a:hover::after {
 }
 
 @media (max-width: 576px) {
-  .hero {
-    min-height: 60vh;
-  }
-  
+
   .hero-content-overlay {
     padding: 25px 20px;
     background: transparent;
@@ -2728,6 +2742,36 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
   
   .postponement-alert .alert-text p {
     font-size: 0.95rem;
+  }
+}
+
+:host-context([data-language="ta"]) .register-btn, :host-context([data-language="ta"]) .btn-hero {
+  white-space: normal !important;
+  min-width: 150px !important;
+  max-width: 260px !important;
+  font-size: 0.9rem !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  line-height: 1.2 !important;
+}
+
+@media (max-width: 768px) {
+  :host-context([data-language="ta"]) .register-btn, :host-context([data-language="ta"]) .btn-hero {
+    min-width: 120px !important;
+    max-width: 200px !important;
+    font-size: 0.8rem !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  :host-context([data-language="ta"]) .register-btn, :host-context([data-language="ta"]) .btn-hero {
+    min-width: 100px !important;
+    max-width: 160px !important;
+    font-size: 0.7rem !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
   }
 }
   
