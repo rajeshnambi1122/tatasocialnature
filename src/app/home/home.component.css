@@ -2614,13 +2614,13 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
 
 /* Event Postponement Alert Styles */
 .postponement-alert {
-  background: linear-gradient(135deg, #f44336, #e53935);
+  background: linear-gradient(135deg, #43a047, #388e3c); /* Green gradient */
   color: white;
   padding: 20px 0;
   position: relative;
   animation: slideInFromTop 0.8s ease-out;
   border-bottom: 4px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 20px rgba(244, 67, 54, 0.3);
+  box-shadow: 0 4px 20px rgba(67, 160, 71, 0.3);
 }
 
 .postponement-alert::before {
