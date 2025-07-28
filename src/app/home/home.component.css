@@ -2782,4 +2782,105 @@ nav ul li:nth-child(9) { animation-delay: 0.9s; }
     padding-bottom: 6px !important;
   }
 }
+
+/* Registration Warning Alert */
+.registration-warning-alert {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 15px 0;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #e55a2b;
+}
+
+.registration-warning-alert::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: moveStripes 3s infinite;
+}
+
+.registration-warning-alert .container {
+  position: relative;
+  z-index: 2;
+}
+
+.registration-warning-alert .alert-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.registration-warning-alert .alert-icon {
+  font-size: 1.5rem;
+  animation: bounce 2s infinite;
+  flex-shrink: 0;
+}
+
+.registration-warning-alert .alert-text h2 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.registration-warning-alert .alert-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.registration-warning-alert .alert-text strong {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .registration-warning-alert .alert-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .registration-warning-alert .alert-icon {
+    font-size: 1.3rem;
+  }
+  
+  .registration-warning-alert .alert-text h2 {
+    font-size: 1rem;
+  }
+  
+  .registration-warning-alert .alert-text p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .registration-warning-alert {
+    padding: 12px 0;
+  }
+  
+  .registration-warning-alert .alert-content {
+    padding: 0 15px;
+  }
+  
+  .registration-warning-alert .alert-icon {
+    font-size: 1.2rem;
+  }
+  
+  .registration-warning-alert .alert-text h2 {
+    font-size: 0.95rem;
+  }
+  
+  .registration-warning-alert .alert-text p {
+    font-size: 0.85rem;
+  }
+}
   
