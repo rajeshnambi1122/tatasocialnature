@@ -28,7 +28,7 @@ export class ApplicationRegisterComponent implements OnInit {
   participantNumber: string | null = null;
   showDeclarationModal: boolean = false;
   formSubmitted: boolean = false;
-  registrationsClosed = true;
+  registrationsClosed = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,22 +39,22 @@ export class ApplicationRegisterComponent implements OnInit {
   ) {
     this.currentLang$ = this.translateService.getCurrentLanguage();
     
-    this.registrationForm = this.fb.group({
-      eventType: ['', Validators.required],
-      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      dob: ['', Validators.required],
-      age: [{value: '', disabled: true}],
-      gender: ['', Validators.required],
-      aadharNumber: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
-      bloodGroup: ['', Validators.required],
-      photo: [null],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      emergencyContact: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      tshirtSize: ['', Validators.required],
-      pledgeAgree: [false, Validators.requiredTrue],
-      declarationAgree: [false, Validators.requiredTrue]
-    });
+         this.registrationForm = this.fb.group({
+       eventType: ['marathon', Validators.required],
+       name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z\s]*$/)]],
+       dob: ['', Validators.required],
+       age: [{value: '', disabled: true}],
+       gender: ['', Validators.required],
+       aadharNumber: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+       bloodGroup: ['', Validators.required],
+       photo: [null],
+       email: ['', [Validators.required, Validators.email]],
+       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+       emergencyContact: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+       tshirtSize: ['', Validators.required],
+       pledgeAgree: [false, Validators.requiredTrue],
+       declarationAgree: [false, Validators.requiredTrue]
+     });
   }
 
   ngOnInit() {

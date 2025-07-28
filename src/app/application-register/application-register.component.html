@@ -99,13 +99,7 @@
     <div class="form-group" [class.has-error]="registrationForm.get('eventType')?.invalid && registrationForm.get('eventType')?.touched">
       <label for="eventType">{{ 'REG_FORM_EVENT_TYPE_LABEL' | translate }} <span class="required">*</span></label>
       <select id="eventType" formControlName="eventType">
-        <option value="">{{ 'REG_FORM_EVENT_TYPE_SELECT' | translate }}</option>
-        <option value="kidathon">{{ 'REG_FORM_EVENT_TYPE_KIDATHON' | translate }}</option>
         <option value="marathon">{{ 'REG_FORM_EVENT_TYPE_MARATHON' | translate }}</option>
-        <option value="kingwalkathon">{{ 'REG_FORM_EVENT_TYPE_KINGWALKATHON' | translate }}</option>
-        <option value="walkathon_disabled">{{ 'REG_FORM_EVENT_TYPE_WALKATHON_DISABLED' | translate }}</option>
-        <option value="drawing">{{ 'REG_FORM_EVENT_TYPE_DRAWING' | translate }}</option>
-        <option value="poetry">{{ 'REG_FORM_EVENT_TYPE_POETRY' | translate }}</option>
       </select>
       <small class="error-message" *ngIf="registrationForm.get('eventType')?.invalid && registrationForm.get('eventType')?.touched">
         <i class="fas fa-exclamation-circle"></i> {{ getErrorMessage('eventType') }}
