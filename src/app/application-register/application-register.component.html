@@ -304,20 +304,7 @@
       <p>{{ 'REG_FORM_DETAILS_REG_END' | translate }}</p> -->
     </div>
 
-    <!-- Submit and Back Buttons -->
-    <div class="form-actions">
-      <button type="submit" class="submit-btn" [disabled]="!registrationForm.valid || isSubmitting">
-        <span *ngIf="!isSubmitting">{{ 'REG_FORM_SUBMIT_BUTTON' | translate }}</span>
-        <span *ngIf="isSubmitting">
-          <span class="spinner"></span> {{ 'REG_FORM_SUBMITTING' | translate }}
-        </span>
-      </button>
-      <button type="button" class="back-btn" routerLink="/" [disabled]="isSubmitting">
-        {{ 'REG_FORM_BACK_BUTTON' | translate }}
-      </button>
-    </div>
-  </form>
-</div>
+
 
 <!-- Declaration Modal -->
 <div class="modal-overlay" *ngIf="showDeclarationModal" (click)="showDeclarationModal = false">
